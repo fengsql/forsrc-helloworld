@@ -115,8 +115,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.7.0'
 
     //forsrc
-//    compile files("E:/prog/java/feng/setup/lib-forsrc/forsrc-common-1.0.jar")
-//    compile files("E:/prog/java/feng/setup/lib-forsrc/forsrc-security-1.0.jar")
     implementation 'io.github.fengsql:forsrc-common:1.0.0.04'
     implementation 'io.github.fengsql:forsrc-security:0.0.2'
 
