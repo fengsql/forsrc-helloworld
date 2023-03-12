@@ -1,0 +1,92 @@
+#
+application:
+  port: 8081
+  name: example
+
+datasource:
+  name: mysql
+  mysql:
+    url: jdbc:mysql://47.100.201.117:3999/example?serverTimezone=PRC&autoReconnect=true&characterEncoding=utf8&useUnicode=true&useSSL=false
+    username: 'dbuser'
+    password: 'G4f#I&Kg^6Hc'
+    driver: com.mysql.jdbc.Driver
+  gp:
+    url: jdbc:pivotal:greenplum://localhost:5510;DatabaseName=mydb
+    username: admin
+    password: 123456
+    driver: com.pivotal.jdbc.GreenplumDriver
+
+swagger:  # 生产环境禁用
+  enable: true
+
+redis:
+  # redis 服务器地址
+  host: 47.100.201.117
+  # 端口号
+  port: 5530
+  # 密码
+  password: 'aR$5dG^k6P'
+  # 设置本项目所有缓存key的前缀，空时不设置前缀
+  cache-prefix: "example"
+  # 设置key的前缀，默认为英文冒号:
+  key-prefix: ":"
+  # 过期时间，单位为秒，默认0不设置过期时间
+  ttl: 3600
+  # 刷新时间，second，获取缓存后判断，当缓存过期时间小于或等于这个时间时刷新过期时间
+  refresh: 3500
+  # 添加记录是否同时添加到缓存，默认为 true 添加缓存
+  cache-insert: true
+
+website:
+  upload:
+    # 上传文件或图片的文件夹
+    folder: 'upload'
+
+project:
+  # 统计任务配置。cron格式：秒 分 小时 月份中的日期 月份 星期中的日期 年份(可选)。
+  statis:
+    # 是否启用，true 开启统计任务，false 不开启。
+    enable: false
+
+security:
+  # 是否开启权限认证，默认 false
+  enable: true
+  # 是否开启图像验证码进行验证，默认 false
+  enable-verify-code: false
+  # 是否开启注册功能，默认 false
+  enable-register: true
+  token:
+    # token 在 header 中的名称，默认 token
+    name: token
+    # token的加密解密密码，默认为空
+    secret: 1234abcd
+    # 过期时间，秒，默认 1 小时
+    expire: 3600
+  # 登陆地址，不需要实现，默认 /auth/login
+  login-url: '/auth/login'
+  # 退出登陆地址，不需要实现，默认 /auth/logout
+  logout-url: '/auth/logout'
+  # 未登陆时允许访问的路径，英文逗号分隔
+  permit:
+    - '/, /*.html, /**/*.js, /**/*.css, /**/*.jpg, /**/*.png, /**/*.gif, /**.ico'
+    # swagger
+    - '/v2/api-docs,
+       /swagger-resources/**,
+       /configuration/ui,
+       /configuration/security,
+       /swagger-ui.html/**,
+       /webjars/**,
+       /definitions/**'
+    # error
+    - '/error'
+    # register
+    - '/business/register/*'
+  # 登录后，任何角色都可以访问
+  all:
+    - '/api/**/*'
+    - '/business/**/*'
+  # 相应角色可以访问的路径，角色和路径使用英文冒号分隔，多个路径用英文逗号分隔
+  role:
+    - 'admin: /static/admin/**, /test/**/*'
+    - '99: /admin/**/*'
+    - 'normal: /static/normal/**'

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+  <!-- 日志输出级别 -->
+  <property name="logLevel" value="info" />
+  <!-- 定义日志文件的存储地址 不要在logback的配置中使用相对路径 -->
+  <property name="logPath" value="log/"/>
+  <!-- 应用程序名称 -->
+  <property name="appName" value="app"/>
+  <!-- 日志文件最大尺寸 -->
+  <property name="maxFileSize" value="50MB" />
+  <!-- 日志文件保留天数 -->
+  <property name="maxHistory" value="180" />
+
+  <!-- 配置控制台输出 -->
+  <appender name="LOG_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{HH:mm:ss.SSS} %-5level[%thread{20}] %logger{30}:【%msg】%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 按照每天生成日志文件 -->
+  <appender name="LOG_NORMAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <FileNamePattern>${logPath}/${appName}-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+      <maxFileSize>${maxFileSize}</maxFileSize>
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread{30}] %logger{50}:【%msg】%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 错误日志的日志文件 -->
+  <appender name="LOG_WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <FileNamePattern>${logPath}/${appName}-%d{yyyy-MM-dd}-warn.%i.log</FileNamePattern>
+      <maxFileSize>${maxFileSize}</maxFileSize>
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread{30}] %logger{50}-%method:【%msg】%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>WARN</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <!-- 错误日志的日志文件 -->
+  <appender name="LOG_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <FileNamePattern>${logPath}/${appName}-%d{yyyy-MM-dd}-error.%i.log</FileNamePattern>
+      <maxFileSize>${maxFileSize}</maxFileSize>
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread{30}] %c-%method-%line:【%msg】%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <!-- 日志输出级别 -->
+  <root level="${logLevel}">
+    <appender-ref ref="LOG_CONSOLE"/>
+    <appender-ref ref="LOG_NORMAL"/>
+    <appender-ref ref="LOG_WARN"/>
+    <appender-ref ref="LOG_ERROR"/>
+  </root>
+  <!-- project -->
+  <logger name="com.example" level="info"/>
+  <logger name="com.example.repository" level="info"/>
+  <logger name="com.example.mvc.dao" level="info"/>
+  <logger name="com.forsrc.common.cache.base" level="info"/>
+  <!-- 关闭 kafka 输出日志 -->
+<!--  <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="OFF"/>-->
+<!--  <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="OFF"/>-->
+<!-- 运行关闭 -->
+  <logger name="org.apache.kafka.clients.consumer.internals" level="warn"/>
+  <logger name="org.apache.kafka.common.utils" level="warn"/>
+  <logger name="org.apache.kafka.listener.KafkaMessageListenerContainer" level="warn"/>
+  <!-- 关闭 flink 输出日志 -->
+  <logger name="org.apache.flink.runtime.checkpoint.CheckpointCoordinator" level="OFF"/>
+  <logger name="org.apache.flink.streaming.api.functions.sink" level="OFF"/>
+<!-- 运行关闭 -->
+  <logger name="org.apache.flink.runtime" level="warn"/>
+  <logger name="org.apache.flink.streaming.connectors.kafka" level="warn"/>
+</configuration>

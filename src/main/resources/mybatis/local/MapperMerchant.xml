@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mvc.dao.DaoMerchant">
+  <!-- Base_Column_List -->
+  <sql id="Base_Column_List">
+    `merchant_id`,
+    `city_id`,
+    `user_id`,
+    `merchant_type`,
+    `mch_name`,
+    `mch_no`,
+    `appid`,
+    `secret`,
+    `phone`,
+    `address`,
+    `info`,
+    `add_time`,
+    `update_time`
+  </sql>
+  <!-- BaseResultMap -->
+  <resultMap id="BaseResultMap" type="com.example.mvc.model.Merchant">
+    <id column="merchant_id" jdbcType="VARCHAR" property="merchantId"/>
+    <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+    <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    <result column="merchant_type" jdbcType="INTEGER" property="merchantType"/>
+    <result column="mch_name" jdbcType="VARCHAR" property="mchName"/>
+    <result column="mch_no" jdbcType="VARCHAR" property="mchNo"/>
+    <result column="appid" jdbcType="VARCHAR" property="appid"/>
+    <result column="secret" jdbcType="VARCHAR" property="secret"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="address" jdbcType="VARCHAR" property="address"/>
+    <result column="info" jdbcType="VARCHAR" property="info"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- RelativeResultMap -->
+  <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepMerchant$MerchantRow">
+    <result column="merchantId" jdbcType="VARCHAR" property="merchantId"/>
+    <result column="cityId" jdbcType="INTEGER" property="cityId"/>
+    <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+    <result column="userId" jdbcType="BIGINT" property="userId"/>
+    <result column="roleType" jdbcType="TINYINT" property="roleType"/>
+    <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
+    <result column="sexType" jdbcType="TINYINT" property="sexType"/>
+    <result column="sexType_" jdbcType="VARCHAR" property="sexType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleSexType"/>
+    <result column="userStatus" jdbcType="TINYINT" property="userStatus"/>
+    <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
+    <result column="merchantType" jdbcType="INTEGER" property="merchantType"/>
+    <result column="merchantType_" jdbcType="VARCHAR" property="merchantType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleMerchantType"/>
+    <result column="mchName" jdbcType="VARCHAR" property="mchName"/>
+    <result column="mchNo" jdbcType="VARCHAR" property="mchNo"/>
+    <result column="appid" jdbcType="VARCHAR" property="appid"/>
+    <result column="secret" jdbcType="VARCHAR" property="secret"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="address" jdbcType="VARCHAR" property="address"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- DetailResultMap -->
+  <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailMerchant">
+    <result column="merchantId" jdbcType="VARCHAR" property="merchantId"/>
+    <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="merchantType" jdbcType="INTEGER" property="merchantType"/>
+    <result column="merchantType_" jdbcType="VARCHAR" property="merchantType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleMerchantType"/>
+    <result column="mchName" jdbcType="VARCHAR" property="mchName"/>
+    <result column="mchNo" jdbcType="VARCHAR" property="mchNo"/>
+    <result column="appid" jdbcType="VARCHAR" property="appid"/>
+    <result column="secret" jdbcType="VARCHAR" property="secret"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="address" jdbcType="VARCHAR" property="address"/>
+    <result column="info" jdbcType="VARCHAR" property="info"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- insert -->
+    <insert id="insert" parameterType="com.example.mvc.model.Merchant">
+    INSERT INTO `t_merchant`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test='merchantId != null and merchantId != ""'>
+        `merchant_id`,
+      </if>
+      <if test='cityId != null'>
+        `city_id`,
+      </if>
+      <if test='userId != null'>
+        `user_id`,
+      </if>
+      <if test='merchantType != null'>
+        `merchant_type`,
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        `mch_name`,
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        `mch_no`,
+      </if>
+      <if test='appid != null and appid != ""'>
+        `appid`,
+      </if>
+      <if test='secret != null and secret != ""'>
+        `secret`,
+      </if>
+      <if test='phone != null and phone != ""'>
+        `phone`,
+      </if>
+      <if test='address != null and address != ""'>
+        `address`,
+      </if>
+      <if test='info != null and info != ""'>
+        `info`,
+      </if>
+      <if test='addTime != null'>
+        `add_time`,
+      </if>
+      <if test='updateTime != null'>
+        `update_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test='merchantId != null and merchantId != ""'>
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test='cityId != null'>
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='userId != null'>
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test='merchantType != null'>
+        #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        #{mchName,jdbcType=VARCHAR},
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        #{mchNo,jdbcType=VARCHAR},
+      </if>
+      <if test='appid != null and appid != ""'>
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test='secret != null and secret != ""'>
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test='phone != null and phone != ""'>
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test='address != null and address != ""'>
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!-- insertEvenNull -->
+    <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant">
+    INSERT INTO `t_merchant` (
+    <trim suffixOverrides=",">
+      `merchant_id`,
+      `city_id`,
+      `user_id`,
+      `merchant_type`,
+      `mch_name`,
+      `mch_no`,
+      `appid`,
+      `secret`,
+      `phone`,
+      `address`,
+      `info`,
+      `add_time`,
+      `update_time`,
+    </trim>
+    ) VALUES (
+    <trim suffixOverrides=",">
+      #{merchantId,jdbcType=VARCHAR},
+      #{cityId,jdbcType=INTEGER},
+      #{userId,jdbcType=BIGINT},
+      #{merchantType,jdbcType=INTEGER},
+      #{mchName,jdbcType=VARCHAR},
+      #{mchNo,jdbcType=VARCHAR},
+      #{appid,jdbcType=VARCHAR},
+      #{secret,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR},
+      #{info,jdbcType=VARCHAR},
+      #{addTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    )
+  </insert>
+  <!-- update -->
+  <update id="update" parameterType="com.example.mvc.model.Merchant">
+    UPDATE `t_merchant`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test='merchantType != null'>
+        `merchant_type` = #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        `mch_name` = #{mchName,jdbcType=VARCHAR},
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        `mch_no` = #{mchNo,jdbcType=VARCHAR},
+      </if>
+      <if test='appid != null and appid != ""'>
+        `appid` = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test='secret != null and secret != ""'>
+        `secret` = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test='phone != null and phone != ""'>
+        `phone` = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test='address != null and address != ""'>
+        `address` = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        `info` = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+  </update>
+  <!-- updateEvenNull -->
+  <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
+    UPDATE `t_merchant` SET
+    <trim suffixOverrides=",">
+      `city_id` = #{cityId,jdbcType=INTEGER},
+      `user_id` = #{userId,jdbcType=BIGINT},
+      `merchant_type` = #{merchantType,jdbcType=INTEGER},
+      `mch_name` = #{mchName,jdbcType=VARCHAR},
+      `mch_no` = #{mchNo,jdbcType=VARCHAR},
+      `appid` = #{appid,jdbcType=VARCHAR},
+      `secret` = #{secret,jdbcType=VARCHAR},
+      `phone` = #{phone,jdbcType=VARCHAR},
+      `address` = #{address,jdbcType=VARCHAR},
+      `info` = #{info,jdbcType=VARCHAR},
+      `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+  </update>
+  <!-- updateConditional -->
+  <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
+    UPDATE `t_merchant` SET
+    <![CDATA[${updatePair}]]>
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `merchant_id` = #{primaryId,jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </update>
+  <!-- delete -->
+  <delete id="delete" parameterType="com.example.mvc.model.Merchant">
+    DELETE FROM `t_merchant`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='merchantId != null'>
+        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+      </if>
+      <if test='cityId != null'>
+        AND `city_id` = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test='merchantType != null'>
+        AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </delete>
+  <!-- deleteConditional -->
+  <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
+    DELETE FROM `t_merchant`
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `merchant_id` = #{primaryId,jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </delete>
+  <!-- selectOne -->
+  <select id="selectOne" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_merchant`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='merchantId != null'>
+        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+      </if>
+      <if test='cityId != null'>
+        AND `city_id` = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test='merchantType != null'>
+        AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        AND `mch_name` = #{mchName,jdbcType=VARCHAR}
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        AND `mch_no` = #{mchNo,jdbcType=VARCHAR}
+      </if>
+      <if test='appid != null and appid != ""'>
+        AND `appid` = #{appid,jdbcType=VARCHAR}
+      </if>
+      <if test='secret != null and secret != ""'>
+        AND `secret` = #{secret,jdbcType=VARCHAR}
+      </if>
+      <if test='phone != null and phone != ""'>
+        AND `phone` = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test='address != null and address != ""'>
+        AND `address` = #{address,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- select -->
+  <select id="select" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_merchant`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='merchantId != null'>
+        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+      </if>
+      <if test='cityId != null'>
+        AND `city_id` = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test='merchantType != null'>
+        AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        AND `mch_name` LIKE CONCAT ('%', #{mchName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        AND `mch_no` LIKE CONCAT ('%', #{mchNo,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='appid != null and appid != ""'>
+        AND `appid` LIKE CONCAT ('%', #{appid,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='secret != null and secret != ""'>
+        AND `secret` LIKE CONCAT ('%', #{secret,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='phone != null and phone != ""'>
+        AND `phone` LIKE CONCAT ('%', #{phone,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='address != null and address != ""'>
+        AND `address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
+      </if>
+    </trim>
+    ORDER BY `merchant_id` DESC
+  </select>
+  <!-- sql_detailField -->
+  <sql id="sql_detailField">
+    t_merchant.`merchant_id` AS merchantId,
+    t_city.`city_name` AS cityName,
+    t_user.`username` AS username,
+    t_merchant.`merchant_type` AS merchantType,
+    t_merchant.`mch_name` AS mchName,
+    t_merchant.`mch_no` AS mchNo,
+    t_merchant.`appid` AS appid,
+    t_merchant.`secret` AS secret,
+    t_merchant.`phone` AS phone,
+    t_merchant.`address` AS address,
+    t_merchant.`info` AS info,
+    t_merchant.`add_time` AS addTime,
+    t_merchant.`update_time` AS updateTime
+  </sql>
+  <!-- sql_detailTable -->
+  <sql id="sql_detailTable">
+    `t_merchant`
+    JOIN `t_city` AS `t_city` ON `t_merchant`.`city_id` = `t_city`.`id`
+    JOIN `t_user` AS `t_user` ON `t_merchant`.`user_id` = `t_user`.`id`
+  </sql>
+  <!-- selectDetail -->
+  <select id="selectDetail" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='merchantId != null'>
+        AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
+      </if>
+      <if test='cityId != null'>
+        AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `t_merchant`.`user_id` = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test='merchantType != null'>
+        AND `t_merchant`.`merchant_type` = #{merchantType,jdbcType=INTEGER}
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+      </if>
+      <if test='appid != null and appid != ""'>
+        AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+      </if>
+      <if test='secret != null and secret != ""'>
+        AND `t_merchant`.`secret` = #{secret,jdbcType=VARCHAR}
+      </if>
+      <if test='phone != null and phone != ""'>
+        AND `t_merchant`.`phone` = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test='address != null and address != ""'>
+        AND `t_merchant`.`address` = #{address,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- sql_selectTable -->
+  <sql id="sql_selectTable">
+    `t_merchant`
+    JOIN `t_city` AS `t_city` ON `t_merchant`.`city_id` = `t_city`.`id`
+    JOIN `t_user` AS `t_user` ON `t_merchant`.`user_id` = `t_user`.`id`
+  </sql>
+  <!-- sql_selectField -->
+  <sql id="sql_selectField">
+    `t_merchant`.`merchant_id` AS merchantId,
+    `t_merchant`.`city_id` AS cityId,
+    `t_city`.`city_name` AS cityName,
+    `t_merchant`.`user_id` AS userId,
+    `t_user`.`role_type` AS roleType, `t_user`.`role_type` AS roleType_,
+    `t_user`.`sex_type` AS sexType, `t_user`.`sex_type` AS sexType_,
+    `t_user`.`user_status` AS userStatus, `t_user`.`user_status` AS userStatus_,
+    `t_user`.`username` AS username,
+    `t_user`.`email` AS email,
+    `t_user`.`score` AS score,
+    `t_user`.`head_img_url` AS headImgUrl,
+    `t_merchant`.`merchant_type` AS merchantType, `t_merchant`.`merchant_type` AS merchantType_,
+    `t_merchant`.`mch_name` AS mchName,
+    `t_merchant`.`mch_no` AS mchNo,
+    `t_merchant`.`appid` AS appid,
+    `t_merchant`.`secret` AS secret,
+    `t_merchant`.`phone` AS phone,
+    `t_merchant`.`address` AS address,
+    `t_merchant`.`add_time` AS addTime
+  </sql>
+  <!-- sql_selectCondition -->
+  <sql id="sql_selectCondition">
+    <if test='merchantId != null'>
+      AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
+    </if>
+    <if test='cityId != null'>
+      AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
+    </if>
+    <if test='userId != null'>
+      AND `t_merchant`.`user_id` = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="merchantType != null and merchantType.length > 0">
+      AND `t_merchant`.`merchant_type` IN
+      <foreach collection="merchantType" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test='mchName != null and mchName != ""'>
+      AND `t_merchant`.`mch_name` LIKE CONCAT ('%', #{mchName,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='mchNo != null and mchNo != ""'>
+      AND `t_merchant`.`mch_no` LIKE CONCAT ('%', #{mchNo,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='appid != null and appid != ""'>
+      AND `t_merchant`.`appid` LIKE CONCAT ('%', #{appid,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='secret != null and secret != ""'>
+      AND `t_merchant`.`secret` LIKE CONCAT ('%', #{secret,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='phone != null and phone != ""'>
+      AND `t_merchant`.`phone` LIKE CONCAT ('%', #{phone,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='address != null and address != ""'>
+      AND `t_merchant`.`address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='addTime != null'>
+      <if test='addTime.length > 0'>
+        AND `t_merchant`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='addTime.length > 1'>
+        AND `t_merchant`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='updateTime != null'>
+      <if test='updateTime.length > 0'>
+        AND `t_merchant`.`update_time` &gt;= #{updateTime[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='updateTime.length > 1'>
+        AND `t_merchant`.`update_time` &lt;= #{updateTime[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='innerCondition != null and innerCondition != ""'>
+      AND <![CDATA[${innerCondition}]]>
+    </if>
+  </sql>
+  <!-- selectTotal -->
+  <select id="selectTotal" parameterType="com.example.mvc.bean.req.ReqMerchant" resultType="Integer">
+    SELECT COUNT(1) FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+  </select>
+  <!-- selectRelative -->
+  <select id="selectRelative" parameterType="com.example.mvc.bean.req.ReqMerchant" resultMap="RelativeResultMap">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_merchant`.`merchant_id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectRelativeMap -->
+  <select id="selectRelativeMap" parameterType="com.example.mvc.bean.req.ReqMerchant" resultType="java.util.Map">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_merchant`.`merchant_id` DESC
+      </otherwise>
+    </choose>
+  </select>
+  <!-- selectList -->
+  <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM (
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_merchant`.`merchant_id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and rownum > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
+    </if>
+    ) t
+  </select>
+  <!-- selectConditional -->
+  <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM t_merchant
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `merchant_id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectSum -->
+  <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        COUNT(1)
+      </otherwise>
+    </choose>
+    FROM `t_merchant`
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+  </select>
+</mapper>

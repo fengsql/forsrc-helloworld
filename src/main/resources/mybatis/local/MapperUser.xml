@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mvc.dao.DaoUser">
+  <!-- Base_Column_List -->
+  <sql id="Base_Column_List">
+    `id`,
+    `role_type`,
+    `sex_type`,
+    `user_status`,
+    `username`,
+    `password`,
+    `email`,
+    `score`,
+    `birth_date`,
+    `head_img_url`,
+    `info`,
+    `add_time`,
+    `update_time`
+  </sql>
+  <!-- BaseResultMap -->
+  <resultMap id="BaseResultMap" type="com.example.mvc.model.User">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="role_type" jdbcType="TINYINT" property="roleType"/>
+    <result column="sex_type" jdbcType="TINYINT" property="sexType"/>
+    <result column="user_status" jdbcType="TINYINT" property="userStatus"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="password" jdbcType="VARCHAR" property="password"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="birth_date" jdbcType="DATE" property="birthDate"/>
+    <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl"/>
+    <result column="info" jdbcType="VARCHAR" property="info"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- RelativeResultMap -->
+  <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepUser$UserRow">
+    <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="roleType" jdbcType="TINYINT" property="roleType"/>
+    <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
+    <result column="sexType" jdbcType="TINYINT" property="sexType"/>
+    <result column="sexType_" jdbcType="VARCHAR" property="sexType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleSexType"/>
+    <result column="userStatus" jdbcType="TINYINT" property="userStatus"/>
+    <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="birthDate" jdbcType="DATE" property="birthDate"/>
+    <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- DetailResultMap -->
+  <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailUser">
+    <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="roleType" jdbcType="TINYINT" property="roleType"/>
+    <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
+    <result column="sexType" jdbcType="TINYINT" property="sexType"/>
+    <result column="sexType_" jdbcType="VARCHAR" property="sexType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleSexType"/>
+    <result column="userStatus" jdbcType="TINYINT" property="userStatus"/>
+    <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="birthDate" jdbcType="DATE" property="birthDate"/>
+    <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
+    <result column="info" jdbcType="VARCHAR" property="info"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- insert -->
+    <insert id="insert" parameterType="com.example.mvc.model.User">
+    INSERT INTO `t_user`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test='id != null'>
+        `id`,
+      </if>
+      <if test='roleType != null'>
+        `role_type`,
+      </if>
+      <if test='sexType != null'>
+        `sex_type`,
+      </if>
+      <if test='userStatus != null'>
+        `user_status`,
+      </if>
+      <if test='username != null and username != ""'>
+        `username`,
+      </if>
+      <if test='password != null and password != ""'>
+        `password`,
+      </if>
+      <if test='email != null and email != ""'>
+        `email`,
+      </if>
+      <if test='score != null'>
+        `score`,
+      </if>
+      <if test='birthDate != null'>
+        `birth_date`,
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        `head_img_url`,
+      </if>
+      <if test='info != null and info != ""'>
+        `info`,
+      </if>
+      <if test='addTime != null'>
+        `add_time`,
+      </if>
+      <if test='updateTime != null'>
+        `update_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test='id != null'>
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test='roleType != null'>
+        #{roleType,jdbcType=TINYINT},
+      </if>
+      <if test='sexType != null'>
+        #{sexType,jdbcType=TINYINT},
+      </if>
+      <if test='userStatus != null'>
+        #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test='username != null and username != ""'>
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test='password != null and password != ""'>
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test='email != null and email != ""'>
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test='score != null'>
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test='birthDate != null'>
+        #{birthDate,jdbcType=DATE},
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!-- insertEvenNull -->
+    <insert id="insertEvenNull" parameterType="com.example.mvc.model.User">
+    INSERT INTO `t_user` (
+    <trim suffixOverrides=",">
+      `id`,
+      `role_type`,
+      `sex_type`,
+      `user_status`,
+      `username`,
+      `password`,
+      `email`,
+      `score`,
+      `birth_date`,
+      `head_img_url`,
+      `info`,
+      `add_time`,
+      `update_time`,
+    </trim>
+    ) VALUES (
+    <trim suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      #{roleType,jdbcType=TINYINT},
+      #{sexType,jdbcType=TINYINT},
+      #{userStatus,jdbcType=TINYINT},
+      #{username,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{score,jdbcType=INTEGER},
+      #{birthDate,jdbcType=DATE},
+      #{headImgUrl,jdbcType=VARCHAR},
+      #{info,jdbcType=VARCHAR},
+      #{addTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    )
+  </insert>
+  <!-- update -->
+  <update id="update" parameterType="com.example.mvc.model.User">
+    UPDATE `t_user`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='roleType != null'>
+        `role_type` = #{roleType,jdbcType=TINYINT},
+      </if>
+      <if test='sexType != null'>
+        `sex_type` = #{sexType,jdbcType=TINYINT},
+      </if>
+      <if test='userStatus != null'>
+        `user_status` = #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test='username != null and username != ""'>
+        `username` = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test='password != null and password != ""'>
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test='email != null and email != ""'>
+        `email` = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test='score != null'>
+        `score` = #{score,jdbcType=INTEGER},
+      </if>
+      <if test='birthDate != null'>
+        `birth_date` = #{birthDate,jdbcType=DATE},
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        `head_img_url` = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        `info` = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    WHERE `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- updateEvenNull -->
+  <update id="updateEvenNull" parameterType="com.example.mvc.model.User">
+    UPDATE `t_user` SET
+    <trim suffixOverrides=",">
+      `role_type` = #{roleType,jdbcType=TINYINT},
+      `sex_type` = #{sexType,jdbcType=TINYINT},
+      `user_status` = #{userStatus,jdbcType=TINYINT},
+      `username` = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      `email` = #{email,jdbcType=VARCHAR},
+      `score` = #{score,jdbcType=INTEGER},
+      `birth_date` = #{birthDate,jdbcType=DATE},
+      `head_img_url` = #{headImgUrl,jdbcType=VARCHAR},
+      `info` = #{info,jdbcType=VARCHAR},
+      `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    WHERE `id` = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- updateConditional -->
+  <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
+    UPDATE `t_user` SET
+    <![CDATA[${updatePair}]]>
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=BIGINT}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </update>
+  <!-- delete -->
+  <delete id="delete" parameterType="com.example.mvc.model.User">
+    DELETE FROM `t_user`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=BIGINT}
+      </if>
+      <if test='roleType != null'>
+        AND `role_type` = #{roleType,jdbcType=TINYINT}
+      </if>
+      <if test='sexType != null'>
+        AND `sex_type` = #{sexType,jdbcType=TINYINT}
+      </if>
+      <if test='userStatus != null'>
+        AND `user_status` = #{userStatus,jdbcType=TINYINT}
+      </if>
+    </trim>
+  </delete>
+  <!-- deleteConditional -->
+  <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
+    DELETE FROM `t_user`
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=BIGINT}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </delete>
+  <!-- selectOne -->
+  <select id="selectOne" parameterType="com.example.mvc.model.User" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_user`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=BIGINT}
+      </if>
+      <if test='roleType != null'>
+        AND `role_type` = #{roleType,jdbcType=TINYINT}
+      </if>
+      <if test='sexType != null'>
+        AND `sex_type` = #{sexType,jdbcType=TINYINT}
+      </if>
+      <if test='userStatus != null'>
+        AND `user_status` = #{userStatus,jdbcType=TINYINT}
+      </if>
+      <if test='username != null and username != ""'>
+        AND `username` = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test='email != null and email != ""'>
+        AND `email` = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test='score != null'>
+        AND `score` = #{score,jdbcType=INTEGER}
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        AND `head_img_url` = #{headImgUrl,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- select -->
+  <select id="select" parameterType="com.example.mvc.model.User" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_user`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=BIGINT}
+      </if>
+      <if test='roleType != null'>
+        AND `role_type` = #{roleType,jdbcType=TINYINT}
+      </if>
+      <if test='sexType != null'>
+        AND `sex_type` = #{sexType,jdbcType=TINYINT}
+      </if>
+      <if test='userStatus != null'>
+        AND `user_status` = #{userStatus,jdbcType=TINYINT}
+      </if>
+      <if test='username != null and username != ""'>
+        AND `username` LIKE CONCAT ('%', #{username,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='email != null and email != ""'>
+        AND `email` LIKE CONCAT ('%', #{email,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test='score != null'>
+        AND `score` = #{score,jdbcType=INTEGER}
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        AND `head_img_url` LIKE CONCAT ('%', #{headImgUrl,jdbcType=VARCHAR}, '%')
+      </if>
+    </trim>
+    ORDER BY `id` DESC
+  </select>
+  <!-- sql_detailField -->
+  <sql id="sql_detailField">
+    `id` AS id,
+    `role_type` AS roleType,
+    `sex_type` AS sexType,
+    `user_status` AS userStatus,
+    `username` AS username,
+    `email` AS email,
+    `score` AS score,
+    `birth_date` AS birthDate,
+    `head_img_url` AS headImgUrl,
+    `info` AS info,
+    `add_time` AS addTime,
+    `update_time` AS updateTime
+  </sql>
+  <!-- sql_detailTable -->
+  <sql id="sql_detailTable">
+    `t_user`
+  </sql>
+  <!-- selectDetail -->
+  <select id="selectDetail" parameterType="com.example.mvc.model.User" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `t_user`.`id` = #{id,jdbcType=BIGINT}
+      </if>
+      <if test='roleType != null'>
+        AND `t_user`.`role_type` = #{roleType,jdbcType=TINYINT}
+      </if>
+      <if test='sexType != null'>
+        AND `t_user`.`sex_type` = #{sexType,jdbcType=TINYINT}
+      </if>
+      <if test='userStatus != null'>
+        AND `t_user`.`user_status` = #{userStatus,jdbcType=TINYINT}
+      </if>
+      <if test='username != null and username != ""'>
+        AND `t_user`.`username` = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test='email != null and email != ""'>
+        AND `t_user`.`email` = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test='score != null'>
+        AND `t_user`.`score` = #{score,jdbcType=INTEGER}
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        AND `t_user`.`head_img_url` = #{headImgUrl,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- sql_selectTable -->
+  <sql id="sql_selectTable">
+    `t_user`
+  </sql>
+  <!-- sql_selectField -->
+  <sql id="sql_selectField">
+    `id` AS id,
+    `role_type` AS roleType, `role_type` AS roleType_,
+    `sex_type` AS sexType, `sex_type` AS sexType_,
+    `user_status` AS userStatus, `user_status` AS userStatus_,
+    `username` AS username,
+    `email` AS email,
+    `score` AS score,
+    `birth_date` AS birthDate,
+    `head_img_url` AS headImgUrl,
+    `add_time` AS addTime,
+    `update_time` AS updateTime
+  </sql>
+  <!-- sql_selectCondition -->
+  <sql id="sql_selectCondition">
+    <if test='id != null'>
+      AND `t_user`.`id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="roleType != null and roleType.length > 0">
+      AND `t_user`.`role_type` IN
+      <foreach collection="roleType" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="sexType != null and sexType.length > 0">
+      AND `t_user`.`sex_type` IN
+      <foreach collection="sexType" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="userStatus != null and userStatus.length > 0">
+      AND `t_user`.`user_status` IN
+      <foreach collection="userStatus" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test='username != null and username != ""'>
+      AND `t_user`.`username` LIKE CONCAT ('%', #{username,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='email != null and email != ""'>
+      AND `t_user`.`email` LIKE CONCAT ('%', #{email,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='score != null'>
+      <if test='score.length > 0'>
+        AND `t_user`.`score` &gt;= #{score[0],jdbcType=INTEGER}
+      </if>
+      <if test='score.length > 1'>
+        AND `t_user`.`score` &lt;= #{score[1],jdbcType=INTEGER}
+      </if>
+    </if>
+    <if test='birthDate != null'>
+      <if test='birthDate.length > 0'>
+        AND `t_user`.`birth_date` &gt;= #{birthDate[0],jdbcType=DATE}
+      </if>
+      <if test='birthDate.length > 1'>
+        AND `t_user`.`birth_date` &lt;= #{birthDate[1],jdbcType=DATE}
+      </if>
+    </if>
+    <if test='headImgUrl != null and headImgUrl != ""'>
+      AND `t_user`.`head_img_url` LIKE CONCAT ('%', #{headImgUrl,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='addTime != null'>
+      <if test='addTime.length > 0'>
+        AND `t_user`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='addTime.length > 1'>
+        AND `t_user`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='updateTime != null'>
+      <if test='updateTime.length > 0'>
+        AND `t_user`.`update_time` &gt;= #{updateTime[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='updateTime.length > 1'>
+        AND `t_user`.`update_time` &lt;= #{updateTime[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='innerCondition != null and innerCondition != ""'>
+      AND <![CDATA[${innerCondition}]]>
+    </if>
+  </sql>
+  <!-- selectTotal -->
+  <select id="selectTotal" parameterType="com.example.mvc.bean.req.ReqUser" resultType="Integer">
+    SELECT COUNT(1) FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+  </select>
+  <!-- selectRelative -->
+  <select id="selectRelative" parameterType="com.example.mvc.bean.req.ReqUser" resultMap="RelativeResultMap">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_user`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectRelativeMap -->
+  <select id="selectRelativeMap" parameterType="com.example.mvc.bean.req.ReqUser" resultType="java.util.Map">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_user`.`id` DESC
+      </otherwise>
+    </choose>
+  </select>
+  <!-- selectList -->
+  <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM (
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_user`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and rownum > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
+    </if>
+    ) t
+  </select>
+  <!-- selectConditional -->
+  <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM t_user
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectSum -->
+  <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        COUNT(1)
+      </otherwise>
+    </choose>
+    FROM `t_user`
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+  </select>
+</mapper>

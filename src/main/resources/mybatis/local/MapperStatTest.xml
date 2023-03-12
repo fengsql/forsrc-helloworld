@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mvc.dao.DaoStatTest">
+  <!-- Base_Column_List -->
+  <sql id="Base_Column_List">
+    `id`,
+    `day_no`,
+    `crs_dep_time`,
+    `crs_arr_time`,
+    `flight_num`,
+    `flight_sum`,
+    `crs_elapsed_time`,
+    `distance`,
+    `distance_sum`,
+    `add_time`
+  </sql>
+  <!-- BaseResultMap -->
+  <resultMap id="BaseResultMap" type="com.example.mvc.model.StatTest">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="day_no" jdbcType="VARCHAR" property="dayNo"/>
+    <result column="crs_dep_time" jdbcType="DECIMAL" property="crsDepTime"/>
+    <result column="crs_arr_time" jdbcType="DECIMAL" property="crsArrTime"/>
+    <result column="flight_num" jdbcType="DECIMAL" property="flightNum"/>
+    <result column="flight_sum" jdbcType="DECIMAL" property="flightSum"/>
+    <result column="crs_elapsed_time" jdbcType="DECIMAL" property="crsElapsedTime"/>
+    <result column="distance" jdbcType="DECIMAL" property="distance"/>
+    <result column="distance_sum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- RelativeResultMap -->
+  <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepStatTest$StatTestRow">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="dayNo" jdbcType="VARCHAR" property="dayNo"/>
+    <result column="crsDepTime" jdbcType="DECIMAL" property="crsDepTime"/>
+    <result column="crsArrTime" jdbcType="DECIMAL" property="crsArrTime"/>
+    <result column="flightNum" jdbcType="DECIMAL" property="flightNum"/>
+    <result column="flightSum" jdbcType="DECIMAL" property="flightSum"/>
+    <result column="crsElapsedTime" jdbcType="DECIMAL" property="crsElapsedTime"/>
+    <result column="distance" jdbcType="DECIMAL" property="distance"/>
+    <result column="distanceSum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- DetailResultMap -->
+  <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailStatTest">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="dayNo" jdbcType="VARCHAR" property="dayNo"/>
+    <result column="crsDepTime" jdbcType="DECIMAL" property="crsDepTime"/>
+    <result column="crsArrTime" jdbcType="DECIMAL" property="crsArrTime"/>
+    <result column="flightNum" jdbcType="DECIMAL" property="flightNum"/>
+    <result column="flightSum" jdbcType="DECIMAL" property="flightSum"/>
+    <result column="crsElapsedTime" jdbcType="DECIMAL" property="crsElapsedTime"/>
+    <result column="distance" jdbcType="DECIMAL" property="distance"/>
+    <result column="distanceSum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- insert -->
+  <insert id="insert" parameterType="com.example.mvc.model.StatTest" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `t_stat_test`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test='dayNo != null and dayNo != ""'>
+        `day_no`,
+      </if>
+      <if test='crsDepTime != null'>
+        `crs_dep_time`,
+      </if>
+      <if test='crsArrTime != null'>
+        `crs_arr_time`,
+      </if>
+      <if test='flightNum != null'>
+        `flight_num`,
+      </if>
+      <if test='flightSum != null'>
+        `flight_sum`,
+      </if>
+      <if test='crsElapsedTime != null'>
+        `crs_elapsed_time`,
+      </if>
+      <if test='distance != null'>
+        `distance`,
+      </if>
+      <if test='distanceSum != null'>
+        `distance_sum`,
+      </if>
+      <if test='addTime != null'>
+        `add_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test='dayNo != null and dayNo != ""'>
+        #{dayNo,jdbcType=VARCHAR},
+      </if>
+      <if test='crsDepTime != null'>
+        #{crsDepTime,jdbcType=DECIMAL},
+      </if>
+      <if test='crsArrTime != null'>
+        #{crsArrTime,jdbcType=DECIMAL},
+      </if>
+      <if test='flightNum != null'>
+        #{flightNum,jdbcType=DECIMAL},
+      </if>
+      <if test='flightSum != null'>
+        #{flightSum,jdbcType=DECIMAL},
+      </if>
+      <if test='crsElapsedTime != null'>
+        #{crsElapsedTime,jdbcType=DECIMAL},
+      </if>
+      <if test='distance != null'>
+        #{distance,jdbcType=DECIMAL},
+      </if>
+      <if test='distanceSum != null'>
+        #{distanceSum,jdbcType=DECIMAL},
+      </if>
+      <if test='addTime != null'>
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!-- insertEvenNull -->
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.StatTest" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `t_stat_test` (
+    <trim suffixOverrides=",">
+      `day_no`,
+      `crs_dep_time`,
+      `crs_arr_time`,
+      `flight_num`,
+      `flight_sum`,
+      `crs_elapsed_time`,
+      `distance`,
+      `distance_sum`,
+      `add_time`,
+    </trim>
+    ) VALUES (
+    <trim suffixOverrides=",">
+      #{dayNo,jdbcType=VARCHAR},
+      #{crsDepTime,jdbcType=DECIMAL},
+      #{crsArrTime,jdbcType=DECIMAL},
+      #{flightNum,jdbcType=DECIMAL},
+      #{flightSum,jdbcType=DECIMAL},
+      #{crsElapsedTime,jdbcType=DECIMAL},
+      #{distance,jdbcType=DECIMAL},
+      #{distanceSum,jdbcType=DECIMAL},
+      #{addTime,jdbcType=TIMESTAMP},
+    </trim>
+    )
+  </insert>
+  <!-- update -->
+  <update id="update" parameterType="com.example.mvc.model.StatTest">
+    UPDATE `t_stat_test`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='dayNo != null and dayNo != ""'>
+        `day_no` = #{dayNo,jdbcType=VARCHAR},
+      </if>
+      <if test='crsDepTime != null'>
+        `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
+      </if>
+      <if test='crsArrTime != null'>
+        `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
+      </if>
+      <if test='flightNum != null'>
+        `flight_num` = #{flightNum,jdbcType=DECIMAL},
+      </if>
+      <if test='flightSum != null'>
+        `flight_sum` = #{flightSum,jdbcType=DECIMAL},
+      </if>
+      <if test='crsElapsedTime != null'>
+        `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
+      </if>
+      <if test='distance != null'>
+        `distance` = #{distance,jdbcType=DECIMAL},
+      </if>
+      <if test='distanceSum != null'>
+        `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateEvenNull -->
+  <update id="updateEvenNull" parameterType="com.example.mvc.model.StatTest">
+    UPDATE `t_stat_test` SET
+    <trim suffixOverrides=",">
+      `day_no` = #{dayNo,jdbcType=VARCHAR},
+      `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
+      `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
+      `flight_num` = #{flightNum,jdbcType=DECIMAL},
+      `flight_sum` = #{flightSum,jdbcType=DECIMAL},
+      `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
+      `distance` = #{distance,jdbcType=DECIMAL},
+      `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
+      `add_time` = #{addTime,jdbcType=TIMESTAMP},
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateConditional -->
+  <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
+    UPDATE `t_stat_test` SET
+    <![CDATA[${updatePair}]]>
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </update>
+  <!-- delete -->
+  <delete id="delete" parameterType="com.example.mvc.model.StatTest">
+    DELETE FROM `t_stat_test`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </delete>
+  <!-- deleteConditional -->
+  <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
+    DELETE FROM `t_stat_test`
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </delete>
+  <!-- selectOne -->
+  <select id="selectOne" parameterType="com.example.mvc.model.StatTest" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_stat_test`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='dayNo != null and dayNo != ""'>
+        AND `day_no` = #{dayNo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- select -->
+  <select id="select" parameterType="com.example.mvc.model.StatTest" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_stat_test`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='dayNo != null and dayNo != ""'>
+        AND `day_no` LIKE CONCAT ('%', #{dayNo,jdbcType=VARCHAR}, '%')
+      </if>
+    </trim>
+    ORDER BY `id` DESC
+  </select>
+  <!-- sql_detailField -->
+  <sql id="sql_detailField">
+    `id` AS id,
+    `day_no` AS dayNo,
+    `crs_dep_time` AS crsDepTime,
+    `crs_arr_time` AS crsArrTime,
+    `flight_num` AS flightNum,
+    `flight_sum` AS flightSum,
+    `crs_elapsed_time` AS crsElapsedTime,
+    `distance` AS distance,
+    `distance_sum` AS distanceSum,
+    `add_time` AS addTime
+  </sql>
+  <!-- sql_detailTable -->
+  <sql id="sql_detailTable">
+    `t_stat_test`
+  </sql>
+  <!-- selectDetail -->
+  <select id="selectDetail" parameterType="com.example.mvc.model.StatTest" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='dayNo != null and dayNo != ""'>
+        AND `t_stat_test`.`day_no` = #{dayNo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- sql_selectTable -->
+  <sql id="sql_selectTable">
+    `t_stat_test`
+  </sql>
+  <!-- sql_selectField -->
+  <sql id="sql_selectField">
+    `id` AS id,
+    `day_no` AS dayNo,
+    `crs_dep_time` AS crsDepTime,
+    `crs_arr_time` AS crsArrTime,
+    `flight_num` AS flightNum,
+    `flight_sum` AS flightSum,
+    `crs_elapsed_time` AS crsElapsedTime,
+    `distance` AS distance,
+    `distance_sum` AS distanceSum,
+    `add_time` AS addTime
+  </sql>
+  <!-- sql_selectCondition -->
+  <sql id="sql_selectCondition">
+    <if test='id != null'>
+      AND `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
+    </if>
+    <if test='dayNo != null and dayNo != ""'>
+      AND `t_stat_test`.`day_no` LIKE CONCAT ('%', #{dayNo,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='crsDepTime != null'>
+      <if test='crsDepTime.length > 0'>
+        AND `t_stat_test`.`crs_dep_time` &gt;= #{crsDepTime[0],jdbcType=DECIMAL}
+      </if>
+      <if test='crsDepTime.length > 1'>
+        AND `t_stat_test`.`crs_dep_time` &lt;= #{crsDepTime[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='crsArrTime != null'>
+      <if test='crsArrTime.length > 0'>
+        AND `t_stat_test`.`crs_arr_time` &gt;= #{crsArrTime[0],jdbcType=DECIMAL}
+      </if>
+      <if test='crsArrTime.length > 1'>
+        AND `t_stat_test`.`crs_arr_time` &lt;= #{crsArrTime[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='flightNum != null'>
+      <if test='flightNum.length > 0'>
+        AND `t_stat_test`.`flight_num` &gt;= #{flightNum[0],jdbcType=DECIMAL}
+      </if>
+      <if test='flightNum.length > 1'>
+        AND `t_stat_test`.`flight_num` &lt;= #{flightNum[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='flightSum != null'>
+      <if test='flightSum.length > 0'>
+        AND `t_stat_test`.`flight_sum` &gt;= #{flightSum[0],jdbcType=DECIMAL}
+      </if>
+      <if test='flightSum.length > 1'>
+        AND `t_stat_test`.`flight_sum` &lt;= #{flightSum[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='crsElapsedTime != null'>
+      <if test='crsElapsedTime.length > 0'>
+        AND `t_stat_test`.`crs_elapsed_time` &gt;= #{crsElapsedTime[0],jdbcType=DECIMAL}
+      </if>
+      <if test='crsElapsedTime.length > 1'>
+        AND `t_stat_test`.`crs_elapsed_time` &lt;= #{crsElapsedTime[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='distance != null'>
+      <if test='distance.length > 0'>
+        AND `t_stat_test`.`distance` &gt;= #{distance[0],jdbcType=DECIMAL}
+      </if>
+      <if test='distance.length > 1'>
+        AND `t_stat_test`.`distance` &lt;= #{distance[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='distanceSum != null'>
+      <if test='distanceSum.length > 0'>
+        AND `t_stat_test`.`distance_sum` &gt;= #{distanceSum[0],jdbcType=DECIMAL}
+      </if>
+      <if test='distanceSum.length > 1'>
+        AND `t_stat_test`.`distance_sum` &lt;= #{distanceSum[1],jdbcType=DECIMAL}
+      </if>
+    </if>
+    <if test='addTime != null'>
+      <if test='addTime.length > 0'>
+        AND `t_stat_test`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='addTime.length > 1'>
+        AND `t_stat_test`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='innerCondition != null and innerCondition != ""'>
+      AND <![CDATA[${innerCondition}]]>
+    </if>
+  </sql>
+  <!-- selectTotal -->
+  <select id="selectTotal" parameterType="com.example.mvc.bean.req.ReqStatTest" resultType="Integer">
+    SELECT COUNT(1) FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+  </select>
+  <!-- selectRelative -->
+  <select id="selectRelative" parameterType="com.example.mvc.bean.req.ReqStatTest" resultMap="RelativeResultMap">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_stat_test`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectRelativeMap -->
+  <select id="selectRelativeMap" parameterType="com.example.mvc.bean.req.ReqStatTest" resultType="java.util.Map">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_stat_test`.`id` DESC
+      </otherwise>
+    </choose>
+  </select>
+  <!-- selectList -->
+  <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM (
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_stat_test`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and rownum > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
+    </if>
+    ) t
+  </select>
+  <!-- selectConditional -->
+  <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM t_stat_test
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectSum -->
+  <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        COUNT(1)
+      </otherwise>
+    </choose>
+    FROM `t_stat_test`
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+  </select>
+</mapper>

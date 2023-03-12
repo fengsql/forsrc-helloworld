@@ -1,0 +1,140 @@
+server:
+  port: ${application.port}
+  tomcat:
+    accept-count: 500
+    threads:
+      max: 500
+      min-spare: 200
+
+spring:
+  application:
+    name: ${application.name}
+  profiles:
+    include: main
+  #    active: prd
+  boot:
+    admin:
+      client:
+        enabled: true
+        auto-registration: true
+        instance:
+          prefer-ip: true
+  main:
+    allow-bean-definition-overriding: true
+  redis:
+    host: ${redis.host}
+    port: ${redis.port}
+    password: ${redis.password}
+    database: 0
+    timeout: 5400
+    lettuce:
+      pool:
+        # 最大等待时间，重新连接的等待时间, ms
+        max-wait: 3600
+        # 最大活跃链接数 默认8
+        max-active: 16
+        # 最大空闲连接数 默认8
+        max-idle: 8
+        # 最小空闲连接数 默认0
+        min-idle: 0
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid 为 url
+    url: ${datasource.${datasource.name}.url}
+    # hikari 为 jdbc-url
+    jdbc-url: ${datasource.${datasource.name}.url}
+    username: ${datasource.${datasource.name}.username}
+    password: ${datasource.${datasource.name}.password}
+    driver-class-name: ${datasource.${datasource.name}.driver}
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 60000
+      # 需要根据不同数据库类型进行调整，如 postgresql 为：'SELECT 1'
+      validation-query: 'SELECT 1 FROM DUAL'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+  liquibase:
+    enabled: false
+  # 发送邮件功能。如果启用此功能，建议将 management.health.mail.enabled 设为 true
+  mail:
+    host: '' #smtp.126.com
+    port: 25
+    username: ""
+    password: ""  #授权码，不是密码
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+
+mybatis:
+  mapper-locations: classpath*:mybatis/**/*.xml
+
+logging:
+  config: 'classpath:logback-spring.xml'
+
+thread:
+  pool:
+    executor:
+      corePoolSize: 10
+      maxPoolSize: 50
+      queueCapacity: 100
+      keepAliveSeconds: 300
+      awaitTerminationSeconds: 60  #设置线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁，而不是阻塞住
+      threadNamePrefix: "taskExecutor-"
+    scheduler:
+      poolSize: 10
+      awaitTerminationSeconds: 60  #
+      threadNamePrefix: "taskScheduler-"
+
+okhttp:
+  connect-timeout: 30
+  read-timeout: 30
+  write-timeout: 30
+  # 连接池中整体的空闲连接的最大数量
+  max-idle-connections: 200
+  # 连接空闲时间最多为 300 秒
+  keep-alive-duration: 300
+
+websocket:
+  enable: false
+  port: 8011
+  # minute
+  message-timeout: 30
+  #second
+  login-timeout: 30
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  health:
+    mail:
+      enabled: false  #禁用mail相关的健康检查，如果配置了邮箱功能，建议开启

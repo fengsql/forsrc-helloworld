@@ -1,0 +1,157 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.8.RELEASE")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://mvnrepository.com/'
+    }
+    maven {
+        allowInsecureProtocol = true
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+    set('springBootAdminVersion', "2.1.6")
+    set('springCloudVersion', "Greenwich.SR2")
+}
+
+dependencies {
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //mybatis
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-jersey'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'de.codecentric:spring-boot-admin-starter-client'
+    implementation 'org.apache.kafka:kafka-streams'
+    implementation 'org.liquibase:liquibase-core'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.security:spring-security-test'
+    //hutool
+    implementation 'cn.hutool:hutool-all:5.8.12'
+    //postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.19'
+    //unrar
+    implementation 'com.github.junrar:junrar:7.4.0'
+    //cglib
+    implementation 'cglib:cglib:3.3.0'
+
+    implementation 'org.javatuples:javatuples:1.2'
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.6.5'
+    implementation 'io.prometheus:simpleclient_spring_boot:0.8.0'
+    implementation 'org.latencyutils:LatencyUtils:2.0.3'
+    implementation 'com.thetransactioncompany:cors-filter:2.8'
+    implementation 'com.google.guava:guava:28.1-jre'
+    implementation 'org.apache.httpcomponents:httpcomponents-client:4.5.10'
+    implementation 'com.thetransactioncompany:cors-filter:2.8'
+    //mysql 5
+    implementation 'mysql:mysql-connector-java:5.1.46'
+    //redis
+    implementation 'redis.clients:jedis:3.5.2'
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    //poi
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.19'
+    //yaml
+    implementation 'org.yaml:snakeyaml:1.28'
+    //alibaba
+    implementation 'com.alibaba:druid-spring-boot-starter:1.1.20'
+    implementation 'com.alibaba:fastjson:1.2.60'
+    //hbase
+    implementation 'org.apache.hbase:hbase-client:2.1.6'
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    // swagger http://localhost:8088/doc.html
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:2.0.3'
+//    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3'
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    //mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.8'
+    //spring-boot-starter-freemarker
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.7.0'
+
+    //forsrc
+//    compile files("E:/prog/java/feng/setup/lib-forsrc/forsrc-common-1.0.jar")
+//    compile files("E:/prog/java/feng/setup/lib-forsrc/forsrc-security-1.0.jar")
+    implementation 'io.github.fengsql:forsrc-common:1.0.0.04'
+    implementation 'io.github.fengsql:forsrc-security:0.0.2'
+
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+// 以下功能为打包后分离 lib，如果不需要分离，可删除以下代码
+task myClearLib(type: Delete) {
+    delete "$buildDir/libs/lib"
+}
+
+task myCopyLib(type: Copy) {
+    from configurations.compileClasspath
+    into "$buildDir/libs/lib"
+}
+
+bootJar {
+    excludes = ["*.jar"]
+
+    dependsOn myClearLib
+    dependsOn myCopyLib
+
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                'Class-Path': configurations.compileClasspath.files.collect { "lib/$it.name" }.join(' ')
+    }
+}

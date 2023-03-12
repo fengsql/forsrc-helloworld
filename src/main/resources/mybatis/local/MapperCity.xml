@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mvc.dao.DaoCity">
+  <!-- Base_Column_List -->
+  <sql id="Base_Column_List">
+    `id`,
+    `province_id`,
+    `city_name`
+  </sql>
+  <!-- BaseResultMap -->
+  <resultMap id="BaseResultMap" type="com.example.mvc.model.City">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="province_id" jdbcType="INTEGER" property="provinceId"/>
+    <result column="city_name" jdbcType="VARCHAR" property="cityName"/>
+  </resultMap>
+  <!-- RelativeResultMap -->
+  <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepCity$CityRow">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="provinceId" jdbcType="INTEGER" property="provinceId"/>
+    <result column="provinceName" jdbcType="VARCHAR" property="provinceName"/>
+    <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+  </resultMap>
+  <!-- DetailResultMap -->
+  <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailCity">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="provinceName" jdbcType="VARCHAR" property="provinceName"/>
+    <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
+  </resultMap>
+  <!-- insert -->
+  <insert id="insert" parameterType="com.example.mvc.model.City" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `t_city`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test='provinceId != null'>
+        `province_id`,
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        `city_name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test='provinceId != null'>
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- insertEvenNull -->
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.City" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `t_city` (
+    <trim suffixOverrides=",">
+      `province_id`,
+      `city_name`,
+    </trim>
+    ) VALUES (
+    <trim suffixOverrides=",">
+      #{provinceId,jdbcType=INTEGER},
+      #{cityName,jdbcType=VARCHAR},
+    </trim>
+    )
+  </insert>
+  <!-- update -->
+  <update id="update" parameterType="com.example.mvc.model.City">
+    UPDATE `t_city`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='provinceId != null'>
+        `province_id` = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        `city_name` = #{cityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateEvenNull -->
+  <update id="updateEvenNull" parameterType="com.example.mvc.model.City">
+    UPDATE `t_city` SET
+    <trim suffixOverrides=",">
+      `province_id` = #{provinceId,jdbcType=INTEGER},
+      `city_name` = #{cityName,jdbcType=VARCHAR},
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateConditional -->
+  <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
+    UPDATE `t_city` SET
+    <![CDATA[${updatePair}]]>
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </update>
+  <!-- delete -->
+  <delete id="delete" parameterType="com.example.mvc.model.City">
+    DELETE FROM `t_city`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='provinceId != null'>
+        AND `province_id` = #{provinceId,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </delete>
+  <!-- deleteConditional -->
+  <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
+    DELETE FROM `t_city`
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </delete>
+  <!-- selectOne -->
+  <select id="selectOne" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_city`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='provinceId != null'>
+        AND `province_id` = #{provinceId,jdbcType=INTEGER}
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        AND `city_name` = #{cityName,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- select -->
+  <select id="select" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_city`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='provinceId != null'>
+        AND `province_id` = #{provinceId,jdbcType=INTEGER}
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        AND `city_name` LIKE CONCAT ('%', #{cityName,jdbcType=VARCHAR}, '%')
+      </if>
+    </trim>
+    ORDER BY `id` DESC
+  </select>
+  <!-- sql_detailField -->
+  <sql id="sql_detailField">
+    t_city.`id` AS id,
+    t_province.`province_name` AS provinceName,
+    t_city.`city_name` AS cityName
+  </sql>
+  <!-- sql_detailTable -->
+  <sql id="sql_detailTable">
+    `t_city`
+    JOIN `t_province` AS `t_province` ON `t_city`.`province_id` = `t_province`.`id`
+  </sql>
+  <!-- selectDetail -->
+  <select id="selectDetail" parameterType="com.example.mvc.model.City" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `t_city`.`id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='provinceId != null'>
+        AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- sql_selectTable -->
+  <sql id="sql_selectTable">
+    `t_city`
+    JOIN `t_province` AS `t_province` ON `t_city`.`province_id` = `t_province`.`id`
+  </sql>
+  <!-- sql_selectField -->
+  <sql id="sql_selectField">
+    `t_city`.`id` AS id,
+    `t_city`.`province_id` AS provinceId,
+    `t_province`.`province_name` AS provinceName,
+    `t_city`.`city_name` AS cityName
+  </sql>
+  <!-- sql_selectCondition -->
+  <sql id="sql_selectCondition">
+    <if test='id != null'>
+      AND `t_city`.`id` = #{id,jdbcType=INTEGER}
+    </if>
+    <if test='provinceId != null'>
+      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    </if>
+    <if test='cityName != null and cityName != ""'>
+      AND `t_city`.`city_name` LIKE CONCAT ('%', #{cityName,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='innerCondition != null and innerCondition != ""'>
+      AND <![CDATA[${innerCondition}]]>
+    </if>
+  </sql>
+  <!-- selectTotal -->
+  <select id="selectTotal" parameterType="com.example.mvc.bean.req.ReqCity" resultType="Integer">
+    SELECT COUNT(1) FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+  </select>
+  <!-- selectRelative -->
+  <select id="selectRelative" parameterType="com.example.mvc.bean.req.ReqCity" resultMap="RelativeResultMap">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_city`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectRelativeMap -->
+  <select id="selectRelativeMap" parameterType="com.example.mvc.bean.req.ReqCity" resultType="java.util.Map">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_city`.`id` DESC
+      </otherwise>
+    </choose>
+  </select>
+  <!-- selectList -->
+  <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM (
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `t_city`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and rownum > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
+    </if>
+    ) t
+  </select>
+  <!-- selectConditional -->
+  <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM t_city
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectSum -->
+  <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        COUNT(1)
+      </otherwise>
+    </choose>
+    FROM `t_city`
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+  </select>
+</mapper>
