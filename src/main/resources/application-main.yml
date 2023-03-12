@@ -6,9 +6,9 @@ application:
 datasource:
   name: mysql
   mysql:
-    url: jdbc:mysql://47.100.201.117:3999/example?serverTimezone=PRC&autoReconnect=true&characterEncoding=utf8&useUnicode=true&useSSL=false
-    username: 'dbuser'
-    password: 'G4f#I&Kg^6Hc'
+    url: jdbc:mysql://localhost:3306/example?serverTimezone=PRC&autoReconnect=true&characterEncoding=utf8&useUnicode=true&useSSL=false
+    username: 'root'
+    password: 'root'
     driver: com.mysql.jdbc.Driver
   gp:
     url: jdbc:pivotal:greenplum://localhost:5510;DatabaseName=mydb
@@ -21,11 +21,11 @@ swagger:  # 生产环境禁用
 
 redis:
   # redis 服务器地址
-  host: 47.100.201.117
-  # 端口号
-  port: 5530
+  host: localhost
+  # 端口号，默认6379
+  port: 6379
   # 密码
-  password: 'aR$5dG^k6P'
+  password: ''
   # 设置本项目所有缓存key的前缀，空时不设置前缀
   cache-prefix: "example"
   # 设置key的前缀，默认为英文冒号:
