@@ -55,7 +55,6 @@ public interface DaoDistrict extends IDao<District> {
    * @return 返回删除的记录数。
    */
   int delete(District district);
-
   /**
    * 删除县表。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。
@@ -118,6 +117,20 @@ public interface DaoDistrict extends IDao<District> {
    * @return 返回的县表列表。
    */
   List<District> selectConditional(ParamQuery paramQuery);
+
+  /**
+   * 根据唯一键更新一条县表，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param district 县表。
+   * @return 返回更新的记录数。
+   */
+  int updateByDistrictName(District district);
+
+  /**
+   * 根据唯一键删除一条县表。
+   * @param district 县表。
+   * @return 返回删除的记录数。
+   */
+  int deleteByDistrictName(District district);
 
   /**
    * 统计县表列表。此查询有 sql 注入风险。

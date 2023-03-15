@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "县表", description = "县表相关的 API", position = 2)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerDistrict {
    * @param district 县表。
    * @return 返回添加的县表。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加县表", notes = "添加县表，空字段(null)将被忽略。", response = District.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public District insert(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
@@ -64,7 +63,7 @@ public class ControllerDistrict {
    * @param districts 县表列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加县表", notes = "异步批量添加县表，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<District> districts) {
@@ -78,7 +77,7 @@ public class ControllerDistrict {
    * @param district 县表。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新县表", notes = "更新县表，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
@@ -91,7 +90,7 @@ public class ControllerDistrict {
    * @param id 县编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条县表", notes = "根据主键删除一条县表。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerDistrict {
    * @param district 县表。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除县表", notes = "根据条件删除县表。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
@@ -120,7 +119,7 @@ public class ControllerDistrict {
    * @param id 县编号。
    * @return 返回县表。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条县表", notes = "根据主键查询一条县表。", response = District.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerDistrict {
    * @param district 县表。
    * @return 返回县表详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条县表详情", notes = "根据条件查询一条县表详情。", response = DetailDistrict.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailDistrict selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
@@ -149,7 +148,7 @@ public class ControllerDistrict {
    * @param id 县编号。
    * @return 返回县表详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条县表详情", notes = "根据主键查询一条县表详情。", response = DetailDistrict.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
@@ -158,44 +157,6 @@ public class ControllerDistrict {
   public DetailDistrict selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceDistrict.selectDetailByPrimary(request, response, id);
-  }
-
-  /**
-   * 根据县名称查询一条县表。
-   * @param map 请求参数。cityId: 市编号; districtName: 县名称。
-   * @return 返回县表。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据县名称查询一条县表", notes = "根据县名称查询一条县表。", response = District.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "cityId", value = "市编号", required = true),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "districtName", value = "县名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByDistrictName")
-  public District selectByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByDistrictName. map: {}", map);
-    Integer cityId = (Integer)map.get("cityId");
-    String districtName = (String)map.get("districtName");
-    return serviceDistrict.selectByDistrictName(request, response, cityId, districtName);
-  }
-
-  /**
-   * 根据县名称查询一条县表详情。
-   * @param map 请求参数。cityId: 市编号; districtName: 县名称。
-   * @return 返回县表。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据县名称查询一条县表详情", notes = "根据县名称查询一条县表详情。", response = DetailDistrict.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "cityId", value = "市编号", required = true),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "districtName", value = "县名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByDistrictName")
-  public DetailDistrict selectDetailByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByDistrictName. map: {}", map);
-    Integer cityId = (Integer)map.get("cityId");
-    String districtName = (String)map.get("districtName");
-    return serviceDistrict.selectDetailByDistrictName(request, response, cityId, districtName);
   }
 
   /**
@@ -225,10 +186,62 @@ public class ControllerDistrict {
   }
 
   /**
+   * 根据县名称更新一条县表，此方法不适用根据县名称更改县名称的字段值。
+   * @param district 县表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据县名称更新一条县表", notes = "根据县名称更新一条县表，此方法不适用根据县名称更改县名称的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByDistrictName")
+  public int updateByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("updateByDistrictName. district: {}", district);
+    return serviceDistrict.updateByDistrictName(request, response, district);
+  }
+
+  /**
+   * 根据县名称删除一条县表。
+   * @param district 县表。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据县名称删除一条县表", notes = "根据县名称删除一条县表。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByDistrictName")
+  public int deleteByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("deleteByDistrictName. district: {}", district);
+    return serviceDistrict.deleteByDistrictName(request, response, district);
+  }
+
+  /**
+   * 根据县名称查询一条县表。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据县名称查询一条县表", notes = "根据县名称查询一条县表。", response = District.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByDistrictName")
+  public District selectByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("selectByDistrictName: {}", district);
+    return serviceDistrict.selectByDistrictName(request, response, district);
+  }
+
+  /**
+   * 根据县名称查询一条县表详情。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据县名称查询一条县表详情", notes = "根据县名称查询一条县表详情。", response = DetailDistrict.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByDistrictName")
+  public DetailDistrict selectDetailByDistrictName(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("selectDetailByDistrictName: {}", district);
+    return serviceDistrict.selectDetailByDistrictName(request, response, district);
+  }
+
+  /**
    * 导出县表到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepDistrict.DistrictRow 中获取，reqParam 为 ReqDistrict 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出县表", notes = "导出县表到 excel。其中 fields 从 selectRelative 接口的 RepDistrict.DistrictRow 中获取，reqParam 为 ReqDistrict 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

@@ -1,6 +1,8 @@
 package com.example.mvc.cache;
 
 import com.forsrc.common.cache.base.BCacheTable;
+import com.forsrc.common.constant.Code;
+import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.mvc.dao.DaoMerchant;
 import com.example.mvc.model.Merchant;
@@ -97,57 +99,106 @@ public class CacheMerchant extends BCacheTable<Merchant> {
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条商户表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByMchNo(Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
+    Merchant merchant1 = getByMchNo(merchant);
+    return deleteTable(Tool.toString(merchant1.getMerchantId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条商户表。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
+   * @param merchant 商户表。
    * @return null无记录。非空返回商户表。
    */
-  public Merchant getByMchNo(String mchName, String mchNo) {
-    Merchant merchant;
+  public Merchant getByMchNo(Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
     Map<String, String> map;
     map = new LinkedHashMap<>();
-    map.put("mchName", Tool.toString(mchName));
-    map.put("mchNo", Tool.toString(mchNo));
+    map.put("mchName", Tool.toString(merchant.getMchName()));
+    map.put("mchNo", Tool.toString(merchant.getMchNo()));
     String key = getIndexCache(map);
+    Merchant merchant1;
     if (key != null) {
-//      merchant = getTableByKey(key);
-      merchant = getTable(key);
-      if (merchant != null) {
-        return merchant;
+      merchant1 = getTable(key);
+      if (merchant1 != null) {
+        return merchant1;
       }
     }
-    merchant = selectByMchNo(mchName, mchNo);
-    if (merchant != null) {
-      addCache(merchant);
+    merchant1 = daoMerchant.selectOne(merchant);
+    if (merchant1 != null) {
+      addCache(merchant1);
     }
-    return merchant;
+    return merchant1;
   }
+
   // >>>----------------------- index -----------------------
 
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条商户表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByAppid(Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
+    Merchant merchant1 = getByAppid(merchant);
+    return deleteTable(Tool.toString(merchant1.getMerchantId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条商户表。
-   * @param appid Appid。
+   * @param merchant 商户表。
    * @return null无记录。非空返回商户表。
    */
-  public Merchant getByAppid(String appid) {
-    Merchant merchant;
+  public Merchant getByAppid(Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
     Map<String, String> map;
-    String key = getIndexCache("appid", Tool.toString(appid));
+    String key = getIndexCache("appid", Tool.toString(merchant.getAppid()));
+    Merchant merchant1;
     if (key != null) {
-//      merchant = getTableByKey(key);
-      merchant = getTable(key);
-      if (merchant != null) {
-        return merchant;
+      merchant1 = getTable(key);
+      if (merchant1 != null) {
+        return merchant1;
       }
     }
-    merchant = selectByAppid(appid);
-    if (merchant != null) {
-      addCache(merchant);
+    merchant1 = daoMerchant.selectOne(merchant);
+    if (merchant1 != null) {
+      addCache(merchant1);
     }
-    return merchant;
+    return merchant1;
   }
+
   // >>>----------------------- index -----------------------
 
   // >>----------------------- public -----------------------
@@ -253,36 +304,6 @@ public class CacheMerchant extends BCacheTable<Merchant> {
   }
 
   // >>>----------------------- normal -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询商户表。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
-   * @return null无记录；非空为返回的商户表。
-   */
-  private Merchant selectByMchNo(String mchName, String mchNo) {
-    Merchant merchant = new Merchant();
-    merchant.setMchName(mchName);
-    merchant.setMchNo(mchNo);
-    return daoMerchant.selectOne(merchant);
-  }
-  // >>>----------------------- select -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询商户表。
-   * @param appid Appid。
-   * @return null无记录；非空为返回的商户表。
-   */
-  private Merchant selectByAppid(String appid) {
-    Merchant merchant = new Merchant();
-    merchant.setAppid(appid);
-    return daoMerchant.selectOne(merchant);
-  }
-  // >>>----------------------- select -----------------------
 
   // >>----------------------- protected -----------------------
 

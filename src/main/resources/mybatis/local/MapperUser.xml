@@ -628,6 +628,61 @@
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
   </select>
+  <!-- updateByUsername -->
+  <update id="updateByUsername" parameterType="com.example.mvc.model.User">
+    UPDATE `t_user`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='id != null'>
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      <if test='roleType != null'>
+        `role_type` = #{roleType,jdbcType=TINYINT},
+      </if>
+      <if test='sexType != null'>
+        `sex_type` = #{sexType,jdbcType=TINYINT},
+      </if>
+      <if test='userStatus != null'>
+        `user_status` = #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test='username != null and username != ""'>
+        `username` = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test='password != null and password != ""'>
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test='email != null and email != ""'>
+        `email` = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test='score != null'>
+        `score` = #{score,jdbcType=INTEGER},
+      </if>
+      <if test='birthDate != null'>
+        `birth_date` = #{birthDate,jdbcType=DATE},
+      </if>
+      <if test='headImgUrl != null and headImgUrl != ""'>
+        `head_img_url` = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        `info` = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_user`.`username` = #{username,jdbcType=VARCHAR}
+    </trim>
+  </update>
+  <!-- deleteByUsername -->
+  <delete id="deleteByUsername" parameterType="com.example.mvc.model.User">
+    DELETE FROM `t_user`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_user`.`username` = #{username,jdbcType=VARCHAR}
+    </trim>
+  </delete>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

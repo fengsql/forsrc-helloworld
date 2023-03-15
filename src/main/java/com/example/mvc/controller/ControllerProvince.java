@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "省表", description = "省表相关的 API", position = 0)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerProvince {
    * @param province 省表。
    * @return 返回添加的省表。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加省表", notes = "添加省表，空字段(null)将被忽略。", response = Province.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public Province insert(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
@@ -64,7 +63,7 @@ public class ControllerProvince {
    * @param provinces 省表列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加省表", notes = "异步批量添加省表，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Province> provinces) {
@@ -78,7 +77,7 @@ public class ControllerProvince {
    * @param province 省表。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新省表", notes = "更新省表，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
@@ -91,7 +90,7 @@ public class ControllerProvince {
    * @param id 省编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条省表", notes = "根据主键删除一条省表。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerProvince {
    * @param province 省表。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除省表", notes = "根据条件删除省表。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
@@ -120,7 +119,7 @@ public class ControllerProvince {
    * @param id 省编号。
    * @return 返回省表。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条省表", notes = "根据主键查询一条省表。", response = Province.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerProvince {
    * @param province 省表。
    * @return 返回省表详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条省表详情", notes = "根据条件查询一条省表详情。", response = DetailProvince.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailProvince selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
@@ -149,7 +148,7 @@ public class ControllerProvince {
    * @param id 省编号。
    * @return 返回省表详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条省表详情", notes = "根据主键查询一条省表详情。", response = DetailProvince.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
@@ -158,40 +157,6 @@ public class ControllerProvince {
   public DetailProvince selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceProvince.selectDetailByPrimary(request, response, id);
-  }
-
-  /**
-   * 根据省名称查询一条省表。
-   * @param map 请求参数。provinceName: 省名称。
-   * @return 返回省表。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据省名称查询一条省表", notes = "根据省名称查询一条省表。", response = Province.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "provinceName", value = "省名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByProvinceName")
-  public Province selectByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByProvinceName. map: {}", map);
-    String provinceName = (String)map.get("provinceName");
-    return serviceProvince.selectByProvinceName(request, response, provinceName);
-  }
-
-  /**
-   * 根据省名称查询一条省表详情。
-   * @param map 请求参数。provinceName: 省名称。
-   * @return 返回省表。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据省名称查询一条省表详情", notes = "根据省名称查询一条省表详情。", response = DetailProvince.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "provinceName", value = "省名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByProvinceName")
-  public DetailProvince selectDetailByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByProvinceName. map: {}", map);
-    String provinceName = (String)map.get("provinceName");
-    return serviceProvince.selectDetailByProvinceName(request, response, provinceName);
   }
 
   /**
@@ -221,10 +186,62 @@ public class ControllerProvince {
   }
 
   /**
+   * 根据省名称更新一条省表，此方法不适用根据省名称更改省名称的字段值。
+   * @param province 省表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据省名称更新一条省表", notes = "根据省名称更新一条省表，此方法不适用根据省名称更改省名称的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByProvinceName")
+  public int updateByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("updateByProvinceName. province: {}", province);
+    return serviceProvince.updateByProvinceName(request, response, province);
+  }
+
+  /**
+   * 根据省名称删除一条省表。
+   * @param province 省表。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据省名称删除一条省表", notes = "根据省名称删除一条省表。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByProvinceName")
+  public int deleteByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("deleteByProvinceName. province: {}", province);
+    return serviceProvince.deleteByProvinceName(request, response, province);
+  }
+
+  /**
+   * 根据省名称查询一条省表。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据省名称查询一条省表", notes = "根据省名称查询一条省表。", response = Province.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByProvinceName")
+  public Province selectByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("selectByProvinceName: {}", province);
+    return serviceProvince.selectByProvinceName(request, response, province);
+  }
+
+  /**
+   * 根据省名称查询一条省表详情。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据省名称查询一条省表详情", notes = "根据省名称查询一条省表详情。", response = DetailProvince.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByProvinceName")
+  public DetailProvince selectDetailByProvinceName(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("selectDetailByProvinceName: {}", province);
+    return serviceProvince.selectDetailByProvinceName(request, response, province);
+  }
+
+  /**
    * 导出省表到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepProvince.ProvinceRow 中获取，reqParam 为 ReqProvince 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出省表", notes = "导出省表到 excel。其中 fields 从 selectRelative 接口的 RepProvince.ProvinceRow 中获取，reqParam 为 ReqProvince 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

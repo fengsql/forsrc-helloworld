@@ -55,7 +55,6 @@ public interface DaoProvince extends IDao<Province> {
    * @return 返回删除的记录数。
    */
   int delete(Province province);
-
   /**
    * 删除省表。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。
@@ -118,6 +117,20 @@ public interface DaoProvince extends IDao<Province> {
    * @return 返回的省表列表。
    */
   List<Province> selectConditional(ParamQuery paramQuery);
+
+  /**
+   * 根据唯一键更新一条省表，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param province 省表。
+   * @return 返回更新的记录数。
+   */
+  int updateByProvinceName(Province province);
+
+  /**
+   * 根据唯一键删除一条省表。
+   * @param province 省表。
+   * @return 返回删除的记录数。
+   */
+  int deleteByProvinceName(Province province);
 
   /**
    * 统计省表列表。此查询有 sql 注入风险。

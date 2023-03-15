@@ -1,6 +1,8 @@
 package com.example.mvc.cache;
 
 import com.forsrc.common.cache.base.BCacheTable;
+import com.forsrc.common.constant.Code;
+import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.mvc.dao.DaoDistrict;
 import com.example.mvc.model.District;
@@ -97,31 +99,58 @@ public class CacheDistrict extends BCacheTable<District> {
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条县表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param district 县表。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByDistrictName(District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
+    District district1 = getByDistrictName(district);
+    return deleteTable(Tool.toString(district1.getId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条县表。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
+   * @param district 县表。
    * @return null无记录。非空返回县表。
    */
-  public District getByDistrictName(Integer cityId, String districtName) {
-    District district;
+  public District getByDistrictName(District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
     Map<String, String> map;
     map = new LinkedHashMap<>();
-    map.put("cityId", Tool.toString(cityId));
-    map.put("districtName", Tool.toString(districtName));
+    map.put("cityId", Tool.toString(district.getCityId()));
+    map.put("districtName", Tool.toString(district.getDistrictName()));
     String key = getIndexCache(map);
+    District district1;
     if (key != null) {
-//      district = getTableByKey(key);
-      district = getTable(key);
-      if (district != null) {
-        return district;
+      district1 = getTable(key);
+      if (district1 != null) {
+        return district1;
       }
     }
-    district = selectByDistrictName(cityId, districtName);
-    if (district != null) {
-      addCache(district);
+    district1 = daoDistrict.selectOne(district);
+    if (district1 != null) {
+      addCache(district1);
     }
-    return district;
+    return district1;
   }
+
   // >>>----------------------- index -----------------------
 
   // >>----------------------- public -----------------------
@@ -223,22 +252,6 @@ public class CacheDistrict extends BCacheTable<District> {
   }
 
   // >>>----------------------- normal -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询县表。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
-   * @return null无记录；非空为返回的县表。
-   */
-  private District selectByDistrictName(Integer cityId, String districtName) {
-    District district = new District();
-    district.setCityId(cityId);
-    district.setDistrictName(districtName);
-    return daoDistrict.selectOne(district);
-  }
-  // >>>----------------------- select -----------------------
 
   // >>----------------------- protected -----------------------
 

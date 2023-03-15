@@ -340,6 +340,33 @@
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
   </select>
+  <!-- updateByCityName -->
+  <update id="updateByCityName" parameterType="com.example.mvc.model.City">
+    UPDATE `t_city`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='id != null'>
+        `id` = #{id,jdbcType=INTEGER},
+      </if>
+      <if test='provinceId != null'>
+        `province_id` = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test='cityName != null and cityName != ""'>
+        `city_name` = #{cityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+      AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    </trim>
+  </update>
+  <!-- deleteByCityName -->
+  <delete id="deleteByCityName" parameterType="com.example.mvc.model.City">
+    DELETE FROM `t_city`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+      AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    </trim>
+  </delete>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

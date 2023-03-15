@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "统计信息", description = "统计信息相关的 API", position = 5)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerStatTest {
    * @param statTest 统计信息。
    * @return 返回添加的统计信息。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加统计信息", notes = "添加统计信息，空字段(null)将被忽略。", response = StatTest.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public StatTest insert(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
@@ -64,7 +63,7 @@ public class ControllerStatTest {
    * @param statTests 统计信息列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加统计信息", notes = "异步批量添加统计信息，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<StatTest> statTests) {
@@ -78,7 +77,7 @@ public class ControllerStatTest {
    * @param statTest 统计信息。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新统计信息", notes = "更新统计信息，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
@@ -91,7 +90,7 @@ public class ControllerStatTest {
    * @param id 编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条统计信息", notes = "根据主键删除一条统计信息。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerStatTest {
    * @param statTest 统计信息。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除统计信息", notes = "根据条件删除统计信息。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
@@ -120,7 +119,7 @@ public class ControllerStatTest {
    * @param id 编号。
    * @return 返回统计信息。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条统计信息", notes = "根据主键查询一条统计信息。", response = StatTest.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerStatTest {
    * @param statTest 统计信息。
    * @return 返回统计信息详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条统计信息详情", notes = "根据条件查询一条统计信息详情。", response = DetailStatTest.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailStatTest selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
@@ -149,7 +148,7 @@ public class ControllerStatTest {
    * @param id 编号。
    * @return 返回统计信息详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条统计信息详情", notes = "根据主键查询一条统计信息详情。", response = DetailStatTest.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
@@ -190,7 +189,7 @@ public class ControllerStatTest {
    * 导出统计信息到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepStatTest.StatTestRow 中获取，reqParam 为 ReqStatTest 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出统计信息", notes = "导出统计信息到 excel。其中 fields 从 selectRelative 接口的 RepStatTest.StatTestRow 中获取，reqParam 为 ReqStatTest 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

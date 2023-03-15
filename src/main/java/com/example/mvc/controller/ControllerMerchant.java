@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "商户表", description = "商户表相关的 API", position = 4)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerMerchant {
    * @param merchant 商户表。
    * @return 返回添加的商户表。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加商户表", notes = "添加商户表，空字段(null)将被忽略。", response = Merchant.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public Merchant insert(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
@@ -64,7 +63,7 @@ public class ControllerMerchant {
    * @param merchants 商户表列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加商户表", notes = "异步批量添加商户表，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Merchant> merchants) {
@@ -78,7 +77,7 @@ public class ControllerMerchant {
    * @param merchant 商户表。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新商户表", notes = "更新商户表，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
@@ -91,7 +90,7 @@ public class ControllerMerchant {
    * @param merchantId 商户编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条商户表", notes = "根据主键删除一条商户表。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerMerchant {
    * @param merchant 商户表。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除商户表", notes = "根据条件删除商户表。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
@@ -120,7 +119,7 @@ public class ControllerMerchant {
    * @param merchantId 商户编号。
    * @return 返回商户表。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条商户表", notes = "根据主键查询一条商户表。", response = Merchant.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerMerchant {
    * @param merchant 商户表。
    * @return 返回商户表详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条商户表详情", notes = "根据条件查询一条商户表详情。", response = DetailMerchant.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailMerchant selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
@@ -149,7 +148,7 @@ public class ControllerMerchant {
    * @param merchantId 商户编号。
    * @return 返回商户表详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条商户表详情", notes = "根据主键查询一条商户表详情。", response = DetailMerchant.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
@@ -158,78 +157,6 @@ public class ControllerMerchant {
   public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") String merchantId) {
     log.info("selectDetailByPrimary: {}", merchantId);
     return serviceMerchant.selectDetailByPrimary(request, response, merchantId);
-  }
-
-  /**
-   * 根据商户号查询一条商户表。
-   * @param map 请求参数。mchName: 商户名; mchNo: 商户号。
-   * @return 返回商户表。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据商户号查询一条商户表", notes = "根据商户号查询一条商户表。", response = Merchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "mchName", value = "商户名", required = false),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "mchNo", value = "商户号", required = false)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByMchNo")
-  public Merchant selectByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByMchNo. map: {}", map);
-    String mchName = (String)map.get("mchName");
-    String mchNo = (String)map.get("mchNo");
-    return serviceMerchant.selectByMchNo(request, response, mchName, mchNo);
-  }
-
-  /**
-   * 根据商户号查询一条商户表详情。
-   * @param map 请求参数。mchName: 商户名; mchNo: 商户号。
-   * @return 返回商户表。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据商户号查询一条商户表详情", notes = "根据商户号查询一条商户表详情。", response = DetailMerchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "mchName", value = "商户名", required = false),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "mchNo", value = "商户号", required = false)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByMchNo")
-  public DetailMerchant selectDetailByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByMchNo. map: {}", map);
-    String mchName = (String)map.get("mchName");
-    String mchNo = (String)map.get("mchNo");
-    return serviceMerchant.selectDetailByMchNo(request, response, mchName, mchNo);
-  }
-
-  /**
-   * 根据Appid查询一条商户表。
-   * @param map 请求参数。appid: Appid。
-   * @return 返回商户表。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据Appid查询一条商户表", notes = "根据Appid查询一条商户表。", response = Merchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "appid", value = "Appid", required = false)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByAppid")
-  public Merchant selectByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByAppid. map: {}", map);
-    String appid = (String)map.get("appid");
-    return serviceMerchant.selectByAppid(request, response, appid);
-  }
-
-  /**
-   * 根据Appid查询一条商户表详情。
-   * @param map 请求参数。appid: Appid。
-   * @return 返回商户表。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据Appid查询一条商户表详情", notes = "根据Appid查询一条商户表详情。", response = DetailMerchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "appid", value = "Appid", required = false)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByAppid")
-  public DetailMerchant selectDetailByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByAppid. map: {}", map);
-    String appid = (String)map.get("appid");
-    return serviceMerchant.selectDetailByAppid(request, response, appid);
   }
 
   /**
@@ -259,10 +186,114 @@ public class ControllerMerchant {
   }
 
   /**
+   * 根据商户号更新一条商户表，此方法不适用根据商户号更改商户号的字段值。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据商户号更新一条商户表", notes = "根据商户号更新一条商户表，此方法不适用根据商户号更改商户号的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByMchNo")
+  public int updateByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("updateByMchNo. merchant: {}", merchant);
+    return serviceMerchant.updateByMchNo(request, response, merchant);
+  }
+
+  /**
+   * 根据商户号删除一条商户表。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据商户号删除一条商户表", notes = "根据商户号删除一条商户表。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByMchNo")
+  public int deleteByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("deleteByMchNo. merchant: {}", merchant);
+    return serviceMerchant.deleteByMchNo(request, response, merchant);
+  }
+
+  /**
+   * 根据商户号查询一条商户表。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据商户号查询一条商户表", notes = "根据商户号查询一条商户表。", response = Merchant.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByMchNo")
+  public Merchant selectByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("selectByMchNo: {}", merchant);
+    return serviceMerchant.selectByMchNo(request, response, merchant);
+  }
+
+  /**
+   * 根据商户号查询一条商户表详情。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据商户号查询一条商户表详情", notes = "根据商户号查询一条商户表详情。", response = DetailMerchant.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByMchNo")
+  public DetailMerchant selectDetailByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("selectDetailByMchNo: {}", merchant);
+    return serviceMerchant.selectDetailByMchNo(request, response, merchant);
+  }
+
+  /**
+   * 根据Appid更新一条商户表，此方法不适用根据Appid更改Appid的字段值。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据Appid更新一条商户表", notes = "根据Appid更新一条商户表，此方法不适用根据Appid更改Appid的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByAppid")
+  public int updateByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("updateByAppid. merchant: {}", merchant);
+    return serviceMerchant.updateByAppid(request, response, merchant);
+  }
+
+  /**
+   * 根据Appid删除一条商户表。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据Appid删除一条商户表", notes = "根据Appid删除一条商户表。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByAppid")
+  public int deleteByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("deleteByAppid. merchant: {}", merchant);
+    return serviceMerchant.deleteByAppid(request, response, merchant);
+  }
+
+  /**
+   * 根据Appid查询一条商户表。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据Appid查询一条商户表", notes = "根据Appid查询一条商户表。", response = Merchant.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByAppid")
+  public Merchant selectByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("selectByAppid: {}", merchant);
+    return serviceMerchant.selectByAppid(request, response, merchant);
+  }
+
+  /**
+   * 根据Appid查询一条商户表详情。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据Appid查询一条商户表详情", notes = "根据Appid查询一条商户表详情。", response = DetailMerchant.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByAppid")
+  public DetailMerchant selectDetailByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("selectDetailByAppid: {}", merchant);
+    return serviceMerchant.selectDetailByAppid(request, response, merchant);
+  }
+
+  /**
    * 导出商户表到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepMerchant.MerchantRow 中获取，reqParam 为 ReqMerchant 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出商户表", notes = "导出商户表到 excel。其中 fields 从 selectRelative 接口的 RepMerchant.MerchantRow 中获取，reqParam 为 ReqMerchant 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

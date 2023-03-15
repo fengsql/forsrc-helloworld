@@ -26,8 +26,9 @@ public class SecurityServiceUserDetails extends BServiceUserDetails<User> {
 
   @Override
   public IUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    username = Tool.toString(username);
-    User user = serviceUser.selectByUsername(username);
+    User user = new User();
+    user.setUsername(Tool.toString(username));
+    user = serviceUser.selectByUsername(user);
     if (user == null) {
       throw new UsernameNotFoundException("not find username '" + username + "'");
     }

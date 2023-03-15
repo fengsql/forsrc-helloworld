@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "市表", description = "市表相关的 API", position = 1)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerCity {
    * @param city 市表。
    * @return 返回添加的市表。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加市表", notes = "添加市表，空字段(null)将被忽略。", response = City.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public City insert(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
@@ -64,7 +63,7 @@ public class ControllerCity {
    * @param citys 市表列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加市表", notes = "异步批量添加市表，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<City> citys) {
@@ -78,7 +77,7 @@ public class ControllerCity {
    * @param city 市表。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新市表", notes = "更新市表，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
@@ -91,7 +90,7 @@ public class ControllerCity {
    * @param id 市编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条市表", notes = "根据主键删除一条市表。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerCity {
    * @param city 市表。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除市表", notes = "根据条件删除市表。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
@@ -120,7 +119,7 @@ public class ControllerCity {
    * @param id 市编号。
    * @return 返回市表。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条市表", notes = "根据主键查询一条市表。", response = City.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerCity {
    * @param city 市表。
    * @return 返回市表详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条市表详情", notes = "根据条件查询一条市表详情。", response = DetailCity.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailCity selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
@@ -149,7 +148,7 @@ public class ControllerCity {
    * @param id 市编号。
    * @return 返回市表详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条市表详情", notes = "根据主键查询一条市表详情。", response = DetailCity.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
@@ -158,44 +157,6 @@ public class ControllerCity {
   public DetailCity selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceCity.selectDetailByPrimary(request, response, id);
-  }
-
-  /**
-   * 根据市名称查询一条市表。
-   * @param map 请求参数。provinceId: 省编号; cityName: 市名称。
-   * @return 返回市表。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据市名称查询一条市表", notes = "根据市名称查询一条市表。", response = City.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "provinceId", value = "省编号", required = true),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "cityName", value = "市名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByCityName")
-  public City selectByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByCityName. map: {}", map);
-    Integer provinceId = (Integer)map.get("provinceId");
-    String cityName = (String)map.get("cityName");
-    return serviceCity.selectByCityName(request, response, provinceId, cityName);
-  }
-
-  /**
-   * 根据市名称查询一条市表详情。
-   * @param map 请求参数。provinceId: 省编号; cityName: 市名称。
-   * @return 返回市表。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据市名称查询一条市表详情", notes = "根据市名称查询一条市表详情。", response = DetailCity.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "provinceId", value = "省编号", required = true),
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "cityName", value = "市名称", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByCityName")
-  public DetailCity selectDetailByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByCityName. map: {}", map);
-    Integer provinceId = (Integer)map.get("provinceId");
-    String cityName = (String)map.get("cityName");
-    return serviceCity.selectDetailByCityName(request, response, provinceId, cityName);
   }
 
   /**
@@ -225,10 +186,62 @@ public class ControllerCity {
   }
 
   /**
+   * 根据市名称更新一条市表，此方法不适用根据市名称更改市名称的字段值。
+   * @param city 市表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据市名称更新一条市表", notes = "根据市名称更新一条市表，此方法不适用根据市名称更改市名称的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByCityName")
+  public int updateByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("updateByCityName. city: {}", city);
+    return serviceCity.updateByCityName(request, response, city);
+  }
+
+  /**
+   * 根据市名称删除一条市表。
+   * @param city 市表。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据市名称删除一条市表", notes = "根据市名称删除一条市表。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByCityName")
+  public int deleteByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("deleteByCityName. city: {}", city);
+    return serviceCity.deleteByCityName(request, response, city);
+  }
+
+  /**
+   * 根据市名称查询一条市表。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据市名称查询一条市表", notes = "根据市名称查询一条市表。", response = City.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByCityName")
+  public City selectByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("selectByCityName: {}", city);
+    return serviceCity.selectByCityName(request, response, city);
+  }
+
+  /**
+   * 根据市名称查询一条市表详情。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据市名称查询一条市表详情", notes = "根据市名称查询一条市表详情。", response = DetailCity.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByCityName")
+  public DetailCity selectDetailByCityName(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("selectDetailByCityName: {}", city);
+    return serviceCity.selectDetailByCityName(request, response, city);
+  }
+
+  /**
    * 导出市表到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepCity.CityRow 中获取，reqParam 为 ReqCity 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出市表", notes = "导出市表到 excel。其中 fields 从 selectRelative 接口的 RepCity.CityRow 中获取，reqParam 为 ReqCity 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

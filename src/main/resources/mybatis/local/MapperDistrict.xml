@@ -340,6 +340,33 @@
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
   </select>
+  <!-- updateByDistrictName -->
+  <update id="updateByDistrictName" parameterType="com.example.mvc.model.District">
+    UPDATE `t_district`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='id != null'>
+        `id` = #{id,jdbcType=INTEGER},
+      </if>
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='districtName != null and districtName != ""'>
+        `district_name` = #{districtName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_district`.`city_id` = #{cityId,jdbcType=INTEGER}
+      AND `t_district`.`district_name` = #{districtName,jdbcType=VARCHAR}
+    </trim>
+  </update>
+  <!-- deleteByDistrictName -->
+  <delete id="deleteByDistrictName" parameterType="com.example.mvc.model.District">
+    DELETE FROM `t_district`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_district`.`city_id` = #{cityId,jdbcType=INTEGER}
+      AND `t_district`.`district_name` = #{districtName,jdbcType=VARCHAR}
+    </trim>
+  </delete>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

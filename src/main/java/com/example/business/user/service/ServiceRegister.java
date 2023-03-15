@@ -125,8 +125,10 @@ public class ServiceRegister {
   }
 
   private void existUser(String username) {
-    User user = serviceUser.selectByUsername(username);
-    if (user != null) {
+    User user = new User();
+    user.setUsername(username);
+    User user1 = serviceUser.selectByUsername(user);
+    if (user1 != null) {
       throw new CommonException("这个用户名已经注册!");
     }
   }

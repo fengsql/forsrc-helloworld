@@ -55,7 +55,6 @@ public interface DaoUser extends IDao<User> {
    * @return 返回删除的记录数。
    */
   int delete(User user);
-
   /**
    * 删除用户。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。
@@ -118,6 +117,20 @@ public interface DaoUser extends IDao<User> {
    * @return 返回的用户列表。
    */
   List<User> selectConditional(ParamQuery paramQuery);
+
+  /**
+   * 根据唯一键更新一条用户，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param user 用户。
+   * @return 返回更新的记录数。
+   */
+  int updateByUsername(User user);
+
+  /**
+   * 根据唯一键删除一条用户。
+   * @param user 用户。
+   * @return 返回删除的记录数。
+   */
+  int deleteByUsername(User user);
 
   /**
    * 统计用户列表。此查询有 sql 注入风险。

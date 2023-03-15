@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Api(tags = "用户", description = "用户相关的 API", position = 3)
 @RestController
@@ -38,7 +37,7 @@ public class ControllerUser {
    * @param user 用户。
    * @return 返回添加的用户。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 10)
   @ApiOperation(value = "添加用户", notes = "添加用户，空字段(null)将被忽略。", response = User.class)
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public User insert(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
@@ -64,7 +63,7 @@ public class ControllerUser {
    * @param users 用户列表。
    * @return 无返回。
    */
-  @ApiOperationSupport(order = 20)
+  @ApiOperationSupport(order = 30)
   @ApiOperation(value = "异步批量添加用户", notes = "异步批量添加用户，空字段(null)将被忽略。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<User> users) {
@@ -78,7 +77,7 @@ public class ControllerUser {
    * @param user 用户。
    * @return 返回更新的记录数。
    */
-  @ApiOperationSupport(order = 30)
+  @ApiOperationSupport(order = 40)
   @ApiOperation(value = "更新用户", notes = "更新用户，不更新空字段(null)。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
@@ -91,7 +90,7 @@ public class ControllerUser {
    * @param id 用户编号。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 40)
+  @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条用户", notes = "根据主键删除一条用户。", response = Integer.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
@@ -107,7 +106,7 @@ public class ControllerUser {
    * @param user 用户。
    * @return 返回删除的记录数。
    */
-  @ApiOperationSupport(order = 50)
+  @ApiOperationSupport(order = 60)
   @ApiOperation(value = "删除用户", notes = "根据条件删除用户。", response = Integer.class)
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
@@ -120,7 +119,7 @@ public class ControllerUser {
    * @param id 用户编号。
    * @return 返回用户。
    */
-  @ApiOperationSupport(order = 60)
+  @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条用户", notes = "根据主键查询一条用户。", response = User.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
@@ -136,7 +135,7 @@ public class ControllerUser {
    * @param user 用户。
    * @return 返回用户详情。
    */
-  @ApiOperationSupport(order = 70)
+  @ApiOperationSupport(order = 80)
   @ApiOperation(value = "根据条件查询一条用户详情", notes = "根据条件查询一条用户详情。", response = DetailUser.class)
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailUser selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
@@ -149,7 +148,7 @@ public class ControllerUser {
    * @param id 用户编号。
    * @return 返回用户详情。
    */
-  @ApiOperationSupport(order = 71)
+  @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条用户详情", notes = "根据主键查询一条用户详情。", response = DetailUser.class)
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
@@ -158,40 +157,6 @@ public class ControllerUser {
   public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Long id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceUser.selectDetailByPrimary(request, response, id);
-  }
-
-  /**
-   * 根据用户名查询一条用户。
-   * @param map 请求参数。username: 用户名。
-   * @return 返回用户。
-   */
-  @ApiOperationSupport(order = 80)
-  @ApiOperation(value = "根据用户名查询一条用户", notes = "根据用户名查询一条用户。", response = User.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "username", value = "用户名", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectByUsername")
-  public User selectByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectByUsername. map: {}", map);
-    String username = (String)map.get("username");
-    return serviceUser.selectByUsername(request, response, username);
-  }
-
-  /**
-   * 根据用户名查询一条用户详情。
-   * @param map 请求参数。username: 用户名。
-   * @return 返回用户。
-   */
-  @ApiOperationSupport(order = 90)
-  @ApiOperation(value = "根据用户名查询一条用户详情", notes = "根据用户名查询一条用户详情。", response = DetailUser.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "username", value = "用户名", required = true)
-  })
-  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByUsername")
-  public DetailUser selectDetailByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
-    log.info("selectDetailByUsername. map: {}", map);
-    String username = (String)map.get("username");
-    return serviceUser.selectDetailByUsername(request, response, username);
   }
 
   /**
@@ -221,10 +186,62 @@ public class ControllerUser {
   }
 
   /**
+   * 根据用户名更新一条用户，此方法不适用根据用户名更改用户名的字段值。
+   * @param user 用户。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 120)
+  @ApiOperation(value = "根据用户名更新一条用户", notes = "根据用户名更新一条用户，此方法不适用根据用户名更改用户名的字段值。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateByUsername")
+  public int updateByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("updateByUsername. user: {}", user);
+    return serviceUser.updateByUsername(request, response, user);
+  }
+
+  /**
+   * 根据用户名删除一条用户。
+   * @param user 用户。
+   * @return 返回删除的记录数。
+   */
+  @ApiOperationSupport(order = 121)
+  @ApiOperation(value = "根据用户名删除一条用户", notes = "根据用户名删除一条用户。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "deleteByUsername")
+  public int deleteByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("deleteByUsername. user: {}", user);
+    return serviceUser.deleteByUsername(request, response, user);
+  }
+
+  /**
+   * 根据用户名查询一条用户。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  @ApiOperationSupport(order = 122)
+  @ApiOperation(value = "根据用户名查询一条用户", notes = "根据用户名查询一条用户。", response = User.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectByUsername")
+  public User selectByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("selectByUsername: {}", user);
+    return serviceUser.selectByUsername(request, response, user);
+  }
+
+  /**
+   * 根据用户名查询一条用户详情。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  @ApiOperationSupport(order = 123)
+  @ApiOperation(value = "根据用户名查询一条用户详情", notes = "根据用户名查询一条用户详情。", response = DetailUser.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectDetailByUsername")
+  public DetailUser selectDetailByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("selectDetailByUsername: {}", user);
+    return serviceUser.selectDetailByUsername(request, response, user);
+  }
+
+  /**
    * 导出用户到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepUser.UserRow 中获取，reqParam 为 ReqUser 对象。
    */
-  @ApiOperationSupport(order = 2)
+  @ApiOperationSupport(order = 200)
   @ApiOperation(value = "导出用户", notes = "导出用户到 excel。其中 fields 从 selectRelative 接口的 RepUser.UserRow 中获取，reqParam 为 ReqUser 对象。")
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {

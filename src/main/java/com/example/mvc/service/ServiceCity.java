@@ -128,7 +128,6 @@ public class ServiceCity extends BaseService implements IService<City> {
     insertAsyn(null, null, citys);
   }
 
-
   /**
    * 更新市表。空值将被忽略。
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
@@ -282,80 +281,6 @@ public class ServiceCity extends BaseService implements IService<City> {
     return selectDetailByPrimary(null, null, id);
   }
 
-
-  /**
-   * 根据唯一键查询一条市表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
-   * @return 返回市表。
-   */
-  public City selectByCityName(HttpServletRequest request, HttpServletResponse response, Integer provinceId, String cityName) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(provinceId)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(cityName)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    City city = new City();
-    city.setProvinceId(provinceId);
-    city.setCityName(cityName);
-    City city1 = cacheCity.getByCityName(provinceId, cityName);
-    return city1;
-  }
-
-  /**
-   * 根据唯一键查询一条市表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
-   * @return 返回市表。
-   */
-  public City selectByCityName(Integer provinceId, String cityName) {
-    return selectByCityName(null, null, provinceId, cityName);
-  }
-
-  /**
-   * 根据唯一键查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
-   * @return 返回市表。
-   */
-  public DetailCity selectDetailByCityName(HttpServletRequest request, HttpServletResponse response, Integer provinceId, String cityName) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(provinceId)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(cityName)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    City city = new City();
-    city.setProvinceId(provinceId);
-    city.setCityName(cityName);
-    DetailCity detailCity = daoCity.selectDetail(city);
-    return detailCity;
-  }
-
-  /**
-   * 根据唯一键查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
-   * @return 返回市表。
-   */
-  public DetailCity selectDetailByCityName(Integer provinceId, String cityName) {
-    return selectDetailByCityName(null, null, provinceId, cityName);
-  }
-
-
   /**
    * 查询市表列表。返回所有符合条件的市表，未分页。
    * @param city 市表。
@@ -403,6 +328,138 @@ public class ServiceCity extends BaseService implements IService<City> {
    */
   public RepCity selectRelative(ReqCity reqCity) {
     return selectRelative(null, null, reqCity);
+  }
+
+  /**
+   * 根据唯一键更新一条市表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByCityName(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
+    int count = daoCity.updateByCityName(city);
+    if (count > 0) {
+      cacheCity.update(daoCity.selectOne(city));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条市表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByCityName(City city) {
+    return updateByCityName(null, null, city);
+  }
+
+  /**
+   * 根据唯一键删除一条市表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByCityName(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
+    City city1 = new City();
+    city1.setProvinceId(city.getProvinceId());
+    city1.setCityName(city.getCityName());
+    int count = cacheCity.deleteByCityName(city1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条市表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByCityName(City city) {
+    return deleteByCityName(null, null, city);
+  }
+
+  /**
+   * 根据唯一键查询一条市表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public City selectByCityName(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
+    City city1 = new City();
+    city1.setProvinceId(city.getProvinceId());
+    city1.setCityName(city.getCityName());
+    City city2 = cacheCity.getByCityName(city1);
+    return city2;
+  }
+
+  /**
+   * 根据唯一键查询一条市表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public City selectByCityName(City city) {
+    return selectByCityName(null, null, city);
+  }
+
+  /**
+   * 根据唯一键查询一条市表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public DetailCity selectDetailByCityName(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
+    City city1 = new City();
+    city1.setProvinceId(city.getProvinceId());
+    city1.setCityName(city.getCityName());
+    DetailCity detailCity = daoCity.selectDetail(city1);
+    return detailCity;
+  }
+
+  /**
+   * 根据唯一键查询一条市表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public DetailCity selectDetailByCityName(City city) {
+    return selectDetailByCityName(null, null, city);
   }
 
   /**

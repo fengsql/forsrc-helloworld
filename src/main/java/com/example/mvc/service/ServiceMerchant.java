@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailMerchant;
-import com.example.mvc.bean.rep.RepMerchant;
-import com.example.mvc.bean.req.ReqMerchant;
-import com.example.mvc.cache.CacheMerchant;
-import com.example.mvc.dao.DaoMerchant;
-import com.example.mvc.model.Merchant;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,6 +11,12 @@ import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailMerchant;
+import com.example.mvc.bean.rep.RepMerchant;
+import com.example.mvc.bean.req.ReqMerchant;
+import com.example.mvc.dao.DaoMerchant;
+import com.example.mvc.model.Merchant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheMerchant;
 
 @Service
 @Slf4j
@@ -127,7 +127,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
   public void insertAsyn(List<Merchant> merchants) {
     insertAsyn(null, null, merchants);
   }
-
 
   /**
    * 更新商户表。空值将被忽略。
@@ -282,133 +281,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     return selectDetailByPrimary(null, null, merchantId);
   }
 
-
-  /**
-   * 根据唯一键查询一条商户表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
-   * @return 返回商户表。
-   */
-  public Merchant selectByMchNo(HttpServletRequest request, HttpServletResponse response, String mchName, String mchNo) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(mchName)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(mchNo)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Merchant merchant = new Merchant();
-    merchant.setMchName(mchName);
-    merchant.setMchNo(mchNo);
-    Merchant merchant1 = cacheMerchant.getByMchNo(mchName, mchNo);
-    return merchant1;
-  }
-
-  /**
-   * 根据唯一键查询一条商户表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
-   * @return 返回商户表。
-   */
-  public Merchant selectByMchNo(String mchName, String mchNo) {
-    return selectByMchNo(null, null, mchName, mchNo);
-  }
-
-  /**
-   * 根据唯一键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
-   * @return 返回商户表。
-   */
-  public DetailMerchant selectDetailByMchNo(HttpServletRequest request, HttpServletResponse response, String mchName, String mchNo) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(mchName)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(mchNo)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Merchant merchant = new Merchant();
-    merchant.setMchName(mchName);
-    merchant.setMchNo(mchNo);
-    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant);
-    return detailMerchant;
-  }
-
-  /**
-   * 根据唯一键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param mchName 商户名。
-   * @param mchNo 商户号。
-   * @return 返回商户表。
-   */
-  public DetailMerchant selectDetailByMchNo(String mchName, String mchNo) {
-    return selectDetailByMchNo(null, null, mchName, mchNo);
-  }
-
-
-  /**
-   * 根据唯一键查询一条商户表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param appid Appid。
-   * @return 返回商户表。
-   */
-  public Merchant selectByAppid(HttpServletRequest request, HttpServletResponse response, String appid) {
-    if (appid == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Merchant merchant = new Merchant();
-    merchant.setAppid(appid);
-    Merchant merchant1 = cacheMerchant.getByAppid(appid);
-    return merchant1;
-  }
-
-  /**
-   * 根据唯一键查询一条商户表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param appid Appid。
-   * @return 返回商户表。
-   */
-  public Merchant selectByAppid(String appid) {
-    return selectByAppid(null, null, appid);
-  }
-
-  /**
-   * 根据唯一键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param appid Appid。
-   * @return 返回商户表。
-   */
-  public DetailMerchant selectDetailByAppid(HttpServletRequest request, HttpServletResponse response, String appid) {
-    if (appid == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Merchant merchant = new Merchant();
-    merchant.setAppid(appid);
-    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant);
-    return detailMerchant;
-  }
-
-  /**
-   * 根据唯一键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param appid Appid。
-   * @return 返回商户表。
-   */
-  public DetailMerchant selectDetailByAppid(String appid) {
-    return selectDetailByAppid(null, null, appid);
-  }
-
-
   /**
    * 查询商户表列表。返回所有符合条件的商户表，未分页。
    * @param merchant 商户表。
@@ -456,6 +328,255 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    */
   public RepMerchant selectRelative(ReqMerchant reqMerchant) {
     return selectRelative(null, null, reqMerchant);
+  }
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByMchNo(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
+    int count = daoMerchant.updateByMchNo(merchant);
+    if (count > 0) {
+      cacheMerchant.update(daoMerchant.selectOne(merchant));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByMchNo(Merchant merchant) {
+    return updateByMchNo(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByMchNo(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setMchName(merchant.getMchName());
+    merchant1.setMchNo(merchant.getMchNo());
+    int count = cacheMerchant.deleteByMchNo(merchant1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByMchNo(Merchant merchant) {
+    return deleteByMchNo(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键查询一条商户表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectByMchNo(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setMchName(merchant.getMchName());
+    merchant1.setMchNo(merchant.getMchNo());
+    Merchant merchant2 = cacheMerchant.getByMchNo(merchant1);
+    return merchant2;
+  }
+
+  /**
+   * 根据唯一键查询一条商户表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectByMchNo(Merchant merchant) {
+    return selectByMchNo(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键查询一条商户表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public DetailMerchant selectDetailByMchNo(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getMchName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchName is null!");
+    }
+    if (Tool.isNull(merchant.getMchNo())) {
+      throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setMchName(merchant.getMchName());
+    merchant1.setMchNo(merchant.getMchNo());
+    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant1);
+    return detailMerchant;
+  }
+
+  /**
+   * 根据唯一键查询一条商户表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public DetailMerchant selectDetailByMchNo(Merchant merchant) {
+    return selectDetailByMchNo(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByAppid(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
+    int count = daoMerchant.updateByAppid(merchant);
+    if (count > 0) {
+      cacheMerchant.update(daoMerchant.selectOne(merchant));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByAppid(Merchant merchant) {
+    return updateByAppid(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByAppid(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setAppid(merchant.getAppid());
+    int count = cacheMerchant.deleteByAppid(merchant1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByAppid(Merchant merchant) {
+    return deleteByAppid(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键查询一条商户表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectByAppid(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setAppid(merchant.getAppid());
+    Merchant merchant2 = cacheMerchant.getByAppid(merchant1);
+    return merchant2;
+  }
+
+  /**
+   * 根据唯一键查询一条商户表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectByAppid(Merchant merchant) {
+    return selectByAppid(null, null, merchant);
+  }
+
+  /**
+   * 根据唯一键查询一条商户表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public DetailMerchant selectDetailByAppid(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(merchant.getAppid())) {
+      throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
+    }
+    Merchant merchant1 = new Merchant();
+    merchant1.setAppid(merchant.getAppid());
+    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant1);
+    return detailMerchant;
+  }
+
+  /**
+   * 根据唯一键查询一条商户表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public DetailMerchant selectDetailByAppid(Merchant merchant) {
+    return selectDetailByAppid(null, null, merchant);
   }
 
   /**

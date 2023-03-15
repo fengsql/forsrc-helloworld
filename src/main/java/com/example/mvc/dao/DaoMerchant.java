@@ -55,7 +55,6 @@ public interface DaoMerchant extends IDao<Merchant> {
    * @return 返回删除的记录数。
    */
   int delete(Merchant merchant);
-
   /**
    * 删除商户表。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。
@@ -118,6 +117,34 @@ public interface DaoMerchant extends IDao<Merchant> {
    * @return 返回的商户表列表。
    */
   List<Merchant> selectConditional(ParamQuery paramQuery);
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param merchant 商户表。
+   * @return 返回更新的记录数。
+   */
+  int updateByMchNo(Merchant merchant);
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  int deleteByMchNo(Merchant merchant);
+
+  /**
+   * 根据唯一键更新一条商户表，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param merchant 商户表。
+   * @return 返回更新的记录数。
+   */
+  int updateByAppid(Merchant merchant);
+
+  /**
+   * 根据唯一键删除一条商户表。
+   * @param merchant 商户表。
+   * @return 返回删除的记录数。
+   */
+  int deleteByAppid(Merchant merchant);
 
   /**
    * 统计商户表列表。此查询有 sql 注入风险。

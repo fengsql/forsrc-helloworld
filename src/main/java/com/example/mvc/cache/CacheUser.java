@@ -1,6 +1,8 @@
 package com.example.mvc.cache;
 
 import com.forsrc.common.cache.base.BCacheTable;
+import com.forsrc.common.constant.Code;
+import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.mvc.dao.DaoUser;
 import com.example.mvc.model.User;
@@ -97,27 +99,49 @@ public class CacheUser extends BCacheTable<User> {
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条用户。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByUsername(User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
+    User user1 = getByUsername(user);
+    return deleteTable(Tool.toString(user1.getId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条用户。
-   * @param username 用户名。
+   * @param user 用户。
    * @return null无记录。非空返回用户。
    */
-  public User getByUsername(String username) {
-    User user;
+  public User getByUsername(User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
     Map<String, String> map;
-    String key = getIndexCache("username", Tool.toString(username));
+    String key = getIndexCache("username", Tool.toString(user.getUsername()));
+    User user1;
     if (key != null) {
-//      user = getTableByKey(key);
-      user = getTable(key);
-      if (user != null) {
-        return user;
+      user1 = getTable(key);
+      if (user1 != null) {
+        return user1;
       }
     }
-    user = selectByUsername(username);
-    if (user != null) {
-      addCache(user);
+    user1 = daoUser.selectOne(user);
+    if (user1 != null) {
+      addCache(user1);
     }
-    return user;
+    return user1;
   }
+
   // >>>----------------------- index -----------------------
 
   // >>----------------------- public -----------------------
@@ -210,20 +234,6 @@ public class CacheUser extends BCacheTable<User> {
   }
 
   // >>>----------------------- normal -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询用户。
-   * @param username 用户名。
-   * @return null无记录；非空为返回的用户。
-   */
-  private User selectByUsername(String username) {
-    User user = new User();
-    user.setUsername(username);
-    return daoUser.selectOne(user);
-  }
-  // >>>----------------------- select -----------------------
 
   // >>----------------------- protected -----------------------
 

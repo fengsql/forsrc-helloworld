@@ -113,7 +113,6 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
     insertAsyn(null, null, statTests);
   }
 
-
   /**
    * 更新统计信息。空值将被忽略。
    * @param statTest 统计信息。
@@ -251,7 +250,6 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
   public DetailStatTest selectDetailByPrimary(Integer id) {
     return selectDetailByPrimary(null, null, id);
   }
-
 
   /**
    * 查询统计信息列表。返回所有符合条件的统计信息，未分页。

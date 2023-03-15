@@ -1,6 +1,8 @@
 package com.example.mvc.cache;
 
 import com.forsrc.common.cache.base.BCacheTable;
+import com.forsrc.common.constant.Code;
+import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.mvc.dao.DaoCity;
 import com.example.mvc.model.City;
@@ -97,31 +99,58 @@ public class CacheCity extends BCacheTable<City> {
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条市表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByCityName(City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
+    City city1 = getByCityName(city);
+    return deleteTable(Tool.toString(city1.getId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条市表。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
+   * @param city 市表。
    * @return null无记录。非空返回市表。
    */
-  public City getByCityName(Integer provinceId, String cityName) {
-    City city;
+  public City getByCityName(City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(city.getProvinceId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceId is null!");
+    }
+    if (Tool.isNull(city.getCityName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
+    }
     Map<String, String> map;
     map = new LinkedHashMap<>();
-    map.put("provinceId", Tool.toString(provinceId));
-    map.put("cityName", Tool.toString(cityName));
+    map.put("provinceId", Tool.toString(city.getProvinceId()));
+    map.put("cityName", Tool.toString(city.getCityName()));
     String key = getIndexCache(map);
+    City city1;
     if (key != null) {
-//      city = getTableByKey(key);
-      city = getTable(key);
-      if (city != null) {
-        return city;
+      city1 = getTable(key);
+      if (city1 != null) {
+        return city1;
       }
     }
-    city = selectByCityName(provinceId, cityName);
-    if (city != null) {
-      addCache(city);
+    city1 = daoCity.selectOne(city);
+    if (city1 != null) {
+      addCache(city1);
     }
-    return city;
+    return city1;
   }
+
   // >>>----------------------- index -----------------------
 
   // >>----------------------- public -----------------------
@@ -223,22 +252,6 @@ public class CacheCity extends BCacheTable<City> {
   }
 
   // >>>----------------------- normal -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询市表。
-   * @param provinceId 省编号。
-   * @param cityName 市名称。
-   * @return null无记录；非空为返回的市表。
-   */
-  private City selectByCityName(Integer provinceId, String cityName) {
-    City city = new City();
-    city.setProvinceId(provinceId);
-    city.setCityName(cityName);
-    return daoCity.selectOne(city);
-  }
-  // >>>----------------------- select -----------------------
 
   // >>----------------------- protected -----------------------
 

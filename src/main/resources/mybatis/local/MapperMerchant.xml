@@ -654,6 +654,118 @@
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
   </select>
+  <!-- updateByMchNo -->
+  <update id="updateByMchNo" parameterType="com.example.mvc.model.Merchant">
+    UPDATE `t_merchant`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='merchantId != null'>
+        `merchant_id` = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test='merchantType != null'>
+        `merchant_type` = #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        `mch_name` = #{mchName,jdbcType=VARCHAR},
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        `mch_no` = #{mchNo,jdbcType=VARCHAR},
+      </if>
+      <if test='appid != null and appid != ""'>
+        `appid` = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test='secret != null and secret != ""'>
+        `secret` = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test='phone != null and phone != ""'>
+        `phone` = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test='address != null and address != ""'>
+        `address` = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        `info` = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+      AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    </trim>
+  </update>
+  <!-- deleteByMchNo -->
+  <delete id="deleteByMchNo" parameterType="com.example.mvc.model.Merchant">
+    DELETE FROM `t_merchant`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+      AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    </trim>
+  </delete>
+  <!-- updateByAppid -->
+  <update id="updateByAppid" parameterType="com.example.mvc.model.Merchant">
+    UPDATE `t_merchant`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='merchantId != null'>
+        `merchant_id` = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test='merchantType != null'>
+        `merchant_type` = #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        `mch_name` = #{mchName,jdbcType=VARCHAR},
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        `mch_no` = #{mchNo,jdbcType=VARCHAR},
+      </if>
+      <if test='appid != null and appid != ""'>
+        `appid` = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test='secret != null and secret != ""'>
+        `secret` = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test='phone != null and phone != ""'>
+        `phone` = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test='address != null and address != ""'>
+        `address` = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test='info != null and info != ""'>
+        `info` = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    </trim>
+  </update>
+  <!-- deleteByAppid -->
+  <delete id="deleteByAppid" parameterType="com.example.mvc.model.Merchant">
+    DELETE FROM `t_merchant`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    </trim>
+  </delete>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

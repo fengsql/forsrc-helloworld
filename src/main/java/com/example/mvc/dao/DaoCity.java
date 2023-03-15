@@ -55,7 +55,6 @@ public interface DaoCity extends IDao<City> {
    * @return 返回删除的记录数。
    */
   int delete(City city);
-
   /**
    * 删除市表。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。
@@ -118,6 +117,20 @@ public interface DaoCity extends IDao<City> {
    * @return 返回的市表列表。
    */
   List<City> selectConditional(ParamQuery paramQuery);
+
+  /**
+   * 根据唯一键更新一条市表，此方法不适用根据唯一键更改唯一键的字段值。
+   * @param city 市表。
+   * @return 返回更新的记录数。
+   */
+  int updateByCityName(City city);
+
+  /**
+   * 根据唯一键删除一条市表。
+   * @param city 市表。
+   * @return 返回删除的记录数。
+   */
+  int deleteByCityName(City city);
 
   /**
    * 统计市表列表。此查询有 sql 注入风险。

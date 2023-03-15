@@ -1,6 +1,8 @@
 package com.example.mvc.cache;
 
 import com.forsrc.common.cache.base.BCacheTable;
+import com.forsrc.common.constant.Code;
+import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.mvc.dao.DaoProvince;
 import com.example.mvc.model.Province;
@@ -97,27 +99,49 @@ public class CacheProvince extends BCacheTable<Province> {
   // <<<----------------------- index -----------------------
 
   /**
+   * 根据唯一键删除一条省表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return true 成功。false 失败。
+   */
+  public boolean deleteByProvinceName(Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
+    Province province1 = getByProvinceName(province);
+    return deleteTable(Tool.toString(province1.getId()));
+  }
+
+  /**
    * 根据缓存索引字段(唯一字段且未禁用缓存)查询一条省表。
-   * @param provinceName 省名称。
+   * @param province 省表。
    * @return null无记录。非空返回省表。
    */
-  public Province getByProvinceName(String provinceName) {
-    Province province;
+  public Province getByProvinceName(Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
     Map<String, String> map;
-    String key = getIndexCache("provinceName", Tool.toString(provinceName));
+    String key = getIndexCache("provinceName", Tool.toString(province.getProvinceName()));
+    Province province1;
     if (key != null) {
-//      province = getTableByKey(key);
-      province = getTable(key);
-      if (province != null) {
-        return province;
+      province1 = getTable(key);
+      if (province1 != null) {
+        return province1;
       }
     }
-    province = selectByProvinceName(provinceName);
-    if (province != null) {
-      addCache(province);
+    province1 = daoProvince.selectOne(province);
+    if (province1 != null) {
+      addCache(province1);
     }
-    return province;
+    return province1;
   }
+
   // >>>----------------------- index -----------------------
 
   // >>----------------------- public -----------------------
@@ -210,20 +234,6 @@ public class CacheProvince extends BCacheTable<Province> {
   }
 
   // >>>----------------------- normal -----------------------
-
-  // <<<----------------------- select -----------------------
-
-  /**
-   * 根据缓存索引字段(唯一字段且未禁用缓存)从数据库中查询省表。
-   * @param provinceName 省名称。
-   * @return null无记录；非空为返回的省表。
-   */
-  private Province selectByProvinceName(String provinceName) {
-    Province province = new Province();
-    province.setProvinceName(provinceName);
-    return daoProvince.selectOne(province);
-  }
-  // >>>----------------------- select -----------------------
 
   // >>----------------------- protected -----------------------
 

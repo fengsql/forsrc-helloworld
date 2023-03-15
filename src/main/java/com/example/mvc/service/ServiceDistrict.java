@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailDistrict;
-import com.example.mvc.bean.rep.RepDistrict;
-import com.example.mvc.bean.req.ReqDistrict;
-import com.example.mvc.cache.CacheDistrict;
-import com.example.mvc.dao.DaoDistrict;
-import com.example.mvc.model.District;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,6 +11,12 @@ import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailDistrict;
+import com.example.mvc.bean.rep.RepDistrict;
+import com.example.mvc.bean.req.ReqDistrict;
+import com.example.mvc.dao.DaoDistrict;
+import com.example.mvc.model.District;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheDistrict;
 
 @Service
 @Slf4j
@@ -127,7 +127,6 @@ public class ServiceDistrict extends BaseService implements IService<District> {
   public void insertAsyn(List<District> districts) {
     insertAsyn(null, null, districts);
   }
-
 
   /**
    * 更新县表。空值将被忽略。
@@ -282,80 +281,6 @@ public class ServiceDistrict extends BaseService implements IService<District> {
     return selectDetailByPrimary(null, null, id);
   }
 
-
-  /**
-   * 根据唯一键查询一条县表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
-   * @return 返回县表。
-   */
-  public District selectByDistrictName(HttpServletRequest request, HttpServletResponse response, Integer cityId, String districtName) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(cityId)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(districtName)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    District district = new District();
-    district.setCityId(cityId);
-    district.setDistrictName(districtName);
-    District district1 = cacheDistrict.getByDistrictName(cityId, districtName);
-    return district1;
-  }
-
-  /**
-   * 根据唯一键查询一条县表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
-   * @return 返回县表。
-   */
-  public District selectByDistrictName(Integer cityId, String districtName) {
-    return selectByDistrictName(null, null, cityId, districtName);
-  }
-
-  /**
-   * 根据唯一键查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
-   * @return 返回县表。
-   */
-  public DetailDistrict selectDetailByDistrictName(HttpServletRequest request, HttpServletResponse response, Integer cityId, String districtName) {
-    boolean _hasParam = false;
-    if (!Tool.isNull(cityId)) {
-      _hasParam = true;
-    }
-    if (!Tool.isNull(districtName)) {
-      _hasParam = true;
-    }
-    if (!_hasParam) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    District district = new District();
-    district.setCityId(cityId);
-    district.setDistrictName(districtName);
-    DetailDistrict detailDistrict = daoDistrict.selectDetail(district);
-    return detailDistrict;
-  }
-
-  /**
-   * 根据唯一键查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param cityId 市编号。
-   * @param districtName 县名称。
-   * @return 返回县表。
-   */
-  public DetailDistrict selectDetailByDistrictName(Integer cityId, String districtName) {
-    return selectDetailByDistrictName(null, null, cityId, districtName);
-  }
-
-
   /**
    * 查询县表列表。返回所有符合条件的县表，未分页。
    * @param district 县表。
@@ -403,6 +328,138 @@ public class ServiceDistrict extends BaseService implements IService<District> {
    */
   public RepDistrict selectRelative(ReqDistrict reqDistrict) {
     return selectRelative(null, null, reqDistrict);
+  }
+
+  /**
+   * 根据唯一键更新一条县表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param district 县表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByDistrictName(HttpServletRequest request, HttpServletResponse response, District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
+    int count = daoDistrict.updateByDistrictName(district);
+    if (count > 0) {
+      cacheDistrict.update(daoDistrict.selectOne(district));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条县表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param district 县表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByDistrictName(District district) {
+    return updateByDistrictName(null, null, district);
+  }
+
+  /**
+   * 根据唯一键删除一条县表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param district 县表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByDistrictName(HttpServletRequest request, HttpServletResponse response, District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
+    District district1 = new District();
+    district1.setCityId(district.getCityId());
+    district1.setDistrictName(district.getDistrictName());
+    int count = cacheDistrict.deleteByDistrictName(district1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条县表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param district 县表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByDistrictName(District district) {
+    return deleteByDistrictName(null, null, district);
+  }
+
+  /**
+   * 根据唯一键查询一条县表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public District selectByDistrictName(HttpServletRequest request, HttpServletResponse response, District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
+    District district1 = new District();
+    district1.setCityId(district.getCityId());
+    district1.setDistrictName(district.getDistrictName());
+    District district2 = cacheDistrict.getByDistrictName(district1);
+    return district2;
+  }
+
+  /**
+   * 根据唯一键查询一条县表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public District selectByDistrictName(District district) {
+    return selectByDistrictName(null, null, district);
+  }
+
+  /**
+   * 根据唯一键查询一条县表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public DetailDistrict selectDetailByDistrictName(HttpServletRequest request, HttpServletResponse response, District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(district.getCityId())) {
+      throw new CommonException(Code.PARAM_EMPTY, "cityId is null!");
+    }
+    if (Tool.isNull(district.getDistrictName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
+    }
+    District district1 = new District();
+    district1.setCityId(district.getCityId());
+    district1.setDistrictName(district.getDistrictName());
+    DetailDistrict detailDistrict = daoDistrict.selectDetail(district1);
+    return detailDistrict;
+  }
+
+  /**
+   * 根据唯一键查询一条县表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public DetailDistrict selectDetailByDistrictName(District district) {
+    return selectDetailByDistrictName(null, null, district);
   }
 
   /**

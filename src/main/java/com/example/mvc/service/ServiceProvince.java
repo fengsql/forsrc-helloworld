@@ -128,7 +128,6 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     insertAsyn(null, null, provinces);
   }
 
-
   /**
    * 更新省表。空值将被忽略。
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
@@ -282,60 +281,6 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     return selectDetailByPrimary(null, null, id);
   }
 
-
-  /**
-   * 根据唯一键查询一条省表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceName 省名称。
-   * @return 返回省表。
-   */
-  public Province selectByProvinceName(HttpServletRequest request, HttpServletResponse response, String provinceName) {
-    if (provinceName == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Province province = new Province();
-    province.setProvinceName(provinceName);
-    Province province1 = cacheProvince.getByProvinceName(provinceName);
-    return province1;
-  }
-
-  /**
-   * 根据唯一键查询一条省表。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceName 省名称。
-   * @return 返回省表。
-   */
-  public Province selectByProvinceName(String provinceName) {
-    return selectByProvinceName(null, null, provinceName);
-  }
-
-  /**
-   * 根据唯一键查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceName 省名称。
-   * @return 返回省表。
-   */
-  public DetailProvince selectDetailByProvinceName(HttpServletRequest request, HttpServletResponse response, String provinceName) {
-    if (provinceName == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    Province province = new Province();
-    province.setProvinceName(provinceName);
-    DetailProvince detailProvince = daoProvince.selectDetail(province);
-    return detailProvince;
-  }
-
-  /**
-   * 根据唯一键查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param provinceName 省名称。
-   * @return 返回省表。
-   */
-  public DetailProvince selectDetailByProvinceName(String provinceName) {
-    return selectDetailByProvinceName(null, null, provinceName);
-  }
-
-
   /**
    * 查询省表列表。返回所有符合条件的省表，未分页。
    * @param province 省表。
@@ -383,6 +328,123 @@ public class ServiceProvince extends BaseService implements IService<Province> {
    */
   public RepProvince selectRelative(ReqProvince reqProvince) {
     return selectRelative(null, null, reqProvince);
+  }
+
+  /**
+   * 根据唯一键更新一条省表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByProvinceName(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
+    int count = daoProvince.updateByProvinceName(province);
+    if (count > 0) {
+      cacheProvince.update(daoProvince.selectOne(province));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条省表，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByProvinceName(Province province) {
+    return updateByProvinceName(null, null, province);
+  }
+
+  /**
+   * 根据唯一键删除一条省表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByProvinceName(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
+    Province province1 = new Province();
+    province1.setProvinceName(province.getProvinceName());
+    int count = cacheProvince.deleteByProvinceName(province1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条省表。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByProvinceName(Province province) {
+    return deleteByProvinceName(null, null, province);
+  }
+
+  /**
+   * 根据唯一键查询一条省表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public Province selectByProvinceName(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
+    Province province1 = new Province();
+    province1.setProvinceName(province.getProvinceName());
+    Province province2 = cacheProvince.getByProvinceName(province1);
+    return province2;
+  }
+
+  /**
+   * 根据唯一键查询一条省表。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public Province selectByProvinceName(Province province) {
+    return selectByProvinceName(null, null, province);
+  }
+
+  /**
+   * 根据唯一键查询一条省表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public DetailProvince selectDetailByProvinceName(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(province.getProvinceName())) {
+      throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
+    }
+    Province province1 = new Province();
+    province1.setProvinceName(province.getProvinceName());
+    DetailProvince detailProvince = daoProvince.selectDetail(province1);
+    return detailProvince;
+  }
+
+  /**
+   * 根据唯一键查询一条省表详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public DetailProvince selectDetailByProvinceName(Province province) {
+    return selectDetailByProvinceName(null, null, province);
   }
 
   /**

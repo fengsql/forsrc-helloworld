@@ -146,7 +146,6 @@ public class ServiceUser extends BaseService implements IService<User> {
     insertAsyn(null, null, users);
   }
 
-
   /**
    * 更新用户。空值将被忽略。
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
@@ -303,60 +302,6 @@ public class ServiceUser extends BaseService implements IService<User> {
     return selectDetailByPrimary(null, null, id);
   }
 
-
-  /**
-   * 根据唯一键查询一条用户。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param username 用户名。
-   * @return 返回用户。
-   */
-  public User selectByUsername(HttpServletRequest request, HttpServletResponse response, String username) {
-    if (username == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    User user = new User();
-    user.setUsername(username);
-    User user1 = cacheUser.getByUsername(username);
-    return user1;
-  }
-
-  /**
-   * 根据唯一键查询一条用户。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param username 用户名。
-   * @return 返回用户。
-   */
-  public User selectByUsername(String username) {
-    return selectByUsername(null, null, username);
-  }
-
-  /**
-   * 根据唯一键查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param username 用户名。
-   * @return 返回用户。
-   */
-  public DetailUser selectDetailByUsername(HttpServletRequest request, HttpServletResponse response, String username) {
-    if (username == null) {
-      throw new CommonException(Code.PARAM_EMPTY);
-    }
-    User user = new User();
-    user.setUsername(username);
-    DetailUser detailUser = daoUser.selectDetail(user);
-    return detailUser;
-  }
-
-  /**
-   * 根据唯一键查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
-   * @param username 用户名。
-   * @return 返回用户。
-   */
-  public DetailUser selectDetailByUsername(String username) {
-    return selectDetailByUsername(null, null, username);
-  }
-
-
   /**
    * 查询用户列表。返回所有符合条件的用户，未分页。
    * @param user 用户。
@@ -404,6 +349,123 @@ public class ServiceUser extends BaseService implements IService<User> {
    */
   public RepUser selectRelative(ReqUser reqUser) {
     return selectRelative(null, null, reqUser);
+  }
+
+  /**
+   * 根据唯一键更新一条用户，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByUsername(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
+    int count = daoUser.updateByUsername(user);
+    if (count > 0) {
+      cacheUser.update(daoUser.selectOne(user));
+    }
+    return count;
+  }
+
+  /**
+   * 根据唯一键更新一条用户，此方法不适用根据唯一键更改唯一键的字段值。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateByUsername(User user) {
+    return updateByUsername(null, null, user);
+  }
+
+  /**
+   * 根据唯一键删除一条用户。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByUsername(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
+    User user1 = new User();
+    user1.setUsername(user.getUsername());
+    int count = cacheUser.deleteByUsername(user1) ? 1 : 0;
+    return count;
+  }
+
+  /**
+   * 根据唯一键删除一条用户。
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 返回删除的记录数。
+   */
+  public int deleteByUsername(User user) {
+    return deleteByUsername(null, null, user);
+  }
+
+  /**
+   * 根据唯一键查询一条用户。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public User selectByUsername(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
+    User user1 = new User();
+    user1.setUsername(user.getUsername());
+    User user2 = cacheUser.getByUsername(user1);
+    return user2;
+  }
+
+  /**
+   * 根据唯一键查询一条用户。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public User selectByUsername(User user) {
+    return selectByUsername(null, null, user);
+  }
+
+  /**
+   * 根据唯一键查询一条用户详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public DetailUser selectDetailByUsername(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    if (Tool.isNull(user.getUsername())) {
+      throw new CommonException(Code.PARAM_EMPTY, "username is null!");
+    }
+    User user1 = new User();
+    user1.setUsername(user.getUsername());
+    DetailUser detailUser = daoUser.selectDetail(user1);
+    return detailUser;
+  }
+
+  /**
+   * 根据唯一键查询一条用户详情。
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public DetailUser selectDetailByUsername(User user) {
+    return selectDetailByUsername(null, null, user);
   }
 
   /**
