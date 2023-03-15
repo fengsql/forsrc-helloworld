@@ -1,5 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailMerchant;
+import com.example.mvc.bean.rep.RepMerchant;
+import com.example.mvc.bean.req.ReqMerchant;
+import com.example.mvc.cache.CacheMerchant;
+import com.example.mvc.dao.DaoMerchant;
+import com.example.mvc.model.Merchant;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -11,12 +18,6 @@ import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailMerchant;
-import com.example.mvc.bean.rep.RepMerchant;
-import com.example.mvc.bean.req.ReqMerchant;
-import com.example.mvc.dao.DaoMerchant;
-import com.example.mvc.model.Merchant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import com.example.mvc.cache.CacheMerchant;
 
 @Service
 @Slf4j
@@ -215,10 +215,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Merchant merchant = new Merchant();
-    merchant.setMerchantId(merchantId);
-    Merchant merchant1 = cacheMerchant.get(merchantId);
-    return merchant1;
+    Merchant merchant = cacheMerchant.get(merchantId);
+    return merchant;
   }
 
   /**
@@ -265,9 +263,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Merchant merchant = new Merchant();
-    merchant.setMerchantId(merchantId);
-    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant);
+    DetailMerchant detailMerchant = daoMerchant.selectDetailByPrimary(merchantId);
     return detailMerchant;
   }
 
@@ -412,11 +408,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getMchNo())) {
       throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
     }
-    Merchant merchant1 = new Merchant();
-    merchant1.setMchName(merchant.getMchName());
-    merchant1.setMchNo(merchant.getMchNo());
-    Merchant merchant2 = cacheMerchant.getByMchNo(merchant1);
-    return merchant2;
+    Merchant merchant0 = cacheMerchant.getByMchNo(merchant);
+    return merchant0;
   }
 
   /**
@@ -445,10 +438,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getMchNo())) {
       throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
     }
-    Merchant merchant1 = new Merchant();
-    merchant1.setMchName(merchant.getMchName());
-    merchant1.setMchNo(merchant.getMchNo());
-    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant1);
+    DetailMerchant detailMerchant = daoMerchant.selectDetailByMchNo(merchant);
     return detailMerchant;
   }
 
@@ -534,10 +524,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getAppid())) {
       throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
     }
-    Merchant merchant1 = new Merchant();
-    merchant1.setAppid(merchant.getAppid());
-    Merchant merchant2 = cacheMerchant.getByAppid(merchant1);
-    return merchant2;
+    Merchant merchant0 = cacheMerchant.getByAppid(merchant);
+    return merchant0;
   }
 
   /**
@@ -563,9 +551,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getAppid())) {
       throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
     }
-    Merchant merchant1 = new Merchant();
-    merchant1.setAppid(merchant.getAppid());
-    DetailMerchant detailMerchant = daoMerchant.selectDetail(merchant1);
+    DetailMerchant detailMerchant = daoMerchant.selectDetailByAppid(merchant);
     return detailMerchant;
   }
 

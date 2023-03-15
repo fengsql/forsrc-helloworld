@@ -144,7 +144,7 @@ public class CacheCity extends BCacheTable<City> {
         return city1;
       }
     }
-    city1 = daoCity.selectOne(city);
+    city1 = daoCity.selectByCityName(city);
     if (city1 != null) {
       addCache(city1);
     }

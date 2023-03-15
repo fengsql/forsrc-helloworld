@@ -127,6 +127,13 @@
       </choose>
     </trim>
   </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_city`
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
     SELECT
@@ -192,6 +199,14 @@
       </if>
     </trim>
     LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_city`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -354,19 +369,32 @@
         `city_name` = #{cityName,jdbcType=VARCHAR},
       </if>
     </trim>
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-      AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </update>
   <!-- deleteByCityName -->
   <delete id="deleteByCityName" parameterType="com.example.mvc.model.City">
     DELETE FROM `t_city`
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-      AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </delete>
+  <!-- selectByCityName -->
+  <select id="selectByCityName" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_city`
+    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+  </select>
+  <!-- selectDetailByCityName -->
+  <select id="selectDetailByCityName" parameterType="com.example.mvc.model.City" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+  </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

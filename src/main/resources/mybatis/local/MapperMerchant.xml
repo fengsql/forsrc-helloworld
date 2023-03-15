@@ -311,6 +311,13 @@
       </choose>
     </trim>
   </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_merchant`
+    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+  </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
     SELECT
@@ -450,6 +457,14 @@
       </if>
     </trim>
     LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.String" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -698,19 +713,32 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-      AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </update>
   <!-- deleteByMchNo -->
   <delete id="deleteByMchNo" parameterType="com.example.mvc.model.Merchant">
     DELETE FROM `t_merchant`
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-      AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </delete>
+  <!-- selectByMchNo -->
+  <select id="selectByMchNo" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_merchant`
+    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+  </select>
+  <!-- selectDetailByMchNo -->
+  <select id="selectDetailByMchNo" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+  </select>
   <!-- updateByAppid -->
   <update id="updateByAppid" parameterType="com.example.mvc.model.Merchant">
     UPDATE `t_merchant`
@@ -755,17 +783,28 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </update>
   <!-- deleteByAppid -->
   <delete id="deleteByAppid" parameterType="com.example.mvc.model.Merchant">
     DELETE FROM `t_merchant`
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </delete>
+  <!-- selectByAppid -->
+  <select id="selectByAppid" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_merchant`
+    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+  </select>
+  <!-- selectDetailByAppid -->
+  <select id="selectDetailByAppid" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+  </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

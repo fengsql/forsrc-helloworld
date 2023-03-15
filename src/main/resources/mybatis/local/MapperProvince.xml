@@ -107,6 +107,13 @@
       </choose>
     </trim>
   </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_province`
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.Province" resultMap="BaseResultMap">
     SELECT
@@ -161,6 +168,14 @@
       </if>
     </trim>
     LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_province`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -314,17 +329,28 @@
         `province_name` = #{provinceName,jdbcType=VARCHAR},
       </if>
     </trim>
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
   </update>
   <!-- deleteByProvinceName -->
   <delete id="deleteByProvinceName" parameterType="com.example.mvc.model.Province">
     DELETE FROM `t_province`
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
   </delete>
+  <!-- selectByProvinceName -->
+  <select id="selectByProvinceName" parameterType="com.example.mvc.model.Province" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_province`
+    WHERE `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
+  </select>
+  <!-- selectDetailByProvinceName -->
+  <select id="selectDetailByProvinceName" parameterType="com.example.mvc.model.Province" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_province`.`province_name` = #{provinceName,jdbcType=VARCHAR}
+  </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT

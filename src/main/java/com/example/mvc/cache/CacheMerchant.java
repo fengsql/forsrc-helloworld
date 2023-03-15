@@ -144,7 +144,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
         return merchant1;
       }
     }
-    merchant1 = daoMerchant.selectOne(merchant);
+    merchant1 = daoMerchant.selectByMchNo(merchant);
     if (merchant1 != null) {
       addCache(merchant1);
     }
@@ -192,7 +192,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
         return merchant1;
       }
     }
-    merchant1 = daoMerchant.selectOne(merchant);
+    merchant1 = daoMerchant.selectByAppid(merchant);
     if (merchant1 != null) {
       addCache(merchant1);
     }

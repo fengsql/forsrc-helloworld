@@ -215,10 +215,8 @@ public class ServiceCity extends BaseService implements IService<City> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    City city = new City();
-    city.setId(id);
-    City city1 = cacheCity.get(id);
-    return city1;
+    City city = cacheCity.get(id);
+    return city;
   }
 
   /**
@@ -265,9 +263,7 @@ public class ServiceCity extends BaseService implements IService<City> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    City city = new City();
-    city.setId(id);
-    DetailCity detailCity = daoCity.selectDetail(city);
+    DetailCity detailCity = daoCity.selectDetailByPrimary(id);
     return detailCity;
   }
 
@@ -412,11 +408,8 @@ public class ServiceCity extends BaseService implements IService<City> {
     if (Tool.isNull(city.getCityName())) {
       throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
     }
-    City city1 = new City();
-    city1.setProvinceId(city.getProvinceId());
-    city1.setCityName(city.getCityName());
-    City city2 = cacheCity.getByCityName(city1);
-    return city2;
+    City city0 = cacheCity.getByCityName(city);
+    return city0;
   }
 
   /**
@@ -445,10 +438,7 @@ public class ServiceCity extends BaseService implements IService<City> {
     if (Tool.isNull(city.getCityName())) {
       throw new CommonException(Code.PARAM_EMPTY, "cityName is null!");
     }
-    City city1 = new City();
-    city1.setProvinceId(city.getProvinceId());
-    city1.setCityName(city.getCityName());
-    DetailCity detailCity = daoCity.selectDetail(city1);
+    DetailCity detailCity = daoCity.selectDetailByCityName(city);
     return detailCity;
   }
 

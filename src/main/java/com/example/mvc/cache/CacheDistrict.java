@@ -144,7 +144,7 @@ public class CacheDistrict extends BCacheTable<District> {
         return district1;
       }
     }
-    district1 = daoDistrict.selectOne(district);
+    district1 = daoDistrict.selectByDistrictName(district);
     if (district1 != null) {
       addCache(district1);
     }

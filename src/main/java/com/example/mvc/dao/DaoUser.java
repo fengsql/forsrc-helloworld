@@ -63,6 +63,13 @@ public interface DaoUser extends IDao<User> {
   int deleteConditional(ParamDelete paramDelete);
 
   /**
+   * 根据主键查询一条用户。
+   * @param id 用户编号。
+   * @return 返回的用户。
+   */
+  User selectByPrimary(Long id);
+
+  /**
    * 查询一条用户。
    * @param user 用户。
    * @return 返回的用户。
@@ -79,9 +86,16 @@ public interface DaoUser extends IDao<User> {
   /**
    * 查询一条用户详情。
    * @param user 用户。
-   * @return 返回的用户。
+   * @return 返回的用户详情。
    */
   DetailUser selectDetail(User user);
+
+  /**
+   * 根据主键查询一条用户详情。
+   * @param id 用户编号。
+   * @return 返回的用户详情。
+   */
+  DetailUser selectDetailByPrimary(Long id);
 
   /**
    * 根据条件查询用户的记录数。
@@ -131,6 +145,20 @@ public interface DaoUser extends IDao<User> {
    * @return 返回删除的记录数。
    */
   int deleteByUsername(User user);
+
+  /**
+   * 根据唯一键查询一条用户。
+   * @param user 用户。
+   * @return 返回的用户。
+   */
+  User selectByUsername(User user);
+
+  /**
+   * 根据唯一键查询一条用户详情。
+   * @param user 用户。
+   * @return 返回的用户详情。
+   */
+  DetailUser selectDetailByUsername(User user);
 
   /**
    * 统计用户列表。此查询有 sql 注入风险。

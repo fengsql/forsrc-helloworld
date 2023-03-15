@@ -63,6 +63,13 @@ public interface DaoDistrict extends IDao<District> {
   int deleteConditional(ParamDelete paramDelete);
 
   /**
+   * 根据主键查询一条县表。
+   * @param id 县编号。
+   * @return 返回的县表。
+   */
+  District selectByPrimary(Integer id);
+
+  /**
    * 查询一条县表。
    * @param district 县表。
    * @return 返回的县表。
@@ -79,9 +86,16 @@ public interface DaoDistrict extends IDao<District> {
   /**
    * 查询一条县表详情。
    * @param district 县表。
-   * @return 返回的县表。
+   * @return 返回的县表详情。
    */
   DetailDistrict selectDetail(District district);
+
+  /**
+   * 根据主键查询一条县表详情。
+   * @param id 县编号。
+   * @return 返回的县表详情。
+   */
+  DetailDistrict selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询县表的记录数。
@@ -131,6 +145,20 @@ public interface DaoDistrict extends IDao<District> {
    * @return 返回删除的记录数。
    */
   int deleteByDistrictName(District district);
+
+  /**
+   * 根据唯一键查询一条县表。
+   * @param district 县表。
+   * @return 返回的县表。
+   */
+  District selectByDistrictName(District district);
+
+  /**
+   * 根据唯一键查询一条县表详情。
+   * @param district 县表。
+   * @return 返回的县表详情。
+   */
+  DetailDistrict selectDetailByDistrictName(District district);
 
   /**
    * 统计县表列表。此查询有 sql 注入风险。

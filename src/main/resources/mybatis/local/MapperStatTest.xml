@@ -235,6 +235,13 @@
       </choose>
     </trim>
   </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_stat_test`
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.StatTest" resultMap="BaseResultMap">
     SELECT
@@ -297,6 +304,14 @@
       </if>
     </trim>
     LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">

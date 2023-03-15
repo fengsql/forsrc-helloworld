@@ -215,10 +215,8 @@ public class ServiceDistrict extends BaseService implements IService<District> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    District district = new District();
-    district.setId(id);
-    District district1 = cacheDistrict.get(id);
-    return district1;
+    District district = cacheDistrict.get(id);
+    return district;
   }
 
   /**
@@ -265,9 +263,7 @@ public class ServiceDistrict extends BaseService implements IService<District> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    District district = new District();
-    district.setId(id);
-    DetailDistrict detailDistrict = daoDistrict.selectDetail(district);
+    DetailDistrict detailDistrict = daoDistrict.selectDetailByPrimary(id);
     return detailDistrict;
   }
 
@@ -412,11 +408,8 @@ public class ServiceDistrict extends BaseService implements IService<District> {
     if (Tool.isNull(district.getDistrictName())) {
       throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
     }
-    District district1 = new District();
-    district1.setCityId(district.getCityId());
-    district1.setDistrictName(district.getDistrictName());
-    District district2 = cacheDistrict.getByDistrictName(district1);
-    return district2;
+    District district0 = cacheDistrict.getByDistrictName(district);
+    return district0;
   }
 
   /**
@@ -445,10 +438,7 @@ public class ServiceDistrict extends BaseService implements IService<District> {
     if (Tool.isNull(district.getDistrictName())) {
       throw new CommonException(Code.PARAM_EMPTY, "districtName is null!");
     }
-    District district1 = new District();
-    district1.setCityId(district.getCityId());
-    district1.setDistrictName(district.getDistrictName());
-    DetailDistrict detailDistrict = daoDistrict.selectDetail(district1);
+    DetailDistrict detailDistrict = daoDistrict.selectDetailByDistrictName(district);
     return detailDistrict;
   }
 

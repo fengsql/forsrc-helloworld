@@ -63,6 +63,13 @@ public interface DaoProvince extends IDao<Province> {
   int deleteConditional(ParamDelete paramDelete);
 
   /**
+   * 根据主键查询一条省表。
+   * @param id 省编号。
+   * @return 返回的省表。
+   */
+  Province selectByPrimary(Integer id);
+
+  /**
    * 查询一条省表。
    * @param province 省表。
    * @return 返回的省表。
@@ -79,9 +86,16 @@ public interface DaoProvince extends IDao<Province> {
   /**
    * 查询一条省表详情。
    * @param province 省表。
-   * @return 返回的省表。
+   * @return 返回的省表详情。
    */
   DetailProvince selectDetail(Province province);
+
+  /**
+   * 根据主键查询一条省表详情。
+   * @param id 省编号。
+   * @return 返回的省表详情。
+   */
+  DetailProvince selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询省表的记录数。
@@ -131,6 +145,20 @@ public interface DaoProvince extends IDao<Province> {
    * @return 返回删除的记录数。
    */
   int deleteByProvinceName(Province province);
+
+  /**
+   * 根据唯一键查询一条省表。
+   * @param province 省表。
+   * @return 返回的省表。
+   */
+  Province selectByProvinceName(Province province);
+
+  /**
+   * 根据唯一键查询一条省表详情。
+   * @param province 省表。
+   * @return 返回的省表详情。
+   */
+  DetailProvince selectDetailByProvinceName(Province province);
 
   /**
    * 统计省表列表。此查询有 sql 注入风险。

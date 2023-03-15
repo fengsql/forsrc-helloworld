@@ -63,6 +63,13 @@ public interface DaoCity extends IDao<City> {
   int deleteConditional(ParamDelete paramDelete);
 
   /**
+   * 根据主键查询一条市表。
+   * @param id 市编号。
+   * @return 返回的市表。
+   */
+  City selectByPrimary(Integer id);
+
+  /**
    * 查询一条市表。
    * @param city 市表。
    * @return 返回的市表。
@@ -79,9 +86,16 @@ public interface DaoCity extends IDao<City> {
   /**
    * 查询一条市表详情。
    * @param city 市表。
-   * @return 返回的市表。
+   * @return 返回的市表详情。
    */
   DetailCity selectDetail(City city);
+
+  /**
+   * 根据主键查询一条市表详情。
+   * @param id 市编号。
+   * @return 返回的市表详情。
+   */
+  DetailCity selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询市表的记录数。
@@ -131,6 +145,20 @@ public interface DaoCity extends IDao<City> {
    * @return 返回删除的记录数。
    */
   int deleteByCityName(City city);
+
+  /**
+   * 根据唯一键查询一条市表。
+   * @param city 市表。
+   * @return 返回的市表。
+   */
+  City selectByCityName(City city);
+
+  /**
+   * 根据唯一键查询一条市表详情。
+   * @param city 市表。
+   * @return 返回的市表详情。
+   */
+  DetailCity selectDetailByCityName(City city);
 
   /**
    * 统计市表列表。此查询有 sql 注入风险。

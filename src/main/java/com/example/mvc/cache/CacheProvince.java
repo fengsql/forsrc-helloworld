@@ -135,7 +135,7 @@ public class CacheProvince extends BCacheTable<Province> {
         return province1;
       }
     }
-    province1 = daoProvince.selectOne(province);
+    province1 = daoProvince.selectByProvinceName(province);
     if (province1 != null) {
       addCache(province1);
     }

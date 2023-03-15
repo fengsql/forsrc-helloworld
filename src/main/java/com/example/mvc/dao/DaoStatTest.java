@@ -63,6 +63,13 @@ public interface DaoStatTest extends IDao<StatTest> {
   int deleteConditional(ParamDelete paramDelete);
 
   /**
+   * 根据主键查询一条统计信息。
+   * @param id 编号。
+   * @return 返回的统计信息。
+   */
+  StatTest selectByPrimary(Integer id);
+
+  /**
    * 查询一条统计信息。
    * @param statTest 统计信息。
    * @return 返回的统计信息。
@@ -79,9 +86,16 @@ public interface DaoStatTest extends IDao<StatTest> {
   /**
    * 查询一条统计信息详情。
    * @param statTest 统计信息。
-   * @return 返回的统计信息。
+   * @return 返回的统计信息详情。
    */
   DetailStatTest selectDetail(StatTest statTest);
+
+  /**
+   * 根据主键查询一条统计信息详情。
+   * @param id 编号。
+   * @return 返回的统计信息详情。
+   */
+  DetailStatTest selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询统计信息的记录数。

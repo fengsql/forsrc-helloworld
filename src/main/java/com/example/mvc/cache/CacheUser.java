@@ -135,7 +135,7 @@ public class CacheUser extends BCacheTable<User> {
         return user1;
       }
     }
-    user1 = daoUser.selectOne(user);
+    user1 = daoUser.selectByUsername(user);
     if (user1 != null) {
       addCache(user1);
     }

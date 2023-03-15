@@ -236,10 +236,8 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    User user = new User();
-    user.setId(id);
-    User user1 = cacheUser.get(id);
-    return user1;
+    User user = cacheUser.get(id);
+    return user;
   }
 
   /**
@@ -286,9 +284,7 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    User user = new User();
-    user.setId(id);
-    DetailUser detailUser = daoUser.selectDetail(user);
+    DetailUser detailUser = daoUser.selectDetailByPrimary(id);
     return detailUser;
   }
 
@@ -423,10 +419,8 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(user.getUsername())) {
       throw new CommonException(Code.PARAM_EMPTY, "username is null!");
     }
-    User user1 = new User();
-    user1.setUsername(user.getUsername());
-    User user2 = cacheUser.getByUsername(user1);
-    return user2;
+    User user0 = cacheUser.getByUsername(user);
+    return user0;
   }
 
   /**
@@ -452,9 +446,7 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(user.getUsername())) {
       throw new CommonException(Code.PARAM_EMPTY, "username is null!");
     }
-    User user1 = new User();
-    user1.setUsername(user.getUsername());
-    DetailUser detailUser = daoUser.selectDetail(user1);
+    DetailUser detailUser = daoUser.selectDetailByUsername(user);
     return detailUser;
   }
 

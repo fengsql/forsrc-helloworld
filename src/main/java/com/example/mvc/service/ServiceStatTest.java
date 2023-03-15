@@ -190,10 +190,8 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    StatTest statTest = new StatTest();
-    statTest.setId(id);
-    StatTest statTest1 = daoStatTest.selectOne(statTest);
-    return statTest1;
+    StatTest statTest = daoStatTest.selectByPrimary(id);
+    return statTest;
   }
 
   /**
@@ -236,9 +234,7 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    StatTest statTest = new StatTest();
-    statTest.setId(id);
-    DetailStatTest detailStatTest = daoStatTest.selectDetail(statTest);
+    DetailStatTest detailStatTest = daoStatTest.selectDetailByPrimary(id);
     return detailStatTest;
   }
 

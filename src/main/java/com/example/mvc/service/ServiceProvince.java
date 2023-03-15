@@ -215,10 +215,8 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Province province = new Province();
-    province.setId(id);
-    Province province1 = cacheProvince.get(id);
-    return province1;
+    Province province = cacheProvince.get(id);
+    return province;
   }
 
   /**
@@ -265,9 +263,7 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Province province = new Province();
-    province.setId(id);
-    DetailProvince detailProvince = daoProvince.selectDetail(province);
+    DetailProvince detailProvince = daoProvince.selectDetailByPrimary(id);
     return detailProvince;
   }
 
@@ -402,10 +398,8 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     if (Tool.isNull(province.getProvinceName())) {
       throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
     }
-    Province province1 = new Province();
-    province1.setProvinceName(province.getProvinceName());
-    Province province2 = cacheProvince.getByProvinceName(province1);
-    return province2;
+    Province province0 = cacheProvince.getByProvinceName(province);
+    return province0;
   }
 
   /**
@@ -431,9 +425,7 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     if (Tool.isNull(province.getProvinceName())) {
       throw new CommonException(Code.PARAM_EMPTY, "provinceName is null!");
     }
-    Province province1 = new Province();
-    province1.setProvinceName(province.getProvinceName());
-    DetailProvince detailProvince = daoProvince.selectDetail(province1);
+    DetailProvince detailProvince = daoProvince.selectDetailByProvinceName(province);
     return detailProvince;
   }
 

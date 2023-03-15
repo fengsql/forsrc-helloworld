@@ -303,6 +303,13 @@
       </choose>
     </trim>
   </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_user`
+    WHERE `id` = #{id,jdbcType=BIGINT}
+  </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.User" resultMap="BaseResultMap">
     SELECT
@@ -421,6 +428,14 @@
       </if>
     </trim>
     LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.Long" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_user`.`id` = #{id,jdbcType=BIGINT}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -672,17 +687,28 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_user`.`username` = #{username,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_user`.`username` = #{username,jdbcType=VARCHAR}
   </update>
   <!-- deleteByUsername -->
   <delete id="deleteByUsername" parameterType="com.example.mvc.model.User">
     DELETE FROM `t_user`
-    <trim prefix="WHERE" prefixOverrides="AND|OR">
-      AND `t_user`.`username` = #{username,jdbcType=VARCHAR}
-    </trim>
+    WHERE `t_user`.`username` = #{username,jdbcType=VARCHAR}
   </delete>
+  <!-- selectByUsername -->
+  <select id="selectByUsername" parameterType="com.example.mvc.model.User" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `t_user`
+    WHERE `t_user`.`username` = #{username,jdbcType=VARCHAR}
+  </select>
+  <!-- selectDetailByUsername -->
+  <select id="selectDetailByUsername" parameterType="com.example.mvc.model.User" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `t_user`.`username` = #{username,jdbcType=VARCHAR}
+  </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
     SELECT
