@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "演示业务", description = "这是一个演示业务的 API", position = 999)
 @RestController
-@RequestMapping("/api/demo")
+@RequestMapping("/work/demo")
 @Slf4j
 public class ControllerHelloWorld {
 

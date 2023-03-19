@@ -59,6 +59,18 @@ public class BaseService extends BService {
     }
   }
 
+  protected void throwNull(String value, String name) {
+    if (Tool.isNull(value)) {
+      throw new CommonException(Code.OBJECT_NULL, name + " is null!");
+    }
+  }
+
+  protected void throwNull(String value) {
+    if (Tool.isNull(value)) {
+      throw new CommonException(Code.OBJECT_NULL, "object is null!");
+    }
+  }
+
   protected void throwNull(Object object, String name) {
     if (object == null) {
       throw new CommonException(Code.OBJECT_NULL, name + " is null!");
