@@ -19,7 +19,7 @@
   </sql>
   <!-- BaseResultMap -->
   <resultMap id="BaseResultMap" type="com.example.mvc.model.User">
-    <id column="id" jdbcType="BIGINT" property="id"/>
+    <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="role_type" jdbcType="TINYINT" property="roleType"/>
     <result column="sex_type" jdbcType="TINYINT" property="sexType"/>
     <result column="user_status" jdbcType="TINYINT" property="userStatus"/>
@@ -35,7 +35,7 @@
   </resultMap>
   <!-- RelativeResultMap -->
   <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepUser$UserRow">
-    <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="roleType" jdbcType="TINYINT" property="roleType"/>
     <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
     <result column="sexType" jdbcType="TINYINT" property="sexType"/>
@@ -52,7 +52,7 @@
   </resultMap>
   <!-- DetailResultMap -->
   <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailUser">
-    <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="roleType" jdbcType="TINYINT" property="roleType"/>
     <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
     <result column="sexType" jdbcType="TINYINT" property="sexType"/>
@@ -114,7 +114,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test='id != null'>
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test='roleType != null'>
         #{roleType,jdbcType=TINYINT},
@@ -174,7 +174,7 @@
     </trim>
     ) VALUES (
     <trim suffixOverrides=",">
-      #{id,jdbcType=BIGINT},
+      #{id,jdbcType=INTEGER},
       #{roleType,jdbcType=TINYINT},
       #{sexType,jdbcType=TINYINT},
       #{userStatus,jdbcType=TINYINT},
@@ -231,7 +231,7 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    WHERE `id` = #{id,jdbcType=BIGINT}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.User">
@@ -250,7 +250,7 @@
       `add_time` = #{addTime,jdbcType=TIMESTAMP},
       `update_time` = #{updateTime,jdbcType=TIMESTAMP},
     </trim>
-    WHERE `id` = #{id,jdbcType=BIGINT}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
@@ -259,7 +259,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `id` = #{primaryId,jdbcType=BIGINT}
+          `id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -274,7 +274,7 @@
     DELETE FROM `t_user`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `id` = #{id,jdbcType=BIGINT}
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='roleType != null'>
         AND `role_type` = #{roleType,jdbcType=TINYINT}
@@ -293,7 +293,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `id` = #{primaryId,jdbcType=BIGINT}
+          `id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -304,11 +304,11 @@
     </trim>
   </delete>
   <!-- selectByPrimary -->
-  <select id="selectByPrimary" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM `t_user`
-    WHERE `id` = #{id,jdbcType=BIGINT}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.User" resultMap="BaseResultMap">
@@ -317,7 +317,7 @@
     FROM `t_user`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `id` = #{id,jdbcType=BIGINT}
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='roleType != null'>
         AND `role_type` = #{roleType,jdbcType=TINYINT}
@@ -350,7 +350,7 @@
     FROM `t_user`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `id` = #{id,jdbcType=BIGINT}
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='roleType != null'>
         AND `role_type` = #{roleType,jdbcType=TINYINT}
@@ -403,7 +403,7 @@
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `t_user`.`id` = #{id,jdbcType=BIGINT}
+        AND `t_user`.`id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='roleType != null'>
         AND `t_user`.`role_type` = #{roleType,jdbcType=TINYINT}
@@ -430,12 +430,12 @@
     LIMIT 1
   </select>
   <!-- selectDetailByPrimary -->
-  <select id="selectDetailByPrimary" parameterType="java.lang.Long" resultMap="DetailResultMap">
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
     SELECT
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_user`.`id` = #{id,jdbcType=BIGINT}
+    WHERE `t_user`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -458,7 +458,7 @@
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
     <if test='id != null'>
-      AND `t_user`.`id` = #{id,jdbcType=BIGINT}
+      AND `t_user`.`id` = #{id,jdbcType=INTEGER}
     </if>
     <if test="roleType != null and roleType.length > 0">
       AND `t_user`.`role_type` IN
@@ -648,7 +648,7 @@
     UPDATE `t_user`
     <trim prefix="SET" suffixOverrides=",">
       <if test='id != null'>
-        `id` = #{id,jdbcType=BIGINT},
+        `id` = #{id,jdbcType=INTEGER},
       </if>
       <if test='roleType != null'>
         `role_type` = #{roleType,jdbcType=TINYINT},

@@ -11,8 +11,8 @@ public class User {
   /**
    * 用户编号
    */
-  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Long", required = true)
-  private Long id;
+  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Integer", required = true)
+  private Integer id;
 
   /**
    * 角色类型

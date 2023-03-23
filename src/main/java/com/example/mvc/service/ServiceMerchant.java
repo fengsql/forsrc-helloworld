@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailMerchant;
-import com.example.mvc.bean.rep.RepMerchant;
-import com.example.mvc.bean.req.ReqMerchant;
-import com.example.mvc.cache.CacheMerchant;
-import com.example.mvc.dao.DaoMerchant;
-import com.example.mvc.model.Merchant;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,6 +11,12 @@ import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailMerchant;
+import com.example.mvc.bean.rep.RepMerchant;
+import com.example.mvc.bean.req.ReqMerchant;
+import com.example.mvc.dao.DaoMerchant;
+import com.example.mvc.model.Merchant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheMerchant;
 
 @Service
 @Slf4j
@@ -617,7 +617,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
         field.setExportFieldType(Enum.ExportFieldType.string_);
         break;
       case "userId":
-        field.setExportFieldType(Enum.ExportFieldType.long_);
+        field.setExportFieldType(Enum.ExportFieldType.integer_);
         break;
       case "roleType":
         field.setExportFieldType(Enum.ExportFieldType.constant_);

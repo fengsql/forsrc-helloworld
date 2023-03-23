@@ -206,7 +206,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(HttpServletRequest request, HttpServletResponse response, Long id) {
+  public int delete(HttpServletRequest request, HttpServletResponse response, Integer id) {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -222,7 +222,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(Long id) {
+  public int delete(Integer id) {
     return delete(null, null, id);
   }
 
@@ -232,7 +232,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回用户。
    */
-  public User selectByPrimary(HttpServletRequest request, HttpServletResponse response, Long id) {
+  public User selectByPrimary(HttpServletRequest request, HttpServletResponse response, Integer id) {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -246,7 +246,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回用户。
    */
-  public User selectByPrimary(Long id) {
+  public User selectByPrimary(Integer id) {
     return selectByPrimary(null, null, id);
   }
 
@@ -280,7 +280,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回用户详情。
    */
-  public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, Long id) {
+  public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, Integer id) {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -294,7 +294,7 @@ public class ServiceUser extends BaseService implements IService<User> {
    * @param id 用户编号。
    * @return 返回用户详情。
    */
-  public DetailUser selectDetailByPrimary(Long id) {
+  public DetailUser selectDetailByPrimary(Integer id) {
     return selectDetailByPrimary(null, null, id);
   }
 
@@ -501,7 +501,7 @@ public class ServiceUser extends BaseService implements IService<User> {
     String name = field.getName();
     switch (name) {
       case "id":
-        field.setExportFieldType(Enum.ExportFieldType.long_);
+        field.setExportFieldType(Enum.ExportFieldType.integer_);
         break;
       case "roleType":
         field.setExportFieldType(Enum.ExportFieldType.constant_);

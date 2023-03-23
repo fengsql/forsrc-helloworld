@@ -21,7 +21,7 @@
   <resultMap id="BaseResultMap" type="com.example.mvc.model.Merchant">
     <id column="merchant_id" jdbcType="VARCHAR" property="merchantId"/>
     <result column="city_id" jdbcType="INTEGER" property="cityId"/>
-    <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
     <result column="merchant_type" jdbcType="INTEGER" property="merchantType"/>
     <result column="mch_name" jdbcType="VARCHAR" property="mchName"/>
     <result column="mch_no" jdbcType="VARCHAR" property="mchNo"/>
@@ -38,7 +38,7 @@
     <result column="merchantId" jdbcType="VARCHAR" property="merchantId"/>
     <result column="cityId" jdbcType="INTEGER" property="cityId"/>
     <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
-    <result column="userId" jdbcType="BIGINT" property="userId"/>
+    <result column="userId" jdbcType="INTEGER" property="userId"/>
     <result column="roleType" jdbcType="TINYINT" property="roleType"/>
     <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
     <result column="sexType" jdbcType="TINYINT" property="sexType"/>
@@ -128,7 +128,7 @@
         #{cityId,jdbcType=INTEGER},
       </if>
       <if test='userId != null'>
-        #{userId,jdbcType=BIGINT},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test='merchantType != null'>
         #{merchantType,jdbcType=INTEGER},
@@ -184,7 +184,7 @@
     <trim suffixOverrides=",">
       #{merchantId,jdbcType=VARCHAR},
       #{cityId,jdbcType=INTEGER},
-      #{userId,jdbcType=BIGINT},
+      #{userId,jdbcType=INTEGER},
       #{merchantType,jdbcType=INTEGER},
       #{mchName,jdbcType=VARCHAR},
       #{mchNo,jdbcType=VARCHAR},
@@ -206,7 +206,7 @@
         `city_id` = #{cityId,jdbcType=INTEGER},
       </if>
       <if test='userId != null'>
-        `user_id` = #{userId,jdbcType=BIGINT},
+        `user_id` = #{userId,jdbcType=INTEGER},
       </if>
       <if test='merchantType != null'>
         `merchant_type` = #{merchantType,jdbcType=INTEGER},
@@ -246,7 +246,7 @@
     UPDATE `t_merchant` SET
     <trim suffixOverrides=",">
       `city_id` = #{cityId,jdbcType=INTEGER},
-      `user_id` = #{userId,jdbcType=BIGINT},
+      `user_id` = #{userId,jdbcType=INTEGER},
       `merchant_type` = #{merchantType,jdbcType=INTEGER},
       `mch_name` = #{mchName,jdbcType=VARCHAR},
       `mch_no` = #{mchNo,jdbcType=VARCHAR},
@@ -288,7 +288,7 @@
         AND `city_id` = #{cityId,jdbcType=INTEGER}
       </if>
       <if test='userId != null'>
-        AND `user_id` = #{userId,jdbcType=BIGINT}
+        AND `user_id` = #{userId,jdbcType=INTEGER}
       </if>
       <if test='merchantType != null'>
         AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
@@ -331,7 +331,7 @@
         AND `city_id` = #{cityId,jdbcType=INTEGER}
       </if>
       <if test='userId != null'>
-        AND `user_id` = #{userId,jdbcType=BIGINT}
+        AND `user_id` = #{userId,jdbcType=INTEGER}
       </if>
       <if test='merchantType != null'>
         AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
@@ -370,7 +370,7 @@
         AND `city_id` = #{cityId,jdbcType=INTEGER}
       </if>
       <if test='userId != null'>
-        AND `user_id` = #{userId,jdbcType=BIGINT}
+        AND `user_id` = #{userId,jdbcType=INTEGER}
       </if>
       <if test='merchantType != null'>
         AND `merchant_type` = #{merchantType,jdbcType=INTEGER}
@@ -432,7 +432,7 @@
         AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
       </if>
       <if test='userId != null'>
-        AND `t_merchant`.`user_id` = #{userId,jdbcType=BIGINT}
+        AND `t_merchant`.`user_id` = #{userId,jdbcType=INTEGER}
       </if>
       <if test='merchantType != null'>
         AND `t_merchant`.`merchant_type` = #{merchantType,jdbcType=INTEGER}
@@ -503,7 +503,7 @@
       AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
     </if>
     <if test='userId != null'>
-      AND `t_merchant`.`user_id` = #{userId,jdbcType=BIGINT}
+      AND `t_merchant`.`user_id` = #{userId,jdbcType=INTEGER}
     </if>
     <if test="merchantType != null and merchantType.length > 0">
       AND `t_merchant`.`merchant_type` IN
@@ -680,7 +680,7 @@
         `city_id` = #{cityId,jdbcType=INTEGER},
       </if>
       <if test='userId != null'>
-        `user_id` = #{userId,jdbcType=BIGINT},
+        `user_id` = #{userId,jdbcType=INTEGER},
       </if>
       <if test='merchantType != null'>
         `merchant_type` = #{merchantType,jdbcType=INTEGER},
@@ -750,7 +750,7 @@
         `city_id` = #{cityId,jdbcType=INTEGER},
       </if>
       <if test='userId != null'>
-        `user_id` = #{userId,jdbcType=BIGINT},
+        `user_id` = #{userId,jdbcType=INTEGER},
       </if>
       <if test='merchantType != null'>
         `merchant_type` = #{merchantType,jdbcType=INTEGER},

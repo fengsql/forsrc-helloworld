@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class DetailUser {
 
-  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Long", required = true)
-  private Long id;
+  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Integer", required = true)
+  private Integer id;
 
   @ApiModelProperty(value = "角色类型", name = "roleType", dataType = "Byte", required = true)
   private Byte roleType;

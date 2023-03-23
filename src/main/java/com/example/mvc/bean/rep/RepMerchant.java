@@ -28,8 +28,8 @@ public class RepMerchant {
     @ApiModelProperty(value = "市名称(市编号)", name = "cityName", dataType = "String", required = true)
     private String cityName;
 
-    @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Long", required = true)
-    private Long userId;
+    @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Integer", required = true)
+    private Integer userId;
 
     @ApiModelProperty(value = "角色类型(用户编号)", name = "roleType", dataType = "Byte", required = true)
     private Byte roleType;

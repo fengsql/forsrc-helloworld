@@ -23,8 +23,8 @@ public class Merchant {
   /**
    * 用户编号
    */
-  @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Long", required = true)
-  private Long userId;
+  @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Integer", required = true)
+  private Integer userId;
 
   /**
    * 商户类型

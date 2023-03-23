@@ -48,7 +48,7 @@ public class ServiceUpdatePassword extends BaseService {
   }
 
   private User getUser(HttpServletRequest request, HttpServletResponse response) {
-    Long userId = getUserId();
+    Integer userId = getUserId();
     return serviceUser.selectByPrimary(request, response, userId);
   }
 

@@ -36,7 +36,7 @@ public class CacheUser extends BCacheTable<User> {
    * @param id 用户编号。
    * @return null无记录；非空为返回的用户。
    */
-  public User get(Long id) {
+  public User get(Integer id) {
     if (Tool.isNull(id)) {
       log.warn("id is null!");
       return null;
@@ -80,7 +80,7 @@ public class CacheUser extends BCacheTable<User> {
    * @param id 用户编号。
    * @return true 成功。false 失败。
    */
-  public boolean delete(Long id) {
+  public boolean delete(Integer id) {
     if (Tool.isNull(id)) {
       log.warn("id is null!");
       return false;
@@ -165,7 +165,7 @@ public class CacheUser extends BCacheTable<User> {
    */
   @Override
   protected void setPrimaryId(User user, String id) {
-    user.setId(Tool.toLong(id));
+    user.setId(Tool.toInteger(id));
   }
 
   /**

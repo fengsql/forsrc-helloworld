@@ -67,7 +67,7 @@ public interface DaoUser extends IDao<User> {
    * @param id 用户编号。
    * @return 返回的用户。
    */
-  User selectByPrimary(Long id);
+  User selectByPrimary(Integer id);
 
   /**
    * 查询一条用户。
@@ -95,7 +95,7 @@ public interface DaoUser extends IDao<User> {
    * @param id 用户编号。
    * @return 返回的用户详情。
    */
-  DetailUser selectDetailByPrimary(Long id);
+  DetailUser selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询用户的记录数。

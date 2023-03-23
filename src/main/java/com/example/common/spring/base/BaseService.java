@@ -35,9 +35,9 @@ public class BaseService extends BService {
     return pageIndex <= 0;
   }
 
-  protected Long getUserId() {
+  protected Integer getUserId() {
     UserDetail userDetail = getUserDetail();
-    return userDetail == null ? 0 : Tool.toLong(userDetail.getUserId());
+    return userDetail == null ? 0 : Tool.toInteger(userDetail.getUserId());
   }
 
   protected UserDetail getUserDetail() {

@@ -20,8 +20,8 @@ public class ReqMerchant extends BaseRequest {
   @ApiModelProperty(value = "市名称(市编号)", name = "cityName", dataType = "String")
   private String cityName;
 
-  @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Long")
-  private Long userId;
+  @ApiModelProperty(value = "用户编号", name = "userId", dataType = "Integer")
+  private Integer userId;
 
   @ApiModelProperty(value = "角色类型(用户编号)", name = "roleType", dataType = "Integer[]")
   private Integer[] roleType;

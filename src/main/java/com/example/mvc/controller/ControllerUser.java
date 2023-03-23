@@ -93,10 +93,10 @@ public class ControllerUser {
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条用户", notes = "根据主键删除一条用户。", response = Integer.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
-  public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Long id) {
+  public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
     return serviceUser.delete(request, response, id);
   }
@@ -122,10 +122,10 @@ public class ControllerUser {
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条用户", notes = "根据主键查询一条用户。", response = User.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
-  public User selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Long id) {
+  public User selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
     return serviceUser.selectByPrimary(request, response, id);
   }
@@ -151,10 +151,10 @@ public class ControllerUser {
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条用户详情", notes = "根据主键查询一条用户详情。", response = DetailUser.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Long", name = "id", value = "用户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
-  public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Long id) {
+  public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceUser.selectDetailByPrimary(request, response, id);
   }

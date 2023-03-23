@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ReqUser extends BaseRequest {
 
-  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Long")
-  private Long id;
+  @ApiModelProperty(value = "用户编号", name = "id", dataType = "Integer")
+  private Integer id;
 
   @ApiModelProperty(value = "角色类型", name = "roleType", dataType = "Integer[]")
   private Integer[] roleType;

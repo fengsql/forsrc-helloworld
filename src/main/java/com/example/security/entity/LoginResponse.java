@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class LoginResponse extends BLoginResponse {
 
-  private Long id;
+  private Integer id;
 
   private String username;
 
