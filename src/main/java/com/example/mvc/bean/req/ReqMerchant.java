@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ReqMerchant extends BaseRequest {
 
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "String")
-  private String merchantId;
+  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer")
+  private Integer merchantId;
 
   @ApiModelProperty(value = "市编号", name = "cityId", dataType = "Integer")
   private Integer cityId;

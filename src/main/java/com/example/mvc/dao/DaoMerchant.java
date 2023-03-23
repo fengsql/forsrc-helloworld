@@ -67,7 +67,7 @@ public interface DaoMerchant extends IDao<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回的商户表。
    */
-  Merchant selectByPrimary(String merchantId);
+  Merchant selectByPrimary(Integer merchantId);
 
   /**
    * 查询一条商户表。
@@ -95,7 +95,7 @@ public interface DaoMerchant extends IDao<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回的商户表详情。
    */
-  DetailMerchant selectDetailByPrimary(String merchantId);
+  DetailMerchant selectDetailByPrimary(Integer merchantId);
 
   /**
    * 根据条件查询商户表的记录数。

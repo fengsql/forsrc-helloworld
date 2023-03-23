@@ -19,8 +19,8 @@ public class RepMerchant {
   @Data
   public static class MerchantRow {
 
-    @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "String", required = true)
-    private String merchantId;
+    @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
+    private Integer merchantId;
 
     @ApiModelProperty(value = "市编号", name = "cityId", dataType = "Integer", required = true)
     private Integer cityId;

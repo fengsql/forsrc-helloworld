@@ -185,7 +185,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(HttpServletRequest request, HttpServletResponse response, String merchantId) {
+  public int delete(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -201,7 +201,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(String merchantId) {
+  public int delete(Integer merchantId) {
     return delete(null, null, merchantId);
   }
 
@@ -211,7 +211,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回商户表。
    */
-  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, String merchantId) {
+  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -225,7 +225,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回商户表。
    */
-  public Merchant selectByPrimary(String merchantId) {
+  public Merchant selectByPrimary(Integer merchantId) {
     return selectByPrimary(null, null, merchantId);
   }
 
@@ -259,7 +259,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回商户表详情。
    */
-  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, String merchantId) {
+  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
@@ -273,7 +273,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * @param merchantId 商户编号。
    * @return 返回商户表详情。
    */
-  public DetailMerchant selectDetailByPrimary(String merchantId) {
+  public DetailMerchant selectDetailByPrimary(Integer merchantId) {
     return selectDetailByPrimary(null, null, merchantId);
   }
 
@@ -606,8 +606,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     String name = field.getName();
     switch (name) {
       case "merchantId":
-        field.setLength(32);
-        field.setExportFieldType(Enum.ExportFieldType.string_);
+        field.setExportFieldType(Enum.ExportFieldType.integer_);
         break;
       case "cityId":
         field.setExportFieldType(Enum.ExportFieldType.integer_);

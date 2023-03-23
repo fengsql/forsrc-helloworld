@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class DetailMerchant {
 
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "String", required = true)
-  private String merchantId;
+  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
+  private Integer merchantId;
 
   @ApiModelProperty(value = "市名称", name = "cityName", dataType = "String", required = true)
   private String cityName;

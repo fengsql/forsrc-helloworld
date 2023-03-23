@@ -11,8 +11,8 @@ public class Merchant {
   /**
    * 商户编号
    */
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "String", required = true)
-  private String merchantId;
+  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
+  private Integer merchantId;
 
   /**
    * 市编号

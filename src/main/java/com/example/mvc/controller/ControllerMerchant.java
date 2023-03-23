@@ -93,10 +93,10 @@ public class ControllerMerchant {
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条商户表", notes = "根据主键删除一条商户表。", response = Integer.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "merchantId", value = "商户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
-  public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") String merchantId) {
+  public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") Integer merchantId) {
     log.info("deleteByPrimary: {}", merchantId);
     return serviceMerchant.delete(request, response, merchantId);
   }
@@ -122,10 +122,10 @@ public class ControllerMerchant {
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条商户表", notes = "根据主键查询一条商户表。", response = Merchant.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "merchantId", value = "商户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
-  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") String merchantId) {
+  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") Integer merchantId) {
     log.info("selectByPrimary: {}", merchantId);
     return serviceMerchant.selectByPrimary(request, response, merchantId);
   }
@@ -151,10 +151,10 @@ public class ControllerMerchant {
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条商户表详情", notes = "根据主键查询一条商户表详情。", response = DetailMerchant.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "String", name = "merchantId", value = "商户编号", required = true)
+    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "merchantId", value = "商户编号", required = true)
   })
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
-  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") String merchantId) {
+  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "merchantId") Integer merchantId) {
     log.info("selectDetailByPrimary: {}", merchantId);
     return serviceMerchant.selectDetailByPrimary(request, response, merchantId);
   }

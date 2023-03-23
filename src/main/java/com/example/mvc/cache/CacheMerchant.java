@@ -36,7 +36,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
    * @param merchantId 商户编号。
    * @return null无记录；非空为返回的商户表。
    */
-  public Merchant get(String merchantId) {
+  public Merchant get(Integer merchantId) {
     if (Tool.isNull(merchantId)) {
       log.warn("merchantId is null!");
       return null;
@@ -80,7 +80,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
    * @param merchantId 商户编号。
    * @return true 成功。false 失败。
    */
-  public boolean delete(String merchantId) {
+  public boolean delete(Integer merchantId) {
     if (Tool.isNull(merchantId)) {
       log.warn("merchantId is null!");
       return false;
@@ -222,7 +222,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
    */
   @Override
   protected void setPrimaryId(Merchant merchant, String id) {
-    merchant.setMerchantId(Tool.toString(id));
+    merchant.setMerchantId(Tool.toInteger(id));
   }
 
   /**

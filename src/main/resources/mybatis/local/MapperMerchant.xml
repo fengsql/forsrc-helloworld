@@ -19,7 +19,7 @@
   </sql>
   <!-- BaseResultMap -->
   <resultMap id="BaseResultMap" type="com.example.mvc.model.Merchant">
-    <id column="merchant_id" jdbcType="VARCHAR" property="merchantId"/>
+    <id column="merchant_id" jdbcType="INTEGER" property="merchantId"/>
     <result column="city_id" jdbcType="INTEGER" property="cityId"/>
     <result column="user_id" jdbcType="INTEGER" property="userId"/>
     <result column="merchant_type" jdbcType="INTEGER" property="merchantType"/>
@@ -35,7 +35,7 @@
   </resultMap>
   <!-- RelativeResultMap -->
   <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepMerchant$MerchantRow">
-    <result column="merchantId" jdbcType="VARCHAR" property="merchantId"/>
+    <result column="merchantId" jdbcType="INTEGER" property="merchantId"/>
     <result column="cityId" jdbcType="INTEGER" property="cityId"/>
     <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
     <result column="userId" jdbcType="INTEGER" property="userId"/>
@@ -61,7 +61,7 @@
   </resultMap>
   <!-- DetailResultMap -->
   <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailMerchant">
-    <result column="merchantId" jdbcType="VARCHAR" property="merchantId"/>
+    <result column="merchantId" jdbcType="INTEGER" property="merchantId"/>
     <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="merchantType" jdbcType="INTEGER" property="merchantType"/>
@@ -77,12 +77,9 @@
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
   </resultMap>
   <!-- insert -->
-    <insert id="insert" parameterType="com.example.mvc.model.Merchant">
+  <insert id="insert" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
     INSERT INTO `t_merchant`
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test='merchantId != null and merchantId != ""'>
-        `merchant_id`,
-      </if>
       <if test='cityId != null'>
         `city_id`,
       </if>
@@ -121,9 +118,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test='merchantId != null and merchantId != ""'>
-        #{merchantId,jdbcType=VARCHAR},
-      </if>
       <if test='cityId != null'>
         #{cityId,jdbcType=INTEGER},
       </if>
@@ -163,10 +157,9 @@
     </trim>
   </insert>
   <!-- insertEvenNull -->
-    <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant">
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
     INSERT INTO `t_merchant` (
     <trim suffixOverrides=",">
-      `merchant_id`,
       `city_id`,
       `user_id`,
       `merchant_type`,
@@ -182,7 +175,6 @@
     </trim>
     ) VALUES (
     <trim suffixOverrides=",">
-      #{merchantId,jdbcType=VARCHAR},
       #{cityId,jdbcType=INTEGER},
       #{userId,jdbcType=INTEGER},
       #{merchantType,jdbcType=INTEGER},
@@ -239,7 +231,7 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
@@ -258,7 +250,7 @@
       `add_time` = #{addTime,jdbcType=TIMESTAMP},
       `update_time` = #{updateTime,jdbcType=TIMESTAMP},
     </trim>
-    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
@@ -267,7 +259,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `merchant_id` = #{primaryId,jdbcType=VARCHAR}
+          `merchant_id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -282,7 +274,7 @@
     DELETE FROM `t_merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -301,7 +293,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `merchant_id` = #{primaryId,jdbcType=VARCHAR}
+          `merchant_id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -312,11 +304,11 @@
     </trim>
   </delete>
   <!-- selectByPrimary -->
-  <select id="selectByPrimary" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM `t_merchant`
-    WHERE `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
@@ -325,7 +317,7 @@
     FROM `t_merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -364,7 +356,7 @@
     FROM `t_merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=VARCHAR}
+        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -426,7 +418,7 @@
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
-        AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
+        AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
@@ -459,12 +451,12 @@
     LIMIT 1
   </select>
   <!-- selectDetailByPrimary -->
-  <select id="selectDetailByPrimary" parameterType="java.lang.String" resultMap="DetailResultMap">
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
     SELECT
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
+    WHERE `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -497,7 +489,7 @@
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
     <if test='merchantId != null'>
-      AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=VARCHAR}
+      AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
     </if>
     <if test='cityId != null'>
       AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
@@ -674,7 +666,7 @@
     UPDATE `t_merchant`
     <trim prefix="SET" suffixOverrides=",">
       <if test='merchantId != null'>
-        `merchant_id` = #{merchantId,jdbcType=VARCHAR},
+        `merchant_id` = #{merchantId,jdbcType=INTEGER},
       </if>
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},
@@ -744,7 +736,7 @@
     UPDATE `t_merchant`
     <trim prefix="SET" suffixOverrides=",">
       <if test='merchantId != null'>
-        `merchant_id` = #{merchantId,jdbcType=VARCHAR},
+        `merchant_id` = #{merchantId,jdbcType=INTEGER},
       </if>
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},

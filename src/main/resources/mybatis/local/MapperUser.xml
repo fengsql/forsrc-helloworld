@@ -69,12 +69,9 @@
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
   </resultMap>
   <!-- insert -->
-    <insert id="insert" parameterType="com.example.mvc.model.User">
+  <insert id="insert" parameterType="com.example.mvc.model.User" keyProperty="id" useGeneratedKeys="true">
     INSERT INTO `t_user`
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test='id != null'>
-        `id`,
-      </if>
       <if test='roleType != null'>
         `role_type`,
       </if>
@@ -113,9 +110,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test='id != null'>
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test='roleType != null'>
         #{roleType,jdbcType=TINYINT},
       </if>
@@ -155,10 +149,9 @@
     </trim>
   </insert>
   <!-- insertEvenNull -->
-    <insert id="insertEvenNull" parameterType="com.example.mvc.model.User">
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.User" keyProperty="id" useGeneratedKeys="true">
     INSERT INTO `t_user` (
     <trim suffixOverrides=",">
-      `id`,
       `role_type`,
       `sex_type`,
       `user_status`,
@@ -174,7 +167,6 @@
     </trim>
     ) VALUES (
     <trim suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
       #{roleType,jdbcType=TINYINT},
       #{sexType,jdbcType=TINYINT},
       #{userStatus,jdbcType=TINYINT},
