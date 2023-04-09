@@ -131,6 +131,19 @@ public class ControllerDistrict {
   }
 
   /**
+   * 根据条件查询一条县表。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条县表", notes = "根据条件查询一条县表。", response = District.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public District selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("selectOne: {}", district);
+    return serviceDistrict.selectOne(request, response, district);
+  }
+
+  /**
    * 根据条件查询一条县表详情。
    * @param district 县表。
    * @return 返回县表详情。

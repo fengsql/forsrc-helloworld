@@ -1,5 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailCity;
+import com.example.mvc.bean.rep.RepCity;
+import com.example.mvc.bean.req.ReqCity;
+import com.example.mvc.cache.CacheCity;
+import com.example.mvc.dao.DaoCity;
+import com.example.mvc.model.City;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -11,12 +18,6 @@ import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailCity;
-import com.example.mvc.bean.rep.RepCity;
-import com.example.mvc.bean.req.ReqCity;
-import com.example.mvc.dao.DaoCity;
-import com.example.mvc.model.City;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import com.example.mvc.cache.CacheCity;
 
 @Service
 @Slf4j
@@ -230,8 +230,20 @@ public class ServiceCity extends BaseService implements IService<City> {
   }
 
   /**
+   * 根据条件查询一条市表。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public City selectOne(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    City city1 = daoCity.selectOne(city);
+    return city1;
+  }
+
+  /**
    * 根据条件查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param city 市表。
    * @return 返回市表详情。
    */
@@ -245,7 +257,6 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据条件查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param city 市表。
    * @return 返回市表详情。
    */
@@ -255,7 +266,6 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据主键查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 市编号。
    * @return 返回市表详情。
    */
@@ -269,7 +279,6 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据主键查询一条市表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 市编号。
    * @return 返回市表详情。
    */

@@ -131,6 +131,19 @@ public class ControllerStatTest {
   }
 
   /**
+   * 根据条件查询一条统计信息。
+   * @param statTest 统计信息。
+   * @return 返回统计信息。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条统计信息", notes = "根据条件查询一条统计信息。", response = StatTest.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public StatTest selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
+    log.info("selectOne: {}", statTest);
+    return serviceStatTest.selectOne(request, response, statTest);
+  }
+
+  /**
    * 根据条件查询一条统计信息详情。
    * @param statTest 统计信息。
    * @return 返回统计信息详情。

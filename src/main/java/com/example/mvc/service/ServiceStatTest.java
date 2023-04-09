@@ -204,6 +204,19 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
   }
 
   /**
+   * 根据条件查询一条统计信息。
+   * @param statTest 统计信息。
+   * @return 返回统计信息。
+   */
+  public StatTest selectOne(HttpServletRequest request, HttpServletResponse response, StatTest statTest) {
+    if (statTest == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    StatTest statTest1 = daoStatTest.selectOne(statTest);
+    return statTest1;
+  }
+
+  /**
    * 根据条件查询一条统计信息详情。
    * @param statTest 统计信息。
    * @return 返回统计信息详情。

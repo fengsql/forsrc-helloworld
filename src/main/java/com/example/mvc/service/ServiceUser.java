@@ -251,8 +251,20 @@ public class ServiceUser extends BaseService implements IService<User> {
   }
 
   /**
+   * 根据条件查询一条用户。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public User selectOne(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    User user1 = daoUser.selectOne(user);
+    return user1;
+  }
+
+  /**
    * 根据条件查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param user 用户。
    * @return 返回用户详情。
    */
@@ -266,7 +278,6 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据条件查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param user 用户。
    * @return 返回用户详情。
    */
@@ -276,7 +287,6 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据主键查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 用户编号。
    * @return 返回用户详情。
    */
@@ -290,7 +300,6 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据主键查询一条用户详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 用户编号。
    * @return 返回用户详情。
    */

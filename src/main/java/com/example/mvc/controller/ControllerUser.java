@@ -131,6 +131,19 @@ public class ControllerUser {
   }
 
   /**
+   * 根据条件查询一条用户。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条用户", notes = "根据条件查询一条用户。", response = User.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public User selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("selectOne: {}", user);
+    return serviceUser.selectOne(request, response, user);
+  }
+
+  /**
    * 根据条件查询一条用户详情。
    * @param user 用户。
    * @return 返回用户详情。

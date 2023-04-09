@@ -131,6 +131,19 @@ public class ControllerProvince {
   }
 
   /**
+   * 根据条件查询一条省表。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条省表", notes = "根据条件查询一条省表。", response = Province.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public Province selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("selectOne: {}", province);
+    return serviceProvince.selectOne(request, response, province);
+  }
+
+  /**
    * 根据条件查询一条省表详情。
    * @param province 省表。
    * @return 返回省表详情。

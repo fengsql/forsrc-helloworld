@@ -230,8 +230,20 @@ public class ServiceProvince extends BaseService implements IService<Province> {
   }
 
   /**
+   * 根据条件查询一条省表。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public Province selectOne(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    Province province1 = daoProvince.selectOne(province);
+    return province1;
+  }
+
+  /**
    * 根据条件查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param province 省表。
    * @return 返回省表详情。
    */
@@ -245,7 +257,6 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据条件查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param province 省表。
    * @return 返回省表详情。
    */
@@ -255,7 +266,6 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据主键查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 省编号。
    * @return 返回省表详情。
    */
@@ -269,7 +279,6 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据主键查询一条省表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 省编号。
    * @return 返回省表详情。
    */

@@ -230,8 +230,20 @@ public class ServiceDistrict extends BaseService implements IService<District> {
   }
 
   /**
+   * 根据条件查询一条县表。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public District selectOne(HttpServletRequest request, HttpServletResponse response, District district) {
+    if (district == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    District district1 = daoDistrict.selectOne(district);
+    return district1;
+  }
+
+  /**
    * 根据条件查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param district 县表。
    * @return 返回县表详情。
    */
@@ -245,7 +257,6 @@ public class ServiceDistrict extends BaseService implements IService<District> {
 
   /**
    * 根据条件查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param district 县表。
    * @return 返回县表详情。
    */
@@ -255,7 +266,6 @@ public class ServiceDistrict extends BaseService implements IService<District> {
 
   /**
    * 根据主键查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 县编号。
    * @return 返回县表详情。
    */
@@ -269,7 +279,6 @@ public class ServiceDistrict extends BaseService implements IService<District> {
 
   /**
    * 根据主键查询一条县表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param id 县编号。
    * @return 返回县表详情。
    */

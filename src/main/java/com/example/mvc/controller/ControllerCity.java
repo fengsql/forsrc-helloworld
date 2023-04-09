@@ -131,6 +131,19 @@ public class ControllerCity {
   }
 
   /**
+   * 根据条件查询一条市表。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条市表", notes = "根据条件查询一条市表。", response = City.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public City selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("selectOne: {}", city);
+    return serviceCity.selectOne(request, response, city);
+  }
+
+  /**
    * 根据条件查询一条市表详情。
    * @param city 市表。
    * @return 返回市表详情。

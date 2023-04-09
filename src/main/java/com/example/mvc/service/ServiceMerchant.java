@@ -230,8 +230,20 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
   }
 
   /**
+   * 根据条件查询一条商户表。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectOne(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    Merchant merchant1 = daoMerchant.selectOne(merchant);
+    return merchant1;
+  }
+
+  /**
    * 根据条件查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param merchant 商户表。
    * @return 返回商户表详情。
    */
@@ -245,7 +257,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
 
   /**
    * 根据条件查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param merchant 商户表。
    * @return 返回商户表详情。
    */
@@ -255,7 +266,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
 
   /**
    * 根据主键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param merchantId 商户编号。
    * @return 返回商户表详情。
    */
@@ -269,7 +279,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
 
   /**
    * 根据主键查询一条商户表详情。
-   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * @param merchantId 商户编号。
    * @return 返回商户表详情。
    */

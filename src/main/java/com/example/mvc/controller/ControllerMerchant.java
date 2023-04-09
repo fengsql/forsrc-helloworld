@@ -131,6 +131,19 @@ public class ControllerMerchant {
   }
 
   /**
+   * 根据条件查询一条商户表。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  @ApiOperationSupport(order = 80)
+  @ApiOperation(value = "根据条件查询一条商户表", notes = "根据条件查询一条商户表。", response = Merchant.class)
+  @RequestMapping(method = RequestMethod.POST, value = "selectOne")
+  public Merchant selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("selectOne: {}", merchant);
+    return serviceMerchant.selectOne(request, response, merchant);
+  }
+
+  /**
    * 根据条件查询一条商户表详情。
    * @param merchant 商户表。
    * @return 返回商户表详情。
