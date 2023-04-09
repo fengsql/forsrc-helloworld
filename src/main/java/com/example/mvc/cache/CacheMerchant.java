@@ -68,7 +68,7 @@ public class CacheMerchant extends BCacheTable<Merchant> {
     }
     boolean ok = updateCache(merchant);
     if (ok) {
-      log.info("update merchant ok. merchantId: " + merchant.getMerchantId());
+      log.debug("update merchant ok. merchantId: " + merchant.getMerchantId());
     } else {
       log.warn("update merchant fail! merchantId: " + merchant.getMerchantId());
     }

@@ -68,7 +68,7 @@ public class CacheDistrict extends BCacheTable<District> {
     }
     boolean ok = updateCache(district);
     if (ok) {
-      log.info("update district ok. id: " + district.getId());
+      log.debug("update district ok. id: " + district.getId());
     } else {
       log.warn("update district fail! id: " + district.getId());
     }

@@ -68,7 +68,7 @@ public class CacheUser extends BCacheTable<User> {
     }
     boolean ok = updateCache(user);
     if (ok) {
-      log.info("update user ok. id: " + user.getId());
+      log.debug("update user ok. id: " + user.getId());
     } else {
       log.warn("update user fail! id: " + user.getId());
     }

@@ -68,7 +68,7 @@ public class CacheCity extends BCacheTable<City> {
     }
     boolean ok = updateCache(city);
     if (ok) {
-      log.info("update city ok. id: " + city.getId());
+      log.debug("update city ok. id: " + city.getId());
     } else {
       log.warn("update city fail! id: " + city.getId());
     }

@@ -68,7 +68,7 @@ public class CacheProvince extends BCacheTable<Province> {
     }
     boolean ok = updateCache(province);
     if (ok) {
-      log.info("update province ok. id: " + province.getId());
+      log.debug("update province ok. id: " + province.getId());
     } else {
       log.warn("update province fail! id: " + province.getId());
     }
