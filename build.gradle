@@ -1,12 +1,12 @@
-buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.8.RELEASE")
-    }
-}
+//buildscript {
+//    repositories {
+//        maven { url "https://plugins.gradle.org/m2/" }
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.8.RELEASE")
+//    }
+//}
 
 plugins {
     id 'org.springframework.boot' version '2.4.4'
@@ -26,6 +26,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
 }
 
 repositories {
@@ -97,9 +98,12 @@ dependencies {
     implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.19'
     //yaml
     implementation 'org.yaml:snakeyaml:1.28'
-    //alibaba
-    implementation 'com.alibaba:druid-spring-boot-starter:1.1.20'
-    implementation 'com.alibaba:fastjson:1.2.60'
+    //druid
+    compile 'com.alibaba:druid-spring-boot-starter:1.2.15'
+    //fastjson
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.25'
+    implementation 'com.alibaba.fastjson2:fastjson2-extension:2.0.25'
+    implementation 'com.alibaba.fastjson2:fastjson2-extension-spring5:2.0.25'
     //hbase
     implementation 'org.apache.hbase:hbase-client:2.1.6'
     //okhttp
@@ -115,8 +119,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.7.0'
 
     //forsrc
-    implementation 'io.github.fengsql:forsrc-common:1.0.0.04'
-    implementation 'io.github.fengsql:forsrc-security:0.0.2'
+    implementation 'io.github.fengsql:forsrc-common:1.0.0.07'
+    implementation 'io.github.fengsql:forsrc-security:0.0.3'
+//    compile files("E:\\prog\\java\\feng\\prog\\forsrc\\common\\source\\build\\libs\\forsrc-common-1.0.jar")
+//    compile files("E:\\prog\\java\\feng\\prog\\forsrc\\security\\source\\build\\libs\\forsrc-security-1.0.jar")
 
 }
 
