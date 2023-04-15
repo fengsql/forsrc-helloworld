@@ -3,12 +3,12 @@ package com.example.mvc.service;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
+import com.forsrc.common.db.batch.DbBatch;
 import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.extend.bean.Field;
 import com.forsrc.common.extend.bean.ParamExport;
 import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
-import com.forsrc.common.spring.db.DbOperator;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
 import com.example.common.spring.base.BaseService;
@@ -34,7 +34,7 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
   @Resource
   private DaoStatTest daoStatTest;
   @Resource
-  private DbOperator<StatTest> dbOperator;
+  private DbBatch<StatTest> dbBatch;
 
   /**
    * 添加统计信息。空值将被忽略。
@@ -101,7 +101,7 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     for (StatTest statTest : statTests) {
-      dbOperator.insert(statTest, daoStatTest);
+      dbBatch.insert(statTest, daoStatTest);
     }
   }
 
