@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Api(tags = "扩展功能-通用", description = "扩展功能通用 API", position = 10000)
 @RestController
@@ -33,7 +34,18 @@ public class ControllerFile {
   @ApiOperation(value = "上传文件或图片", notes = "上传文件或图片，保存成功后返回带有相对路径的文件名。", response = String.class)
   @RequestMapping(method = RequestMethod.POST, value = "upload")
   public String upload(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file") MultipartFile file) {
-    return uploadFile.work(request, response, file);
+    return uploadFile.save(request, response, file);
+  }
+
+  /**
+   * 上传文件，多个文件。
+   * @return 保存成功后返回带有相对路径的文件名。
+   */
+  @ApiOperationSupport(order = 1)
+  @ApiOperation(value = "上传多个文件或图片", notes = "上传多个文件或图片，保存成功后返回带有相对路径的文件名。", response = String.class)
+  @RequestMapping(method = RequestMethod.POST, value = "uploads")
+  public List<String> uploads(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "files") MultipartFile[] files) {
+    return uploadFile.save(request, response, files);
   }
 
   /**

@@ -243,6 +243,15 @@ public class ServiceProvince extends BaseService implements IService<Province> {
   }
 
   /**
+   * 根据条件查询一条省表。
+   * @param province 省表。
+   * @return 返回省表。
+   */
+  public Province selectOne(Province province) {
+    return selectOne(null, null, province);
+  }
+
+  /**
    * 根据条件查询一条省表详情。
    * @param province 省表。
    * @return 返回省表详情。

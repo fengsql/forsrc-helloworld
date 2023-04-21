@@ -243,6 +243,15 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
   }
 
   /**
+   * 根据条件查询一条商户表。
+   * @param merchant 商户表。
+   * @return 返回商户表。
+   */
+  public Merchant selectOne(Merchant merchant) {
+    return selectOne(null, null, merchant);
+  }
+
+  /**
    * 根据条件查询一条商户表详情。
    * @param merchant 商户表。
    * @return 返回商户表详情。

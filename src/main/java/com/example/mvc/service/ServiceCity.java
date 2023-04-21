@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailCity;
-import com.example.mvc.bean.rep.RepCity;
-import com.example.mvc.bean.req.ReqCity;
-import com.example.mvc.cache.CacheCity;
-import com.example.mvc.dao.DaoCity;
-import com.example.mvc.model.City;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,6 +11,12 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailCity;
+import com.example.mvc.bean.rep.RepCity;
+import com.example.mvc.bean.req.ReqCity;
+import com.example.mvc.dao.DaoCity;
+import com.example.mvc.model.City;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheCity;
 
 @Service
 @Slf4j
@@ -240,6 +240,15 @@ public class ServiceCity extends BaseService implements IService<City> {
     }
     City city1 = daoCity.selectOne(city);
     return city1;
+  }
+
+  /**
+   * 根据条件查询一条市表。
+   * @param city 市表。
+   * @return 返回市表。
+   */
+  public City selectOne(City city) {
+    return selectOne(null, null, city);
   }
 
   /**

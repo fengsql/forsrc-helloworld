@@ -11,7 +11,7 @@ spring:
     name: ${application.name}
   profiles:
     include: main
-  #    active: prd
+  #    active: prod
   boot:
     admin:
       client:
@@ -38,6 +38,7 @@ spring:
         # 最小空闲连接数 默认0
         min-idle: 0
   datasource:
+    enable: true  # false 不启用数据库，默认为 true
     type: com.alibaba.druid.pool.DruidDataSource
     # druid 为 url
     url: ${datasource.${datasource.name}.url}
@@ -58,13 +59,40 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      filters: stat,wall
+      # 配置监控统计拦截的 Filter，去掉后监控界面 SQL 无法统计，wall 用于防火墙
+      filters: stat,wall,log4j
       filter:
         stat:
+          # 是否启用监控界面，默认为 false
+          enabled: true
           log-slow-sql: true
           slow-sql-millis: 2000
+      # 打开 PSCache，并且指定每个连接上 PSCache 的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 通过 connection-properties 属性打开 mergeSql 功能；慢 SQL 记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 配置 DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: .js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*
+      # 配置 DruidStatViewServlet
+      stat-view-servlet:
+        # 登录用户名/密码
+        login-username: admin
+        login-password: admin
+        url-pattern: /druid/*
+        # IP 白名单，没有配置或者为空，则允许所有访问
+        allow: 127.0.0.1
+        # IP 黑名单，若白名单也存在，则优先使用 deny
+        deny: ''
+        # 禁用 HTML 中 Reset All 按钮
+        reset-enable: false
   liquibase:
     enabled: false
+  freemarker:
+    check-template-location: false
   # 发送邮件功能。如果启用此功能，建议将 management.health.mail.enabled 设为 true
   mail:
     host: '' #smtp.126.com
@@ -83,6 +111,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mybatis/**/*.xml
+  config-location: classpath*:mybatis/**/*.xml
 
 logging:
   config: 'classpath:logback-spring.xml'
@@ -90,14 +119,18 @@ logging:
 thread:
   pool:
     executor:
+      # 线程池维护线程的最少数量
+      # 纯CPU计算的任务，配置为CPU核数+1 或者CPU核数*2。如压缩、解密、算法等一系列消耗CPU资源的任务
+      # IO密集型，IO任务比CPU任务耗时更多，一般线程数设置为：CPU核数*10。如文件读写操作、网络通信、数据库操作等任务，不会特别消耗CPU资源
       corePoolSize: 10
-      maxPoolSize: 50
-      queueCapacity: 100
-      keepAliveSeconds: 300
-      awaitTerminationSeconds: 60  #设置线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁，而不是阻塞住
-      threadNamePrefix: "taskExecutor-"
+      maxPoolSize: 100  # 线程池维护线程的最大数量
+      queueCapacity: 50  # 缓存队列，设置队列容量 queueCapacity 的值要小于线程数
+      maxQueueSize: 1000  # 当添加任务时，如果缓存队列达到 queueCapacity 时，继续往里添加任务，当任务超过 maxQueueSize 时抛出异常，0 时一直添加
+      keepAliveSeconds: 60  # 当线程数大于核心数时，多余空闲线程在终止前等待新任务的最长时间
+      awaitTerminationSeconds: 600  # 设置线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁，而不是阻塞住
+      threadNamePrefix: "taskExecutor-"  # 前缀
     scheduler:
-      poolSize: 10
+      poolSize: 20
       awaitTerminationSeconds: 60  #
       threadNamePrefix: "taskScheduler-"
 

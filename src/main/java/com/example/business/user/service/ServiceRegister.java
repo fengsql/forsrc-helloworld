@@ -4,11 +4,13 @@ import cn.hutool.core.lang.Validator;
 import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.example.business.user.define.ReqRegister;
+import com.example.common.constant.EnumField;
 import com.example.common.tool.ToolUser;
+import com.example.mvc.dao.DaoUser;
 import com.example.mvc.model.User;
-import com.example.mvc.service.ServiceUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,14 +28,16 @@ public class ServiceRegister {
   @Value("${security.enable-register:false}")
   private Boolean enableRegister;
   @Resource
-  private ServiceUser serviceUser;
+  private PasswordEncoder passwordEncoder;
+  @Resource
+  private DaoUser daoUser;
 
   // <<----------------------- public -----------------------
 
   public String register(HttpServletRequest request, HttpServletResponse response, ReqRegister reqRegister) {
     checkRegister(reqRegister);
     String username = reqRegister.getUsername();
-    String verifyCode = reqRegister.getVerifyCode();
+    String verifyCode = reqRegister.getVerifyCode_();
 
     checkVerifyCode(request, verifyCode);
     checkUsername(username);
@@ -57,21 +61,21 @@ public class ServiceRegister {
       throw new CommonException("用户名为空!");
     }
     if (enableVerifyCode) {
-      if (Tool.isNull(reqRegister.getVerifyCode())) {
+      if (Tool.isNull(reqRegister.getVerifyCode_())) {
         throw new CommonException("验证码为空!");
       }
     }
     if (Tool.isNull(reqRegister.getPassword())) {
       throw new CommonException("密码为空!");
     }
-    if (Tool.isNull(reqRegister.getPasswordAgain())) {
+    if (Tool.isNull(reqRegister.getPassword_again())) {
       throw new CommonException("重复密码为空!");
     }
   }
 
   private void checkPassword(ReqRegister reqRegister) {
     String password = reqRegister.getPassword();
-    String passwordAgain = reqRegister.getPasswordAgain();
+    String passwordAgain = reqRegister.getPassword_again();
     if (!password.equals(passwordAgain)) {
       throw new CommonException("密码不一致!");
     }
@@ -80,16 +84,29 @@ public class ServiceRegister {
     }
   }
 
-  private void register(ReqRegister reqRegister) {
-    User user = newUser(reqRegister);
-    serviceUser.insert(user);
-  }
-
   private User newUser(ReqRegister reqRegister) {
     User user = new User();
+    if (user.getRoleType() == null) {
+      user.setRoleType(EnumField.RoleType.def_.getCode());
+    }
+    if (user.getSexType() == null) {
+      user.setSexType(EnumField.SexType.other_.getCode());
+    }
+    if (user.getUserStatus() == null) {
+      user.setUserStatus(1);
+    }
     user.setUsername(reqRegister.getUsername());
-    user.setPassword(reqRegister.getPassword());
+    user.setPassword(passwordEncoder.encode(reqRegister.getPassword()));
+    user.setEmail(reqRegister.getEmail());
+    user.setScore(reqRegister.getScore());
+    user.setHeadImgUrl(reqRegister.getHeadImgUrl());
+    user.setInfo(reqRegister.getInfo());
     return user;
+  }
+
+  private void register(ReqRegister reqRegister) {
+    User user = newUser(reqRegister);
+    daoUser.insert(user);
   }
 
   // >>>----------------------- register -----------------------
@@ -127,7 +144,7 @@ public class ServiceRegister {
   private void existUser(String username) {
     User user = new User();
     user.setUsername(username);
-    User user1 = serviceUser.selectByUsername(user);
+    User user1 = daoUser.selectByUsername(user);
     if (user1 != null) {
       throw new CommonException("这个用户名已经注册!");
     }

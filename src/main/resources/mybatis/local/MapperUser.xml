@@ -371,9 +371,9 @@
   <!-- sql_detailField -->
   <sql id="sql_detailField">
     `id` AS id,
-    `role_type` AS roleType,
-    `sex_type` AS sexType,
-    `user_status` AS userStatus,
+    `role_type` AS roleType, `role_type` AS roleType_,
+    `sex_type` AS sexType, `sex_type` AS sexType_,
+    `user_status` AS userStatus, `user_status` AS userStatus_,
     `username` AS username,
     `email` AS email,
     `score` AS score,

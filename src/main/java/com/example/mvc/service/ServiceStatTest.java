@@ -217,6 +217,15 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
   }
 
   /**
+   * 根据条件查询一条统计信息。
+   * @param statTest 统计信息。
+   * @return 返回统计信息。
+   */
+  public StatTest selectOne(StatTest statTest) {
+    return selectOne(null, null, statTest);
+  }
+
+  /**
    * 根据条件查询一条统计信息详情。
    * @param statTest 统计信息。
    * @return 返回统计信息详情。

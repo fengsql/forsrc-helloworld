@@ -50,6 +50,14 @@ public class BaseService extends BService {
     return ToolSecurity.getUsername();
   }
 
+  protected int getUserId(UserDetail userDetail) {
+    return userDetail == null ? 0 : Tool.toInteger(userDetail.getUserId());
+  }
+
+  protected String getUsername(UserDetail userDetail) {
+    return userDetail == null ? null : Tool.toString(userDetail.getUsername());
+  }
+
   protected void throwNull(HttpServletRequest request, HttpServletResponse response) {
     if (request == null) {
       throw new CommonException(Code.OBJECT_NULL, "request is null");

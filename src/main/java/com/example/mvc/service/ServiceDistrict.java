@@ -243,6 +243,15 @@ public class ServiceDistrict extends BaseService implements IService<District> {
   }
 
   /**
+   * 根据条件查询一条县表。
+   * @param district 县表。
+   * @return 返回县表。
+   */
+  public District selectOne(District district) {
+    return selectOne(null, null, district);
+  }
+
+  /**
    * 根据条件查询一条县表详情。
    * @param district 县表。
    * @return 返回县表详情。

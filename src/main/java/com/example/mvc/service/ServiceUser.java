@@ -264,6 +264,15 @@ public class ServiceUser extends BaseService implements IService<User> {
   }
 
   /**
+   * 根据条件查询一条用户。
+   * @param user 用户。
+   * @return 返回用户。
+   */
+  public User selectOne(User user) {
+    return selectOne(null, null, user);
+  }
+
+  /**
    * 根据条件查询一条用户详情。
    * @param user 用户。
    * @return 返回用户详情。
