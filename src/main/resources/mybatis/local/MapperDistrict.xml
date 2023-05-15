@@ -172,9 +172,9 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    t_district.`id` AS id,
-    t_city.`city_name` AS cityName,
-    t_district.`district_name` AS districtName
+    `t_district`.`id` AS `id`,
+    `t_city`.`city_name` AS `cityName`,
+    `t_district`.`district_name` AS `districtName`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -215,10 +215,10 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `t_district`.`id` AS id,
-    `t_district`.`city_id` AS cityId,
-    `t_city`.`city_name` AS cityName,
-    `t_district`.`district_name` AS districtName
+    `t_district`.`id` AS `id`,
+    `t_district`.`city_id` AS `cityId`,
+    `t_city`.`city_name` AS `cityName`,
+    `t_district`.`district_name` AS `districtName`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">

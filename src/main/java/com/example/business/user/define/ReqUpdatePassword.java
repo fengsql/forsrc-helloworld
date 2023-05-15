@@ -11,7 +11,7 @@ public class ReqUpdatePassword {
   @ApiModelProperty(value = "旧的密码", name = "oldPassword", dataType = "String", required = true)
   private String oldPassword;
 
-  @ApiModelProperty(value = "新的密码", name = "newPassword", dataType = "Long", required = true)
+  @ApiModelProperty(value = "新的密码", name = "newPassword", dataType = "String", required = true)
   private String newPassword;
 
 }

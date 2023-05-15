@@ -29,6 +29,7 @@ public class Config {
     public static boolean testOnReturn;
     public static boolean removeAbandoned;
     public static int removeAbandonedTimeout;
+    public static boolean logAbandoned;
   }
 
   public static final class project {
@@ -125,6 +126,11 @@ public class Config {
   @Value("${spring.datasource.druid.remove-abandoned-timeout:300}")
   public void setSpring_datasource_druid_removeAbandonedTimeout(String value) {
     datasource.removeAbandonedTimeout = Tool.toInt(value);
+  }
+
+  @Value("${spring.datasource.druid.log-abandoned:300}")
+  public void setSpring_datasource_druid_logAbandoned(String value) {
+    datasource.logAbandoned = Tool.toBoolean(value);
   }
 
   //project-stat

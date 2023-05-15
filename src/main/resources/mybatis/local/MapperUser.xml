@@ -370,18 +370,18 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS id,
-    `role_type` AS roleType, `role_type` AS roleType_,
-    `sex_type` AS sexType, `sex_type` AS sexType_,
-    `user_status` AS userStatus, `user_status` AS userStatus_,
-    `username` AS username,
-    `email` AS email,
-    `score` AS score,
-    `birth_date` AS birthDate,
-    `head_img_url` AS headImgUrl,
-    `info` AS info,
-    `add_time` AS addTime,
-    `update_time` AS updateTime
+    `id` AS `id`,
+    `role_type` AS `roleType`, `role_type` AS `roleType_`,
+    `sex_type` AS `sexType`, `sex_type` AS `sexType_`,
+    `user_status` AS `userStatus`, `user_status` AS `userStatus_`,
+    `username` AS `username`,
+    `email` AS `email`,
+    `score` AS `score`,
+    `birth_date` AS `birthDate`,
+    `head_img_url` AS `headImgUrl`,
+    `info` AS `info`,
+    `add_time` AS `addTime`,
+    `update_time` AS `updateTime`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -435,17 +435,17 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `id` AS id,
-    `role_type` AS roleType, `role_type` AS roleType_,
-    `sex_type` AS sexType, `sex_type` AS sexType_,
-    `user_status` AS userStatus, `user_status` AS userStatus_,
-    `username` AS username,
-    `email` AS email,
-    `score` AS score,
-    `birth_date` AS birthDate,
-    `head_img_url` AS headImgUrl,
-    `add_time` AS addTime,
-    `update_time` AS updateTime
+    `id` AS `id`,
+    `role_type` AS `roleType`, `role_type` AS `roleType_`,
+    `sex_type` AS `sexType`, `sex_type` AS `sexType_`,
+    `user_status` AS `userStatus`, `user_status` AS `userStatus_`,
+    `username` AS `username`,
+    `email` AS `email`,
+    `score` AS `score`,
+    `birth_date` AS `birthDate`,
+    `head_img_url` AS `headImgUrl`,
+    `add_time` AS `addTime`,
+    `update_time` AS `updateTime`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">

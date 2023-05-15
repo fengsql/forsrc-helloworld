@@ -274,16 +274,16 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS id,
-    `day_no` AS dayNo,
-    `crs_dep_time` AS crsDepTime,
-    `crs_arr_time` AS crsArrTime,
-    `flight_num` AS flightNum,
-    `flight_sum` AS flightSum,
-    `crs_elapsed_time` AS crsElapsedTime,
-    `distance` AS distance,
-    `distance_sum` AS distanceSum,
-    `add_time` AS addTime
+    `id` AS `id`,
+    `day_no` AS `dayNo`,
+    `crs_dep_time` AS `crsDepTime`,
+    `crs_arr_time` AS `crsArrTime`,
+    `flight_num` AS `flightNum`,
+    `flight_sum` AS `flightSum`,
+    `crs_elapsed_time` AS `crsElapsedTime`,
+    `distance` AS `distance`,
+    `distance_sum` AS `distanceSum`,
+    `add_time` AS `addTime`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -319,16 +319,16 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `id` AS id,
-    `day_no` AS dayNo,
-    `crs_dep_time` AS crsDepTime,
-    `crs_arr_time` AS crsArrTime,
-    `flight_num` AS flightNum,
-    `flight_sum` AS flightSum,
-    `crs_elapsed_time` AS crsElapsedTime,
-    `distance` AS distance,
-    `distance_sum` AS distanceSum,
-    `add_time` AS addTime
+    `id` AS `id`,
+    `day_no` AS `dayNo`,
+    `crs_dep_time` AS `crsDepTime`,
+    `crs_arr_time` AS `crsArrTime`,
+    `flight_num` AS `flightNum`,
+    `flight_sum` AS `flightSum`,
+    `crs_elapsed_time` AS `crsElapsedTime`,
+    `distance` AS `distance`,
+    `distance_sum` AS `distanceSum`,
+    `add_time` AS `addTime`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">

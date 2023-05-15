@@ -146,8 +146,8 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS id,
-    `province_name` AS provinceName
+    `id` AS `id`,
+    `province_name` AS `provinceName`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -183,8 +183,8 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `id` AS id,
-    `province_name` AS provinceName
+    `id` AS `id`,
+    `province_name` AS `provinceName`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">

@@ -1,14 +1,14 @@
 package com.example.security.service;
 
+import com.example.common.constant.EnumField;
+import com.example.mvc.model.User;
+import com.example.mvc.service.ServiceUser;
+import com.example.security.entity.LoginResponse;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.security.base.BLoginResponse;
 import com.forsrc.security.base.BServiceUserDetails;
 import com.forsrc.security.base.IUserDetails;
 import com.forsrc.security.model.UserDetail;
-import com.example.common.constant.EnumField;
-import com.example.mvc.model.User;
-import com.example.mvc.service.ServiceUser;
-import com.example.security.entity.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -64,12 +64,13 @@ public class SecurityServiceUserDetails extends BServiceUserDetails<User> {
    * 返回登录信息，可以使用自定义登录信息覆盖此方法。
    * @return 返回用户对象。
    */
+  @Override
   protected BLoginResponse getLoginResponse(User user) {
     LoginResponse loginResponse = new LoginResponse();
     loginResponse.setId(user.getId());
     loginResponse.setUsername(user.getUsername());
     loginResponse.setRoleType(user.getRoleType());
-    loginResponse.setRoleName(getRoleName(user));
+    loginResponse.setRoleName_(getRoleName(user));
     return loginResponse;
   }
 

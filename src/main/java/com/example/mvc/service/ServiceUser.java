@@ -1,5 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailUser;
+import com.example.mvc.bean.rep.RepUser;
+import com.example.mvc.bean.req.ReqUser;
+import com.example.mvc.cache.CacheUser;
+import com.example.mvc.dao.DaoUser;
+import com.example.mvc.model.User;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -11,13 +18,8 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailUser;
-import com.example.mvc.bean.rep.RepUser;
-import com.example.mvc.bean.req.ReqUser;
-import com.example.mvc.dao.DaoUser;
-import com.example.mvc.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import com.example.mvc.cache.CacheUser;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Slf4j
@@ -155,9 +155,6 @@ public class ServiceUser extends BaseService implements IService<User> {
   public int update(HttpServletRequest request, HttpServletResponse response, User user) {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
-    }
-    if (user.getPassword() != null) {
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
     int count = daoUser.update(user);
     if (count > 0) {

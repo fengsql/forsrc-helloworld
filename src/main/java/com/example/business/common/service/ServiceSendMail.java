@@ -41,7 +41,7 @@ public class ServiceSendMail extends BaseService {
 
     String filePath = reqSendMail.getFilePath();
     if (Tool.isNull(filePath)) {
-      sendText(email, subject, content);
+      sendHtml(email, subject, content);
     } else {
       sendFile(email, subject, content, filePath);
     }
@@ -68,6 +68,24 @@ public class ServiceSendMail extends BaseService {
     //发送邮件
     mailSender.send(message);
     log.info("sendText ok. email: {}.", email);
+  }
+
+  /**
+   * html 内容发送，无附件。
+   * @param email   接收方 email。
+   * @param subject 邮件主题。
+   * @param html    html格式邮件内容。
+   */
+  @SneakyThrows
+  private void sendHtml(String email, String subject, String html) {
+    MimeMessage message = mailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    helper.setFrom(username);
+    helper.setTo(email);
+    helper.setSubject(subject);
+    helper.setText(html, true);
+    mailSender.send(message);
+    log.info("sendHtml ok. email: {}.", email);
   }
 
   /**

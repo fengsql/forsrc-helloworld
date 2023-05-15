@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @Api(tags = "扩展功能-用户注册", description = "扩展功能用户注册 API", position = 10000)
 @RestController
-@RequestMapping("/business/register")
+@RequestMapping("/business/user/register")
 @Slf4j
 public class ControllerRegister {
 

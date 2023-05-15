@@ -17,7 +17,6 @@ public class LoginResponse extends BLoginResponse {
 
   private int roleType;
 
-  private String roleName;
-
+  private String roleName_;
 
 }

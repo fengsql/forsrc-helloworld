@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 @Slf4j
 public class ServiceUpdatePassword extends BaseService {
-
   @Resource
   private ServiceUser serviceUser;
   @Resource
@@ -28,7 +27,6 @@ public class ServiceUpdatePassword extends BaseService {
     throwNull(reqUpdatePassword, "param");
     throwNull(reqUpdatePassword.getOldPassword(), "old password");
     throwNull(reqUpdatePassword.getNewPassword(), "new password");
-
     User user = getUser(request, response);
     throwNull(user, "user");
 

@@ -7,9 +7,12 @@ import com.forsrc.common.spring.base.BService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.security.model.UserDetail;
 import com.forsrc.security.tool.ToolSecurity;
+import com.example.mvc.model.User;
+import com.example.mvc.service.ServiceUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class BaseService extends BService {
+
+  @Resource
+  private ServiceUser serviceUser;
 
   // <<----------------------- public -----------------------
 
@@ -37,7 +43,19 @@ public class BaseService extends BService {
 
   protected Integer getUserId() {
     UserDetail userDetail = getUserDetail();
+    return getUserId(userDetail);
+  }
+
+  protected Integer getUserId(UserDetail userDetail) {
     return userDetail == null ? 0 : Tool.toInteger(userDetail.getUserId());
+  }
+
+  protected String getUsername() {
+    return ToolSecurity.getUsername();
+  }
+
+  protected String getUsername(UserDetail userDetail) {
+    return userDetail == null ? null : Tool.toString(userDetail.getUsername());
   }
 
   protected UserDetail getUserDetail() {
@@ -46,16 +64,20 @@ public class BaseService extends BService {
     return userDetail;
   }
 
-  protected String getUsername() {
-    return ToolSecurity.getUsername();
+  protected User getUser() {
+    User user = selectUser();
+    if (user == null) {
+      throw new CommonException("用户不存在!");
+    }
+    return user;
   }
 
-  protected int getUserId(UserDetail userDetail) {
-    return userDetail == null ? 0 : Tool.toInteger(userDetail.getUserId());
-  }
-
-  protected String getUsername(UserDetail userDetail) {
-    return userDetail == null ? null : Tool.toString(userDetail.getUsername());
+  protected User selectUser() {
+    Integer userId = getUserId();
+    if (userId == null || userId == 0) {
+      return null;
+    }
+    return serviceUser.selectByPrimary(userId);
   }
 
   protected void throwNull(HttpServletRequest request, HttpServletResponse response) {

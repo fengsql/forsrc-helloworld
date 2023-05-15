@@ -390,19 +390,19 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    t_merchant.`merchant_id` AS merchantId,
-    t_city.`city_name` AS cityName,
-    t_user.`username` AS username,
-    t_merchant.`merchant_type` AS merchantType, t_merchant.`merchant_type` AS merchantType_,
-    t_merchant.`mch_name` AS mchName,
-    t_merchant.`mch_no` AS mchNo,
-    t_merchant.`appid` AS appid,
-    t_merchant.`secret` AS secret,
-    t_merchant.`phone` AS phone,
-    t_merchant.`address` AS address,
-    t_merchant.`info` AS info,
-    t_merchant.`add_time` AS addTime,
-    t_merchant.`update_time` AS updateTime
+    `t_merchant`.`merchant_id` AS `merchantId`,
+    `t_city`.`city_name` AS `cityName`,
+    `t_user`.`username` AS `username`,
+    `t_merchant`.`merchant_type` AS `merchantType`, `t_merchant`.`merchant_type` AS `merchantType_`,
+    `t_merchant`.`mch_name` AS `mchName`,
+    `t_merchant`.`mch_no` AS `mchNo`,
+    `t_merchant`.`appid` AS `appid`,
+    `t_merchant`.`secret` AS `secret`,
+    `t_merchant`.`phone` AS `phone`,
+    `t_merchant`.`address` AS `address`,
+    `t_merchant`.`info` AS `info`,
+    `t_merchant`.`add_time` AS `addTime`,
+    `t_merchant`.`update_time` AS `updateTime`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -466,25 +466,25 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `t_merchant`.`merchant_id` AS merchantId,
-    `t_merchant`.`city_id` AS cityId,
-    `t_city`.`city_name` AS cityName,
-    `t_merchant`.`user_id` AS userId,
-    `t_user`.`role_type` AS roleType, `t_user`.`role_type` AS roleType_,
-    `t_user`.`sex_type` AS sexType, `t_user`.`sex_type` AS sexType_,
-    `t_user`.`user_status` AS userStatus, `t_user`.`user_status` AS userStatus_,
-    `t_user`.`username` AS username,
-    `t_user`.`email` AS email,
-    `t_user`.`score` AS score,
-    `t_user`.`head_img_url` AS headImgUrl,
-    `t_merchant`.`merchant_type` AS merchantType, `t_merchant`.`merchant_type` AS merchantType_,
-    `t_merchant`.`mch_name` AS mchName,
-    `t_merchant`.`mch_no` AS mchNo,
-    `t_merchant`.`appid` AS appid,
-    `t_merchant`.`secret` AS secret,
-    `t_merchant`.`phone` AS phone,
-    `t_merchant`.`address` AS address,
-    `t_merchant`.`add_time` AS addTime
+    `t_merchant`.`merchant_id` AS `merchantId`,
+    `t_merchant`.`city_id` AS `cityId`,
+    `t_city`.`city_name` AS `cityName`,
+    `t_merchant`.`user_id` AS `userId`,
+    `t_user`.`role_type` AS `roleType`, `t_user`.`role_type` AS `roleType_`,
+    `t_user`.`sex_type` AS `sexType`, `t_user`.`sex_type` AS `sexType_`,
+    `t_user`.`user_status` AS `userStatus`, `t_user`.`user_status` AS `userStatus_`,
+    `t_user`.`username` AS `username`,
+    `t_user`.`email` AS `email`,
+    `t_user`.`score` AS `score`,
+    `t_user`.`head_img_url` AS `headImgUrl`,
+    `t_merchant`.`merchant_type` AS `merchantType`, `t_merchant`.`merchant_type` AS `merchantType_`,
+    `t_merchant`.`mch_name` AS `mchName`,
+    `t_merchant`.`mch_no` AS `mchNo`,
+    `t_merchant`.`appid` AS `appid`,
+    `t_merchant`.`secret` AS `secret`,
+    `t_merchant`.`phone` AS `phone`,
+    `t_merchant`.`address` AS `address`,
+    `t_merchant`.`add_time` AS `addTime`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
