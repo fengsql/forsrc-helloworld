@@ -36,10 +36,9 @@ public class ServiceRegister {
 
   public String register(HttpServletRequest request, HttpServletResponse response, ReqRegister reqRegister) {
     checkRegister(reqRegister);
-    String username = reqRegister.getUsername();
     String verifyCode = reqRegister.getVerifyCode_();
-
     checkVerifyCode(request, verifyCode);
+    String username = reqRegister.getUsername();
     checkUsername(username);
     checkPassword(reqRegister);
     existUser(username);
@@ -53,35 +52,9 @@ public class ServiceRegister {
 
   // <<<----------------------- register -----------------------
 
-  private void checkRegister(ReqRegister reqRegister) {
-    if (!enableRegister) {
-      throw new CommonException("未开启注册功能!");
-    }
-    if (Tool.isNull(reqRegister.getUsername())) {
-      throw new CommonException("用户名为空!");
-    }
-    if (enableVerifyCode) {
-      if (Tool.isNull(reqRegister.getVerifyCode_())) {
-        throw new CommonException("验证码为空!");
-      }
-    }
-    if (Tool.isNull(reqRegister.getPassword())) {
-      throw new CommonException("密码为空!");
-    }
-    if (Tool.isNull(reqRegister.getPassword_again())) {
-      throw new CommonException("重复密码为空!");
-    }
-  }
-
-  private void checkPassword(ReqRegister reqRegister) {
-    String password = reqRegister.getPassword();
-    String passwordAgain = reqRegister.getPassword_again();
-    if (!password.equals(passwordAgain)) {
-      throw new CommonException("密码不一致!");
-    }
-    if (password.length() < size_password) {
-      throw new CommonException("密码不能少于 " + size_password + " 位!");
-    }
+  private void register(ReqRegister reqRegister) {
+    User user = newUser(reqRegister);
+    daoUser.insert(user);
   }
 
   private User newUser(ReqRegister reqRegister) {
@@ -104,14 +77,46 @@ public class ServiceRegister {
     return user;
   }
 
-  private void register(ReqRegister reqRegister) {
-    User user = newUser(reqRegister);
-    daoUser.insert(user);
-  }
-
   // >>>----------------------- register -----------------------
 
   // <<<----------------------- normal -----------------------
+
+  private void checkRegister(ReqRegister reqRegister) {
+    if (!enableRegister) {
+      throw new CommonException("未开启注册功能!");
+    }
+    if (enableVerifyCode) {
+      if (Tool.isNull(reqRegister.getVerifyCode_())) {
+        throw new CommonException("验证码为空!");
+      }
+    }
+    if (Tool.isNull(reqRegister.getUsername())) {
+      throw new CommonException("用户名为空!");
+    }
+    if (Tool.isNull(reqRegister.getPassword())) {
+      throw new CommonException("密码为空!");
+    }
+    if (Tool.isNull(reqRegister.getPassword_again())) {
+      throw new CommonException("重复密码为空!");
+    }
+  }
+
+  private void checkVerifyCode(HttpServletRequest request, String verifyCode) {
+    if (enableVerifyCode) {
+      ToolUser.checkVerifyCode(request, verifyCode);
+    }
+  }
+
+  private void checkPassword(ReqRegister reqRegister) {
+    String password = reqRegister.getPassword();
+    String password_again = reqRegister.getPassword_again();
+    if (!password.equals(password_again)) {
+      throw new CommonException("密码不一致!");
+    }
+    if (password.length() < size_password) {
+      throw new CommonException("密码不能少于 " + size_password + " 位!");
+    }
+  }
 
   private void checkUsername(String username) {
     if (username.length() < size_username) {
@@ -132,12 +137,6 @@ public class ServiceRegister {
   private void checkMobile(String mobile) {
     if (!Validator.isMobile(mobile)) {
       throw new CommonException("手机号无效!");
-    }
-  }
-
-  private void checkVerifyCode(HttpServletRequest request, String verifyCode) {
-    if (enableVerifyCode) {
-      ToolUser.checkVerifyCode(request, verifyCode);
     }
   }
 
