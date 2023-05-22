@@ -229,18 +229,97 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.User">
     UPDATE `t_user` SET
     <trim suffixOverrides=",">
-      `role_type` = #{roleType,jdbcType=TINYINT},
-      `sex_type` = #{sexType,jdbcType=TINYINT},
-      `user_status` = #{userStatus,jdbcType=TINYINT},
-      `username` = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR},
-      `email` = #{email,jdbcType=VARCHAR},
-      `score` = #{score,jdbcType=INTEGER},
-      `birth_date` = #{birthDate,jdbcType=DATE},
-      `head_img_url` = #{headImgUrl,jdbcType=VARCHAR},
-      `info` = #{info,jdbcType=VARCHAR},
-      `add_time` = #{addTime,jdbcType=TIMESTAMP},
-      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      <choose>
+        <when test='roleType != null'>
+          `role_type` = #{roleType,jdbcType=TINYINT},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='sexType != null'>
+          `sex_type` = #{sexType,jdbcType=TINYINT},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='userStatus != null'>
+          `user_status` = #{userStatus,jdbcType=TINYINT},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='username != null and username != ""'>
+          `username` = #{username,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='password != null and password != ""'>
+          `password` = #{password,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='email != null and email != ""'>
+          `email` = #{email,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `email` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='score != null'>
+          `score` = #{score,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+          `score` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='birthDate != null'>
+          `birth_date` = #{birthDate,jdbcType=DATE},
+        </when>
+        <otherwise>
+          `birth_date` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='headImgUrl != null and headImgUrl != ""'>
+          `head_img_url` = #{headImgUrl,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `head_img_url` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='info != null and info != ""'>
+          `info` = #{info,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `info` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='addTime != null'>
+          `add_time` = #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `add_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='updateTime != null'>
+          `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `update_time` = null,
+        </otherwise>
+      </choose>
     </trim>
     WHERE `id` = #{id,jdbcType=INTEGER}
   </update>

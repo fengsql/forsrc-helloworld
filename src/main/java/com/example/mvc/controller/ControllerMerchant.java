@@ -86,6 +86,19 @@ public class ControllerMerchant {
   }
 
   /**
+   * 更新商户表。空值将被更新为 null。
+   * @param merchant 商户表。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新商户表空值", notes = "更新商户表，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
+    log.info("updateEvenNull: {}", merchant);
+    return serviceMerchant.updateEvenNull(request, response, merchant);
+  }
+
+  /**
    * 根据主键删除一条商户表。
    * @param merchantId 商户编号。
    * @return 返回删除的记录数。

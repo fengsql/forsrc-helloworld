@@ -181,15 +181,78 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.StatTest">
     UPDATE `t_stat_test` SET
     <trim suffixOverrides=",">
-      `day_no` = #{dayNo,jdbcType=VARCHAR},
-      `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
-      `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
-      `flight_num` = #{flightNum,jdbcType=DECIMAL},
-      `flight_sum` = #{flightSum,jdbcType=DECIMAL},
-      `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
-      `distance` = #{distance,jdbcType=DECIMAL},
-      `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
-      `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      <choose>
+        <when test='dayNo != null and dayNo != ""'>
+          `day_no` = #{dayNo,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `day_no` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='crsDepTime != null'>
+          `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `crs_dep_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='crsArrTime != null'>
+          `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `crs_arr_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='flightNum != null'>
+          `flight_num` = #{flightNum,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `flight_num` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='flightSum != null'>
+          `flight_sum` = #{flightSum,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `flight_sum` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='crsElapsedTime != null'>
+          `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `crs_elapsed_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='distance != null'>
+          `distance` = #{distance,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `distance` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='distanceSum != null'>
+          `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
+        </when>
+        <otherwise>
+          `distance_sum` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='addTime != null'>
+          `add_time` = #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `add_time` = null,
+        </otherwise>
+      </choose>
     </trim>
     WHERE `id` = #{id,jdbcType=INTEGER}
   </update>

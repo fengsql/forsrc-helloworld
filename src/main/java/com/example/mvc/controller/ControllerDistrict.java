@@ -86,6 +86,19 @@ public class ControllerDistrict {
   }
 
   /**
+   * 更新县表。空值将被更新为 null。
+   * @param district 县表。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新县表空值", notes = "更新县表，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
+    log.info("updateEvenNull: {}", district);
+    return serviceDistrict.updateEvenNull(request, response, district);
+  }
+
+  /**
    * 根据主键删除一条县表。
    * @param id 县编号。
    * @return 返回删除的记录数。

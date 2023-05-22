@@ -61,7 +61,13 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Province">
     UPDATE `t_province` SET
     <trim suffixOverrides=",">
-      `province_name` = #{provinceName,jdbcType=VARCHAR},
+      <choose>
+        <when test='provinceName != null and provinceName != ""'>
+          `province_name` = #{provinceName,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
     </trim>
     WHERE `id` = #{id,jdbcType=INTEGER}
   </update>

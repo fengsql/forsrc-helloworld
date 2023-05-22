@@ -237,18 +237,100 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
     UPDATE `t_merchant` SET
     <trim suffixOverrides=",">
-      `city_id` = #{cityId,jdbcType=INTEGER},
-      `user_id` = #{userId,jdbcType=INTEGER},
-      `merchant_type` = #{merchantType,jdbcType=INTEGER},
-      `mch_name` = #{mchName,jdbcType=VARCHAR},
-      `mch_no` = #{mchNo,jdbcType=VARCHAR},
-      `appid` = #{appid,jdbcType=VARCHAR},
-      `secret` = #{secret,jdbcType=VARCHAR},
-      `phone` = #{phone,jdbcType=VARCHAR},
-      `address` = #{address,jdbcType=VARCHAR},
-      `info` = #{info,jdbcType=VARCHAR},
-      `add_time` = #{addTime,jdbcType=TIMESTAMP},
-      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      <choose>
+        <when test='cityId != null'>
+          `city_id` = #{cityId,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='userId != null'>
+          `user_id` = #{userId,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='merchantType != null'>
+          `merchant_type` = #{merchantType,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+          `merchant_type` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='mchName != null and mchName != ""'>
+          `mch_name` = #{mchName,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `mch_name` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='mchNo != null and mchNo != ""'>
+          `mch_no` = #{mchNo,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `mch_no` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='appid != null and appid != ""'>
+          `appid` = #{appid,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `appid` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='secret != null and secret != ""'>
+          `secret` = #{secret,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `secret` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='phone != null and phone != ""'>
+          `phone` = #{phone,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `phone` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='address != null and address != ""'>
+          `address` = #{address,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `address` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='info != null and info != ""'>
+          `info` = #{info,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `info` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='addTime != null'>
+          `add_time` = #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `add_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='updateTime != null'>
+          `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `update_time` = null,
+        </otherwise>
+      </choose>
     </trim>
     WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
   </update>

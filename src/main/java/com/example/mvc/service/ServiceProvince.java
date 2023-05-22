@@ -156,6 +156,33 @@ public class ServiceProvince extends BaseService implements IService<Province> {
   }
 
   /**
+   * 更新省表。空值将被更新为 null。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, Province province) {
+    if (province == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    int count = daoProvince.updateEvenNull(province);
+    if (count > 0) {
+      cacheProvince.update(daoProvince.selectOne(province));
+    }
+    return count;
+  }
+
+  /**
+   * 更新省表。空值将被更新为空。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param province 省表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(Province province) {
+    return updateEvenNull(null, null, province);
+  }
+
+  /**
    * 删除省表。
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
    * @param province 省表。

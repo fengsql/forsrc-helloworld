@@ -156,6 +156,33 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
   }
 
   /**
+   * 更新商户表。空值将被更新为 null。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, Merchant merchant) {
+    if (merchant == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    int count = daoMerchant.updateEvenNull(merchant);
+    if (count > 0) {
+      cacheMerchant.update(daoMerchant.selectOne(merchant));
+    }
+    return count;
+  }
+
+  /**
+   * 更新商户表。空值将被更新为空。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param merchant 商户表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(Merchant merchant) {
+    return updateEvenNull(null, null, merchant);
+  }
+
+  /**
    * 删除商户表。
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
    * @param merchant 商户表。

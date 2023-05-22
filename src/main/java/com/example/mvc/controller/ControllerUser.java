@@ -86,6 +86,19 @@ public class ControllerUser {
   }
 
   /**
+   * 更新用户。空值将被更新为 null。
+   * @param user 用户。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新用户空值", notes = "更新用户，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
+    log.info("updateEvenNull: {}", user);
+    return serviceUser.updateEvenNull(request, response, user);
+  }
+
+  /**
    * 根据主键删除一条用户。
    * @param id 用户编号。
    * @return 返回删除的记录数。

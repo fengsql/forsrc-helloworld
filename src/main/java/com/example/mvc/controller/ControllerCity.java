@@ -86,6 +86,19 @@ public class ControllerCity {
   }
 
   /**
+   * 更新市表。空值将被更新为 null。
+   * @param city 市表。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新市表空值", notes = "更新市表，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
+    log.info("updateEvenNull: {}", city);
+    return serviceCity.updateEvenNull(request, response, city);
+  }
+
+  /**
    * 根据主键删除一条市表。
    * @param id 市编号。
    * @return 返回删除的记录数。

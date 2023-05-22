@@ -86,6 +86,19 @@ public class ControllerStatTest {
   }
 
   /**
+   * 更新统计信息。空值将被更新为 null。
+   * @param statTest 统计信息。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新统计信息空值", notes = "更新统计信息，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody StatTest statTest) {
+    log.info("updateEvenNull: {}", statTest);
+    return serviceStatTest.updateEvenNull(request, response, statTest);
+  }
+
+  /**
    * 根据主键删除一条统计信息。
    * @param id 编号。
    * @return 返回删除的记录数。

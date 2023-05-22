@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailUser;
-import com.example.mvc.bean.rep.RepUser;
-import com.example.mvc.bean.req.ReqUser;
-import com.example.mvc.cache.CacheUser;
-import com.example.mvc.dao.DaoUser;
-import com.example.mvc.model.User;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,8 +11,13 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailUser;
+import com.example.mvc.bean.rep.RepUser;
+import com.example.mvc.bean.req.ReqUser;
+import com.example.mvc.dao.DaoUser;
+import com.example.mvc.model.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheUser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Slf4j
@@ -171,6 +171,33 @@ public class ServiceUser extends BaseService implements IService<User> {
    */
   public int update(User user) {
     return update(null, null, user);
+  }
+
+  /**
+   * 更新用户。空值将被更新为 null。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, User user) {
+    if (user == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    int count = daoUser.updateEvenNull(user);
+    if (count > 0) {
+      cacheUser.update(daoUser.selectOne(user));
+    }
+    return count;
+  }
+
+  /**
+   * 更新用户。空值将被更新为空。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param user 用户。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(User user) {
+    return updateEvenNull(null, null, user);
   }
 
   /**

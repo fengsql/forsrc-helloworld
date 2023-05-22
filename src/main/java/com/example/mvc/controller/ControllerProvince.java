@@ -86,6 +86,19 @@ public class ControllerProvince {
   }
 
   /**
+   * 更新省表。空值将被更新为 null。
+   * @param province 省表。
+   * @return 返回更新的记录数。
+   */
+  @ApiOperationSupport(order = 40)
+  @ApiOperation(value = "更新省表空值", notes = "更新省表，空值将被更新为 null。", response = Integer.class)
+  @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
+    log.info("updateEvenNull: {}", province);
+    return serviceProvince.updateEvenNull(request, response, province);
+  }
+
+  /**
    * 根据主键删除一条省表。
    * @param id 省编号。
    * @return 返回删除的记录数。

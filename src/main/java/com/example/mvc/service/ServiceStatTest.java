@@ -136,6 +136,28 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
   }
 
   /**
+   * 更新统计信息。空值将被更新为 null。
+   * @param statTest 统计信息。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, StatTest statTest) {
+    if (statTest == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    int count = daoStatTest.updateEvenNull(statTest);
+    return count;
+  }
+
+  /**
+   * 更新统计信息。空值将被更新为空。
+   * @param statTest 统计信息。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(StatTest statTest) {
+    return updateEvenNull(null, null, statTest);
+  }
+
+  /**
    * 删除统计信息。
    * @param statTest 统计信息。
    * @return 返回删除的记录数。

@@ -156,6 +156,33 @@ public class ServiceCity extends BaseService implements IService<City> {
   }
 
   /**
+   * 更新市表。空值将被更新为 null。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, City city) {
+    if (city == null) {
+      throw new CommonException(Code.PARAM_EMPTY);
+    }
+    int count = daoCity.updateEvenNull(city);
+    if (count > 0) {
+      cacheCity.update(daoCity.selectOne(city));
+    }
+    return count;
+  }
+
+  /**
+   * 更新市表。空值将被更新为空。
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * @param city 市表。
+   * @return 0为失败；大于0为成功，返回更新的记录数。
+   */
+  public int updateEvenNull(City city) {
+    return updateEvenNull(null, null, city);
+  }
+
+  /**
    * 删除市表。
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
    * @param city 市表。
