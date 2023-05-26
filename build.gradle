@@ -66,6 +66,7 @@ dependencies {
     //cglib
     implementation 'cglib:cglib:3.3.0'
     //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.apache.kafka:kafka-streams'
     //hbase
     implementation 'org.apache.hbase:hbase-client:2.1.6'
@@ -84,8 +85,6 @@ dependencies {
     implementation 'org.latencyutils:LatencyUtils:2.0.3'
     //redis
     implementation 'redis.clients:jedis:3.5.2'
-    //kafka
-    implementation 'org.springframework.kafka:spring-kafka'
     //poi
     implementation 'org.apache.poi:poi:4.1.2'
     implementation 'org.apache.poi:poi-ooxml:4.1.2'
@@ -110,8 +109,8 @@ dependencies {
     //mail
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.8'
     //forsrc
-    implementation 'io.github.fengsql:forsrc-common:1.0.0.08'
-    implementation 'io.github.fengsql:forsrc-security:0.0.3'
+    implementation 'io.github.fengsql:forsrc-common:1.0.0.10'
+    implementation 'io.github.fengsql:forsrc-security:0.0.6'
 
 }
 
