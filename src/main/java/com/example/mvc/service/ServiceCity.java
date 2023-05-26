@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.example.mvc.cache.CacheCity;
@@ -41,7 +42,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 返回添加的市表。
    */
@@ -61,7 +64,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 返回添加的市表。
    */
@@ -71,7 +76,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 同步批量添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param citys 市表。
    * @return 返回添加的市表数。
    */
@@ -96,7 +103,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 同步批量添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param citys 市表。
    * @return 返回添加的市表数。
    */
@@ -107,7 +116,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 异步批量添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param citys 市表。
    */
   public void insertAsyn(HttpServletRequest request, HttpServletResponse response, List<City> citys) {
@@ -121,7 +132,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 异步批量添加市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param citys 市表。
    */
   public void insertAsyn(List<City> citys) {
@@ -130,7 +143,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 更新市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -147,7 +162,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 更新市表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -157,7 +174,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 更新市表。空值将被更新为 null。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -174,7 +193,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 更新市表。空值将被更新为空。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -184,21 +205,31 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 删除市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
-   * @param city 市表。
+   * //#  }
+   * @param city 市表。仅可传入主键、外键、常量字段作为条件。
    * @return 返回删除的记录数。
    */
   public int delete(HttpServletRequest request, HttpServletResponse response, City city) {
     if (city == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    int count = cacheCity.delete(city.getId()) ? 1 : 0;
-    return count;
+    List<City> citys_ = daoCity.select(city);
+    if (Tool.isNull(citys_)) {
+      return 0;
+    }
+    for (City city1 : citys_) {
+      cacheCity.delete(city1.getId());
+    }
+    return citys_.size();
   }
 
   /**
    * 删除市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 返回删除的记录数。
    */
@@ -208,7 +239,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 删除市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 市编号。
    * @return 返回删除的记录数。
    */
@@ -218,13 +251,21 @@ public class ServiceCity extends BaseService implements IService<City> {
     }
     City city = new City();
     city.setId(id);
-    int count = cacheCity.delete(id) ? 1 : 0;
-    return count;
+    City city1 = cacheCity.get(id);
+    if (city1 == null) {
+      return 0;
+    }
+    List<City> citys_ = new ArrayList<>();
+    citys_.add(city1);
+    cacheCity.delete(id);
+    return 1;
   }
 
   /**
    * 删除市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 市编号。
    * @return 返回删除的记录数。
    */
@@ -234,7 +275,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据主键查询一条市表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 市编号。
    * @return 返回市表。
    */
@@ -248,7 +291,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据主键查询一条市表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 市编号。
    * @return 返回市表。
    */
@@ -373,7 +418,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键更新一条市表，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -396,7 +443,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键更新一条市表，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -406,7 +455,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键删除一条市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 返回删除的记录数。
    */
@@ -423,13 +474,21 @@ public class ServiceCity extends BaseService implements IService<City> {
     City city1 = new City();
     city1.setProvinceId(city.getProvinceId());
     city1.setCityName(city.getCityName());
-    int count = cacheCity.deleteByCityName(city1) ? 1 : 0;
-    return count;
+    City city2 = cacheCity.getByCityName(city1);
+    if (city2 == null) {
+      return 0;
+    }
+    List<City> citys_ = new ArrayList<>();
+    citys_.add(city2);
+    cacheCity.deleteByCityName(city2);
+    return 1;
   }
 
   /**
    * 根据唯一键删除一条市表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param city 市表。
    * @return 返回删除的记录数。
    */
@@ -439,7 +498,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键查询一条市表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param city 市表。
    * @return 返回市表。
    */
@@ -459,7 +520,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键查询一条市表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param city 市表。
    * @return 返回市表。
    */
@@ -469,7 +532,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键查询一条市表详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param city 市表。
    * @return 返回市表。
    */
@@ -489,7 +554,9 @@ public class ServiceCity extends BaseService implements IService<City> {
 
   /**
    * 根据唯一键查询一条市表详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param city 市表。
    * @return 返回市表。
    */

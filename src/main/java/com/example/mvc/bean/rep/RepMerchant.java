@@ -55,8 +55,11 @@ public class RepMerchant {
     @ApiModelProperty(value = "电子邮件(用户编号)", name = "email", dataType = "String", required = false)
     private String email;
 
-    @ApiModelProperty(value = "积分(用户编号)", name = "score", dataType = "Integer", required = false)
-    private Integer score;
+    @ApiModelProperty(value = "积分(用户编号)", name = "score", dataType = "Long", required = false)
+    private Long score;
+
+    @ApiModelProperty(value = "次数(用户编号)", name = "times", dataType = "Integer", required = false)
+    private Integer times;
 
     @ApiModelProperty(value = "头像(用户编号)", name = "headImgUrl", dataType = "String", required = false)
     private String headImgUrl;
@@ -84,10 +87,6 @@ public class RepMerchant {
 
     @ApiModelProperty(value = "地址", name = "address", dataType = "String", required = false)
     private String address;
-
-    @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private java.util.Date addTime;
 
   }
 

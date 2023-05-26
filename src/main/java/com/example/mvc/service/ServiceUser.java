@@ -1,5 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailUser;
+import com.example.mvc.bean.rep.RepUser;
+import com.example.mvc.bean.req.ReqUser;
+import com.example.mvc.cache.CacheUser;
+import com.example.mvc.dao.DaoUser;
+import com.example.mvc.model.User;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -11,23 +18,17 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailUser;
-import com.example.mvc.bean.rep.RepUser;
-import com.example.mvc.bean.req.ReqUser;
-import com.example.mvc.dao.DaoUser;
-import com.example.mvc.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.example.mvc.cache.CacheUser;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Slf4j
@@ -44,7 +45,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 返回添加的用户。
    */
@@ -69,7 +72,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 返回添加的用户。
    */
@@ -79,7 +84,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 同步批量添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param users 用户。
    * @return 返回添加的用户数。
    */
@@ -109,7 +116,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 同步批量添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param users 用户。
    * @return 返回添加的用户数。
    */
@@ -120,7 +129,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 异步批量添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param users 用户。
    */
   public void insertAsyn(HttpServletRequest request, HttpServletResponse response, List<User> users) {
@@ -139,7 +150,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 异步批量添加用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param users 用户。
    */
   public void insertAsyn(List<User> users) {
@@ -148,7 +161,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 更新用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -165,7 +180,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 更新用户。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -175,7 +192,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 更新用户。空值将被更新为 null。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -192,7 +211,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 更新用户。空值将被更新为空。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -202,21 +223,31 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 删除用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
-   * @param user 用户。
+   * //#  }
+   * @param user 用户。仅可传入主键、外键、常量字段作为条件。
    * @return 返回删除的记录数。
    */
   public int delete(HttpServletRequest request, HttpServletResponse response, User user) {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    int count = cacheUser.delete(user.getId()) ? 1 : 0;
-    return count;
+    List<User> users_ = daoUser.select(user);
+    if (Tool.isNull(users_)) {
+      return 0;
+    }
+    for (User user1 : users_) {
+      cacheUser.delete(user1.getId());
+    }
+    return users_.size();
   }
 
   /**
    * 删除用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 返回删除的记录数。
    */
@@ -226,7 +257,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 删除用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 用户编号。
    * @return 返回删除的记录数。
    */
@@ -236,13 +269,21 @@ public class ServiceUser extends BaseService implements IService<User> {
     }
     User user = new User();
     user.setId(id);
-    int count = cacheUser.delete(id) ? 1 : 0;
-    return count;
+    User user1 = cacheUser.get(id);
+    if (user1 == null) {
+      return 0;
+    }
+    List<User> users_ = new ArrayList<>();
+    users_.add(user1);
+    cacheUser.delete(id);
+    return 1;
   }
 
   /**
    * 删除用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 用户编号。
    * @return 返回删除的记录数。
    */
@@ -252,7 +293,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据主键查询一条用户。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 用户编号。
    * @return 返回用户。
    */
@@ -266,7 +309,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据主键查询一条用户。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 用户编号。
    * @return 返回用户。
    */
@@ -391,7 +436,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键更新一条用户，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -411,7 +458,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键更新一条用户，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -421,7 +470,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键删除一条用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 返回删除的记录数。
    */
@@ -434,13 +485,21 @@ public class ServiceUser extends BaseService implements IService<User> {
     }
     User user1 = new User();
     user1.setUsername(user.getUsername());
-    int count = cacheUser.deleteByUsername(user1) ? 1 : 0;
-    return count;
+    User user2 = cacheUser.getByUsername(user1);
+    if (user2 == null) {
+      return 0;
+    }
+    List<User> users_ = new ArrayList<>();
+    users_.add(user2);
+    cacheUser.deleteByUsername(user2);
+    return 1;
   }
 
   /**
    * 根据唯一键删除一条用户。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param user 用户。
    * @return 返回删除的记录数。
    */
@@ -450,7 +509,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键查询一条用户。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param user 用户。
    * @return 返回用户。
    */
@@ -467,7 +528,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键查询一条用户。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param user 用户。
    * @return 返回用户。
    */
@@ -477,7 +540,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键查询一条用户详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param user 用户。
    * @return 返回用户。
    */
@@ -494,7 +559,9 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   /**
    * 根据唯一键查询一条用户详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param user 用户。
    * @return 返回用户。
    */
@@ -563,6 +630,9 @@ public class ServiceUser extends BaseService implements IService<User> {
         field.setExportFieldType(Enum.ExportFieldType.string_);
         break;
       case "score":
+        field.setExportFieldType(Enum.ExportFieldType.long_);
+        break;
+      case "times":
         field.setExportFieldType(Enum.ExportFieldType.integer_);
         break;
       case "birthDate":

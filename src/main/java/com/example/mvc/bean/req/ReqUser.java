@@ -29,8 +29,11 @@ public class ReqUser extends BaseRequest {
   @ApiModelProperty(value = "电子邮件", name = "email", dataType = "String")
   private String email;
 
-  @ApiModelProperty(value = "积分", name = "score", dataType = "Integer[]")
-  private Integer[] score;
+  @ApiModelProperty(value = "积分", name = "score", dataType = "Long[]")
+  private Long[] score;
+
+  @ApiModelProperty(value = "次数", name = "times", dataType = "Integer[]")
+  private Integer[] times;
 
   @ApiModelProperty(value = "出生日期", name = "birthDate", dataType = "java.util.Date[]")
   private java.util.Date[] birthDate;

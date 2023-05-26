@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api(tags = "用户", description = "用户相关的 API", position = 3)
+@Api(tags = "用户", description = "用户相关的 API", position = 1)
 @RestController
 @RequestMapping("/api/user")
 @Slf4j

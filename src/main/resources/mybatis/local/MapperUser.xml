@@ -11,6 +11,7 @@
     `password`,
     `email`,
     `score`,
+    `times`,
     `birth_date`,
     `head_img_url`,
     `info`,
@@ -26,7 +27,8 @@
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="password" jdbcType="VARCHAR" property="password"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="score" jdbcType="BIGINT" property="score"/>
+    <result column="times" jdbcType="INTEGER" property="times"/>
     <result column="birth_date" jdbcType="DATE" property="birthDate"/>
     <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl"/>
     <result column="info" jdbcType="VARCHAR" property="info"/>
@@ -44,7 +46,8 @@
     <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="score" jdbcType="BIGINT" property="score"/>
+    <result column="times" jdbcType="INTEGER" property="times"/>
     <result column="birthDate" jdbcType="DATE" property="birthDate"/>
     <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
     <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
@@ -61,7 +64,8 @@
     <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="score" jdbcType="BIGINT" property="score"/>
+    <result column="times" jdbcType="INTEGER" property="times"/>
     <result column="birthDate" jdbcType="DATE" property="birthDate"/>
     <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
     <result column="info" jdbcType="VARCHAR" property="info"/>
@@ -92,6 +96,9 @@
       </if>
       <if test='score != null'>
         `score`,
+      </if>
+      <if test='times != null'>
+        `times`,
       </if>
       <if test='birthDate != null'>
         `birth_date`,
@@ -129,7 +136,10 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test='score != null'>
-        #{score,jdbcType=INTEGER},
+        #{score,jdbcType=BIGINT},
+      </if>
+      <if test='times != null'>
+        #{times,jdbcType=INTEGER},
       </if>
       <if test='birthDate != null'>
         #{birthDate,jdbcType=DATE},
@@ -159,6 +169,7 @@
       `password`,
       `email`,
       `score`,
+      `times`,
       `birth_date`,
       `head_img_url`,
       `info`,
@@ -173,7 +184,8 @@
       #{username,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR},
-      #{score,jdbcType=INTEGER},
+      #{score,jdbcType=BIGINT},
+      #{times,jdbcType=INTEGER},
       #{birthDate,jdbcType=DATE},
       #{headImgUrl,jdbcType=VARCHAR},
       #{info,jdbcType=VARCHAR},
@@ -205,7 +217,10 @@
         `email` = #{email,jdbcType=VARCHAR},
       </if>
       <if test='score != null'>
-        `score` = #{score,jdbcType=INTEGER},
+        `score` = #{score,jdbcType=BIGINT},
+      </if>
+      <if test='times != null'>
+        `times` = #{times,jdbcType=INTEGER},
       </if>
       <if test='birthDate != null'>
         `birth_date` = #{birthDate,jdbcType=DATE},
@@ -229,41 +244,21 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.User">
     UPDATE `t_user` SET
     <trim suffixOverrides=",">
-      <choose>
-        <when test='roleType != null'>
-          `role_type` = #{roleType,jdbcType=TINYINT},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='sexType != null'>
-          `sex_type` = #{sexType,jdbcType=TINYINT},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='userStatus != null'>
-          `user_status` = #{userStatus,jdbcType=TINYINT},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='username != null and username != ""'>
-          `username` = #{username,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='password != null and password != ""'>
-          `password` = #{password,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
+      <if test='roleType != null'>
+        `role_type` = #{roleType,jdbcType=TINYINT},
+      </if>
+      <if test='sexType != null'>
+        `sex_type` = #{sexType,jdbcType=TINYINT},
+      </if>
+      <if test='userStatus != null'>
+        `user_status` = #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test='username != null and username != ""'>
+        `username` = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test='password != null and password != ""'>
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
       <choose>
         <when test='email != null and email != ""'>
           `email` = #{email,jdbcType=VARCHAR},
@@ -274,10 +269,18 @@
       </choose>
       <choose>
         <when test='score != null'>
-          `score` = #{score,jdbcType=INTEGER},
+          `score` = #{score,jdbcType=BIGINT},
         </when>
         <otherwise>
           `score` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='times != null'>
+          `times` = #{times,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+          `times` = null,
         </otherwise>
       </choose>
       <choose>
@@ -406,7 +409,10 @@
         AND `email` = #{email,jdbcType=VARCHAR}
       </if>
       <if test='score != null'>
-        AND `score` = #{score,jdbcType=INTEGER}
+        AND `score` = #{score,jdbcType=BIGINT}
+      </if>
+      <if test='times != null'>
+        AND `times` = #{times,jdbcType=INTEGER}
       </if>
       <if test='headImgUrl != null and headImgUrl != ""'>
         AND `head_img_url` = #{headImgUrl,jdbcType=VARCHAR}
@@ -439,7 +445,10 @@
         AND `email` LIKE CONCAT ('%', #{email,jdbcType=VARCHAR}, '%')
       </if>
       <if test='score != null'>
-        AND `score` = #{score,jdbcType=INTEGER}
+        AND `score` = #{score,jdbcType=BIGINT}
+      </if>
+      <if test='times != null'>
+        AND `times` = #{times,jdbcType=INTEGER}
       </if>
       <if test='headImgUrl != null and headImgUrl != ""'>
         AND `head_img_url` LIKE CONCAT ('%', #{headImgUrl,jdbcType=VARCHAR}, '%')
@@ -456,6 +465,7 @@
     `username` AS `username`,
     `email` AS `email`,
     `score` AS `score`,
+    `times` AS `times`,
     `birth_date` AS `birthDate`,
     `head_img_url` AS `headImgUrl`,
     `info` AS `info`,
@@ -492,7 +502,10 @@
         AND `t_user`.`email` = #{email,jdbcType=VARCHAR}
       </if>
       <if test='score != null'>
-        AND `t_user`.`score` = #{score,jdbcType=INTEGER}
+        AND `t_user`.`score` = #{score,jdbcType=BIGINT}
+      </if>
+      <if test='times != null'>
+        AND `t_user`.`times` = #{times,jdbcType=INTEGER}
       </if>
       <if test='headImgUrl != null and headImgUrl != ""'>
         AND `t_user`.`head_img_url` = #{headImgUrl,jdbcType=VARCHAR}
@@ -521,6 +534,7 @@
     `username` AS `username`,
     `email` AS `email`,
     `score` AS `score`,
+    `times` AS `times`,
     `birth_date` AS `birthDate`,
     `head_img_url` AS `headImgUrl`,
     `add_time` AS `addTime`,
@@ -557,10 +571,18 @@
     </if>
     <if test='score != null'>
       <if test='score.length > 0'>
-        AND `t_user`.`score` &gt;= #{score[0],jdbcType=INTEGER}
+        AND `t_user`.`score` &gt;= #{score.[0],jdbcType=BIGINT}
       </if>
       <if test='score.length > 1'>
-        AND `t_user`.`score` &lt;= #{score[1],jdbcType=INTEGER}
+        AND `t_user`.`score` &lt;= #{score.[1],jdbcType=BIGINT}
+      </if>
+    </if>
+    <if test='times != null'>
+      <if test='times.length > 0'>
+        AND `t_user`.`times` &gt;= #{times.[0],jdbcType=INTEGER}
+      </if>
+      <if test='times.length > 1'>
+        AND `t_user`.`times` &lt;= #{times.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='birthDate != null'>
@@ -740,7 +762,10 @@
         `email` = #{email,jdbcType=VARCHAR},
       </if>
       <if test='score != null'>
-        `score` = #{score,jdbcType=INTEGER},
+        `score` = #{score,jdbcType=BIGINT},
+      </if>
+      <if test='times != null'>
+        `times` = #{times,jdbcType=INTEGER},
       </if>
       <if test='birthDate != null'>
         `birth_date` = #{birthDate,jdbcType=DATE},

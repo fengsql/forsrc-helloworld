@@ -72,6 +72,7 @@ public class ServiceRegister {
     user.setPassword(passwordEncoder.encode(reqRegister.getPassword()));
     user.setEmail(reqRegister.getEmail());
     user.setScore(reqRegister.getScore());
+    user.setTimes(reqRegister.getTimes());
     user.setHeadImgUrl(reqRegister.getHeadImgUrl());
     user.setInfo(reqRegister.getInfo());
     return user;

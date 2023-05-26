@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 返回添加的统计信息。
    */
@@ -54,6 +58,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 返回添加的统计信息。
    */
@@ -63,6 +70,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 同步批量添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTests 统计信息。
    * @return 返回添加的统计信息数。
    */
@@ -84,6 +94,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 同步批量添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTests 统计信息。
    * @return 返回添加的统计信息数。
    */
@@ -94,6 +107,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 异步批量添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param statTests 统计信息。
    */
   public void insertAsyn(HttpServletRequest request, HttpServletResponse response, List<StatTest> statTests) {
@@ -107,6 +123,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 异步批量添加统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param statTests 统计信息。
    */
   public void insertAsyn(List<StatTest> statTests) {
@@ -115,6 +134,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 更新统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -128,6 +150,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 更新统计信息。空值将被忽略。
+   * //#  if (isCache(table)) {
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -137,6 +162,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 更新统计信息。空值将被更新为 null。
+   * //#  if (isCache(table)) {
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -150,6 +178,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 更新统计信息。空值将被更新为空。
+   * //#  if (isCache(table)) {
+   * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -159,7 +190,10 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 删除统计信息。
-   * @param statTest 统计信息。
+   * //#  if (isCache(table)) {
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
+   * @param statTest 统计信息。仅可传入主键、外键、常量字段作为条件。
    * @return 返回删除的记录数。
    */
   public int delete(HttpServletRequest request, HttpServletResponse response, StatTest statTest) {
@@ -172,6 +206,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 删除统计信息。
+   * //#  if (isCache(table)) {
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param statTest 统计信息。
    * @return 返回删除的记录数。
    */
@@ -181,6 +218,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 删除统计信息。
+   * //#  if (isCache(table)) {
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 编号。
    * @return 返回删除的记录数。
    */
@@ -196,6 +236,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 删除统计信息。
+   * //#  if (isCache(table)) {
+   * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 编号。
    * @return 返回删除的记录数。
    */
@@ -205,6 +248,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 根据主键查询一条统计信息。
+   * //#  if (isCache(table)) {
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 编号。
    * @return 返回统计信息。
    */
@@ -218,6 +264,9 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
 
   /**
    * 根据主键查询一条统计信息。
+   * //#  if (isCache(table)) {
+   * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 编号。
    * @return 返回统计信息。
    */

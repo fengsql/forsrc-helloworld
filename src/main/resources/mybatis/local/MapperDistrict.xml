@@ -77,20 +77,12 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.District">
     UPDATE `t_district` SET
     <trim suffixOverrides=",">
-      <choose>
-        <when test='cityId != null'>
-          `city_id` = #{cityId,jdbcType=INTEGER},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='districtName != null and districtName != ""'>
-          `district_name` = #{districtName,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='districtName != null and districtName != ""'>
+        `district_name` = #{districtName,jdbcType=VARCHAR},
+      </if>
     </trim>
     WHERE `id` = #{id,jdbcType=INTEGER}
   </update>

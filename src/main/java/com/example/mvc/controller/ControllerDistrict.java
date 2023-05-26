@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api(tags = "县表", description = "县表相关的 API", position = 2)
+@Api(tags = "县表", description = "县表相关的 API", position = 1)
 @RestController
 @RequestMapping("/api/district")
 @Slf4j

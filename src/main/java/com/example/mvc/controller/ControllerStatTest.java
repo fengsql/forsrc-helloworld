@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Api(tags = "统计信息", description = "统计信息相关的 API", position = 5)
+@Api(tags = "统计信息", description = "统计信息相关的 API", position = 1)
 @RestController
 @RequestMapping("/api/statTest")
 @Slf4j

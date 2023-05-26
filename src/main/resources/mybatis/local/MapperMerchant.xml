@@ -47,7 +47,8 @@
     <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="score" jdbcType="INTEGER" property="score"/>
+    <result column="score" jdbcType="BIGINT" property="score"/>
+    <result column="times" jdbcType="INTEGER" property="times"/>
     <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
     <result column="merchantType" jdbcType="INTEGER" property="merchantType"/>
     <result column="merchantType_" jdbcType="VARCHAR" property="merchantType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleMerchantType"/>
@@ -57,7 +58,6 @@
     <result column="secret" jdbcType="VARCHAR" property="secret"/>
     <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="address" jdbcType="VARCHAR" property="address"/>
-    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- DetailResultMap -->
   <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailMerchant">
@@ -237,20 +237,12 @@
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
     UPDATE `t_merchant` SET
     <trim suffixOverrides=",">
-      <choose>
-        <when test='cityId != null'>
-          `city_id` = #{cityId,jdbcType=INTEGER},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='userId != null'>
-          `user_id` = #{userId,jdbcType=INTEGER},
-        </when>
-        <otherwise>
-        </otherwise>
-      </choose>
+      <if test='cityId != null'>
+        `city_id` = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=INTEGER},
+      </if>
       <choose>
         <when test='merchantType != null'>
           `merchant_type` = #{merchantType,jdbcType=INTEGER},
@@ -558,6 +550,7 @@
     `t_user`.`username` AS `username`,
     `t_user`.`email` AS `email`,
     `t_user`.`score` AS `score`,
+    `t_user`.`times` AS `times`,
     `t_user`.`head_img_url` AS `headImgUrl`,
     `t_merchant`.`merchant_type` AS `merchantType`, `t_merchant`.`merchant_type` AS `merchantType_`,
     `t_merchant`.`mch_name` AS `mchName`,
@@ -565,8 +558,7 @@
     `t_merchant`.`appid` AS `appid`,
     `t_merchant`.`secret` AS `secret`,
     `t_merchant`.`phone` AS `phone`,
-    `t_merchant`.`address` AS `address`,
-    `t_merchant`.`add_time` AS `addTime`
+    `t_merchant`.`address` AS `address`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">

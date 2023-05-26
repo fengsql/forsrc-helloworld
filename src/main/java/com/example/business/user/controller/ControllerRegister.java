@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Api(tags = "扩展功能-用户注册", description = "扩展功能用户注册 API", position = 10000)
+@Api(tags = "扩展功能-用户注册", description = "扩展功能-用户注册 API", position = 10000)
 @RestController
 @RequestMapping("/business/user/register")
 @Slf4j

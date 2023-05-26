@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.example.mvc.cache.CacheProvince;
@@ -41,7 +42,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 返回添加的省表。
    */
@@ -61,7 +64,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 返回添加的省表。
    */
@@ -71,7 +76,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 同步批量添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param provinces 省表。
    * @return 返回添加的省表数。
    */
@@ -96,7 +103,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 同步批量添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 如果开启了插入缓存配置，插入成功后添加缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param provinces 省表。
    * @return 返回添加的省表数。
    */
@@ -107,7 +116,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 异步批量添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param provinces 省表。
    */
   public void insertAsyn(HttpServletRequest request, HttpServletResponse response, List<Province> provinces) {
@@ -121,7 +132,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 异步批量添加省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 注意：异步模式不会添加到缓存中。
+   * //#  }
    * @param provinces 省表。
    */
   public void insertAsyn(List<Province> provinces) {
@@ -130,7 +143,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 更新省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -147,7 +162,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 更新省表。空值将被忽略。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -157,7 +174,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 更新省表。空值将被更新为 null。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -174,7 +193,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 更新省表。空值将被更新为空。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -184,21 +205,31 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 删除省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
-   * @param province 省表。
+   * //#  }
+   * @param province 省表。仅可传入主键、外键、常量字段作为条件。
    * @return 返回删除的记录数。
    */
   public int delete(HttpServletRequest request, HttpServletResponse response, Province province) {
     if (province == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    int count = cacheProvince.delete(province.getId()) ? 1 : 0;
-    return count;
+    List<Province> provinces_ = daoProvince.select(province);
+    if (Tool.isNull(provinces_)) {
+      return 0;
+    }
+    for (Province province1 : provinces_) {
+      cacheProvince.delete(province1.getId());
+    }
+    return provinces_.size();
   }
 
   /**
    * 删除省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 返回删除的记录数。
    */
@@ -208,7 +239,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 删除省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 省编号。
    * @return 返回删除的记录数。
    */
@@ -218,13 +251,21 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     }
     Province province = new Province();
     province.setId(id);
-    int count = cacheProvince.delete(id) ? 1 : 0;
-    return count;
+    Province province1 = cacheProvince.get(id);
+    if (province1 == null) {
+      return 0;
+    }
+    List<Province> provinces_ = new ArrayList<>();
+    provinces_.add(province1);
+    cacheProvince.delete(id);
+    return 1;
   }
 
   /**
    * 删除省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param id 省编号。
    * @return 返回删除的记录数。
    */
@@ -234,7 +275,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据主键查询一条省表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 省编号。
    * @return 返回省表。
    */
@@ -248,7 +291,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据主键查询一条省表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param id 省编号。
    * @return 返回省表。
    */
@@ -373,7 +418,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键更新一条省表，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -393,7 +440,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键更新一条省表，此方法不适用根据唯一键更改唯一键的字段值。
+   * //#  if (isCache(table)) {
    * 更新成功后，同时更新缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 0为失败；大于0为成功，返回更新的记录数。
    */
@@ -403,7 +452,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键删除一条省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 返回删除的记录数。
    */
@@ -416,13 +467,21 @@ public class ServiceProvince extends BaseService implements IService<Province> {
     }
     Province province1 = new Province();
     province1.setProvinceName(province.getProvinceName());
-    int count = cacheProvince.deleteByProvinceName(province1) ? 1 : 0;
-    return count;
+    Province province2 = cacheProvince.getByProvinceName(province1);
+    if (province2 == null) {
+      return 0;
+    }
+    List<Province> provinces_ = new ArrayList<>();
+    provinces_.add(province2);
+    cacheProvince.deleteByProvinceName(province2);
+    return 1;
   }
 
   /**
    * 根据唯一键删除一条省表。
+   * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
+   * //#  }
    * @param province 省表。
    * @return 返回删除的记录数。
    */
@@ -432,7 +491,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键查询一条省表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param province 省表。
    * @return 返回省表。
    */
@@ -449,7 +510,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键查询一条省表。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param province 省表。
    * @return 返回省表。
    */
@@ -459,7 +522,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键查询一条省表详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param province 省表。
    * @return 返回省表。
    */
@@ -476,7 +541,9 @@ public class ServiceProvince extends BaseService implements IService<Province> {
 
   /**
    * 根据唯一键查询一条省表详情。
+   * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
+   * //#  }
    * @param province 省表。
    * @return 返回省表。
    */

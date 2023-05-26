@@ -46,8 +46,11 @@ public class RepUser {
     @ApiModelProperty(value = "电子邮件", name = "email", dataType = "String", required = false)
     private String email;
 
-    @ApiModelProperty(value = "积分", name = "score", dataType = "Integer", required = false)
-    private Integer score;
+    @ApiModelProperty(value = "积分", name = "score", dataType = "Long", required = false)
+    private Long score;
+
+    @ApiModelProperty(value = "次数", name = "times", dataType = "Integer", required = false)
+    private Integer times;
 
     @ApiModelProperty(value = "出生日期", name = "birthDate", dataType = "java.util.Date", required = false)
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")

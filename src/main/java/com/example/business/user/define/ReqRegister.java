@@ -1,5 +1,6 @@
 package com.example.business.user.define;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,8 +35,14 @@ public class ReqRegister {
   /**
    * 积分
    */
-  @ApiModelProperty(value = "积分", name = "score", dataType = "Integer", required = false)
-  private Integer score;
+  @ApiModelProperty(value = "积分", name = "score", dataType = "Long", required = false)
+  private Long score;
+
+  /**
+   * 次数
+   */
+  @ApiModelProperty(value = "次数", name = "times", dataType = "Integer", required = false)
+  private Integer times;
 
   /**
    * 头像

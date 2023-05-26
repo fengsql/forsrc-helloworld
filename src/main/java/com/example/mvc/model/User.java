@@ -53,8 +53,14 @@ public class User {
   /**
    * 积分
    */
-  @ApiModelProperty(value = "积分", name = "score", dataType = "Integer", required = false)
-  private Integer score;
+  @ApiModelProperty(value = "积分", name = "score", dataType = "Long", required = false)
+  private Long score;
+
+  /**
+   * 次数
+   */
+  @ApiModelProperty(value = "次数", name = "times", dataType = "Integer", required = false)
+  private Integer times;
 
   /**
    * 出生日期
