@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 /**
  * 用户登录的返回信息。可以自定义返回数据。
  */
+@ApiModel(value = "用户登录的返回信息", description = "用户登录的返回信息。")
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "用户登录的返回信息", description = "用户登录的返回信息。")
 public class LoginResponse extends BLoginResponse {
 
   @ApiModelProperty(value = "用户编号", name = "id", dataType = "Integer", required = true)

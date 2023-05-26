@@ -403,66 +403,66 @@
     </if>
     <if test='crsDepTime != null'>
       <if test='crsDepTime.length > 0'>
-        AND `t_stat_test`.`crs_dep_time` &gt;= #{crsDepTime[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_dep_time` &gt;= #{crsDepTime.[0],jdbcType=DECIMAL}
       </if>
       <if test='crsDepTime.length > 1'>
-        AND `t_stat_test`.`crs_dep_time` &lt;= #{crsDepTime[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_dep_time` &lt;= #{crsDepTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='crsArrTime != null'>
       <if test='crsArrTime.length > 0'>
-        AND `t_stat_test`.`crs_arr_time` &gt;= #{crsArrTime[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_arr_time` &gt;= #{crsArrTime.[0],jdbcType=DECIMAL}
       </if>
       <if test='crsArrTime.length > 1'>
-        AND `t_stat_test`.`crs_arr_time` &lt;= #{crsArrTime[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_arr_time` &lt;= #{crsArrTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='flightNum != null'>
       <if test='flightNum.length > 0'>
-        AND `t_stat_test`.`flight_num` &gt;= #{flightNum[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`flight_num` &gt;= #{flightNum.[0],jdbcType=DECIMAL}
       </if>
       <if test='flightNum.length > 1'>
-        AND `t_stat_test`.`flight_num` &lt;= #{flightNum[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`flight_num` &lt;= #{flightNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='flightSum != null'>
       <if test='flightSum.length > 0'>
-        AND `t_stat_test`.`flight_sum` &gt;= #{flightSum[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`flight_sum` &gt;= #{flightSum.[0],jdbcType=DECIMAL}
       </if>
       <if test='flightSum.length > 1'>
-        AND `t_stat_test`.`flight_sum` &lt;= #{flightSum[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`flight_sum` &lt;= #{flightSum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='crsElapsedTime != null'>
       <if test='crsElapsedTime.length > 0'>
-        AND `t_stat_test`.`crs_elapsed_time` &gt;= #{crsElapsedTime[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_elapsed_time` &gt;= #{crsElapsedTime.[0],jdbcType=DECIMAL}
       </if>
       <if test='crsElapsedTime.length > 1'>
-        AND `t_stat_test`.`crs_elapsed_time` &lt;= #{crsElapsedTime[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`crs_elapsed_time` &lt;= #{crsElapsedTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='distance != null'>
       <if test='distance.length > 0'>
-        AND `t_stat_test`.`distance` &gt;= #{distance[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`distance` &gt;= #{distance.[0],jdbcType=DECIMAL}
       </if>
       <if test='distance.length > 1'>
-        AND `t_stat_test`.`distance` &lt;= #{distance[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`distance` &lt;= #{distance.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='distanceSum != null'>
       <if test='distanceSum.length > 0'>
-        AND `t_stat_test`.`distance_sum` &gt;= #{distanceSum[0],jdbcType=DECIMAL}
+        AND `t_stat_test`.`distance_sum` &gt;= #{distanceSum.[0],jdbcType=DECIMAL}
       </if>
       <if test='distanceSum.length > 1'>
-        AND `t_stat_test`.`distance_sum` &lt;= #{distanceSum[1],jdbcType=DECIMAL}
+        AND `t_stat_test`.`distance_sum` &lt;= #{distanceSum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='addTime != null'>
       <if test='addTime.length > 0'>
-        AND `t_stat_test`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+        AND `t_stat_test`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='addTime.length > 1'>
-        AND `t_stat_test`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+        AND `t_stat_test`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>

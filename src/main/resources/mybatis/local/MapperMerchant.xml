@@ -597,18 +597,18 @@
     </if>
     <if test='addTime != null'>
       <if test='addTime.length > 0'>
-        AND `t_merchant`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+        AND `t_merchant`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='addTime.length > 1'>
-        AND `t_merchant`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+        AND `t_merchant`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='updateTime != null'>
       <if test='updateTime.length > 0'>
-        AND `t_merchant`.`update_time` &gt;= #{updateTime[0],jdbcType=TIMESTAMP}
+        AND `t_merchant`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='updateTime.length > 1'>
-        AND `t_merchant`.`update_time` &lt;= #{updateTime[1],jdbcType=TIMESTAMP}
+        AND `t_merchant`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>

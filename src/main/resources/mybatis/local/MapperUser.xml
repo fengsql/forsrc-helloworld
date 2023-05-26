@@ -587,10 +587,10 @@
     </if>
     <if test='birthDate != null'>
       <if test='birthDate.length > 0'>
-        AND `t_user`.`birth_date` &gt;= #{birthDate[0],jdbcType=DATE}
+        AND `t_user`.`birth_date` &gt;= #{birthDate.[0],jdbcType=DATE}
       </if>
       <if test='birthDate.length > 1'>
-        AND `t_user`.`birth_date` &lt;= #{birthDate[1],jdbcType=DATE}
+        AND `t_user`.`birth_date` &lt;= #{birthDate.[1],jdbcType=DATE}
       </if>
     </if>
     <if test='headImgUrl != null and headImgUrl != ""'>
@@ -598,18 +598,18 @@
     </if>
     <if test='addTime != null'>
       <if test='addTime.length > 0'>
-        AND `t_user`.`add_time` &gt;= #{addTime[0],jdbcType=TIMESTAMP}
+        AND `t_user`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='addTime.length > 1'>
-        AND `t_user`.`add_time` &lt;= #{addTime[1],jdbcType=TIMESTAMP}
+        AND `t_user`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='updateTime != null'>
       <if test='updateTime.length > 0'>
-        AND `t_user`.`update_time` &gt;= #{updateTime[0],jdbcType=TIMESTAMP}
+        AND `t_user`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='updateTime.length > 1'>
-        AND `t_user`.`update_time` &lt;= #{updateTime[1],jdbcType=TIMESTAMP}
+        AND `t_user`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>
