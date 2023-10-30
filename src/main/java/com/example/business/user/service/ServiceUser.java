@@ -24,6 +24,14 @@ public class ServiceUser extends BaseService {
     return getRepUserSimple(userDetail);
   }
 
+  public String refreshToken(HttpServletRequest request, HttpServletResponse response) {
+    String token = ToolToken.refreshToken(request);
+    if (Tool.isNull(token)) {
+      throw new CommonException(Code.AUTHENTICATION_EXCEPTION);
+    }
+    return token;
+  }
+
   // >>----------------------- public -----------------------
 
   // <<----------------------- private -----------------------
@@ -36,14 +44,6 @@ public class ServiceUser extends BaseService {
     repUserSimple.setUsername(userDetail.getUsername());
     repUserSimple.setRoleType(userDetail.getRoleType());
     return repUserSimple;
-  }
-
-  public String refreshToken(HttpServletRequest request, HttpServletResponse response) {
-    String token = ToolToken.refreshToken(request);
-    if (Tool.isNull(token)) {
-      throw new CommonException(Code.AUTHENTICATION_EXCEPTION);
-    }
-    return token;
   }
 
   // >>>----------------------- getSimple -----------------------

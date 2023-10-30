@@ -126,6 +126,13 @@ public interface DaoProvince extends IDao<Province> {
   List<Map<String, Object>> selectList(Map<String, Object> map);
 
   /**
+   * 查询省表列表。可以指定查询字段，查询条件，设置分页。此查询有 sql 注入风险。
+   * @param paramQuery 查询的参数。
+   * @return 返回列表信息。
+   */
+  List<Map<String, Object>> selectMap(ParamQuery paramQuery);
+
+  /**
    * 查询省表列表。可以设置分页。此查询有 sql 注入风险。
    * @param paramQuery 查询的参数。
    * @return 返回的省表列表。

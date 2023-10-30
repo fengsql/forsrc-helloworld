@@ -3,7 +3,6 @@ package com.example.common.exception;
 import com.forsrc.common.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,7 +22,7 @@ public class LocalExceptionHandler extends BaseExceptionHandler {
    */
   @ExceptionHandler(Exception.class)
   @org.springframework.web.bind.annotation.ResponseBody
-  public ResponseEntity<?> handleException(Exception exception) throws Exception {
+  public Object handleException(Exception exception) throws Exception {
     if (exception instanceof SQLException) {  //可以实现自己的异常处理逻辑
       log.error(ExceptionUtils.getStackTrace(exception));
       return handleSQLException(exception);
@@ -31,7 +30,7 @@ public class LocalExceptionHandler extends BaseExceptionHandler {
     return super.handleException(exception);
   }
 
-  private ResponseEntity<?> handleSQLException(Exception exception) {
+  private Object handleSQLException(Exception exception) {
     return createResponseBody("SQL error!");
   }
 

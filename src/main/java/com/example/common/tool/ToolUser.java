@@ -17,13 +17,21 @@ public class ToolUser {
     return Tool.getRandomString(length_secret);
   }
 
+  public static void setVerifyCode(HttpServletRequest request, String verifyCode) {
+    request.getSession().setAttribute(Const.param_verifyCode, verifyCode);
+  }
+
+  public static void clearVerifyCode(HttpServletRequest request) {
+    request.getSession().setAttribute(Const.param_verifyCode, null);
+  }
+
   public static void checkVerifyCode(HttpServletRequest request, String verifyCode) {
     if (Tool.isNull(verifyCode)) {
       throw new CommonException("验证码为空!");
     }
     String code = (String) request.getSession().getAttribute(Const.param_verifyCode);
     if (Tool.isNull(code)) {
-      throw new CommonException("没有验证码!");
+      throw new CommonException("请刷新验证码!");
     }
     if (!verifyCode.trim().toLowerCase().equals(code.toLowerCase())) {
       throw new CommonException("验证码不匹配!");

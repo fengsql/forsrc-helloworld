@@ -2,8 +2,8 @@ package com.example.business.common.service;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
-import com.forsrc.common.constant.Const;
 import com.example.common.spring.base.BaseService;
+import com.example.common.tool.ToolUser;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ServiceVerifyCode extends BaseService {
     LineCaptcha captcha = CaptchaUtil.createLineCaptcha(80, 30, 4, 50);
     captcha.write(response.getOutputStream());
     String verifyCode = captcha.getCode();
-    request.getSession().setAttribute(Const.param_verifyCode, verifyCode);
+    ToolUser.setVerifyCode(request, verifyCode);
   }
 
   // >>----------------------- public -----------------------

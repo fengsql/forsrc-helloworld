@@ -327,6 +327,38 @@
     </if>
     ) t
   </select>
+  <!-- selectMap -->
+  <select id="selectMap" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM t_city
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
   <!-- selectConditional -->
   <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
     SELECT
