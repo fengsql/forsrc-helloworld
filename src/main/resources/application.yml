@@ -89,10 +89,6 @@ spring:
         deny: ''
         # 禁用 HTML 中 Reset All 按钮
         reset-enable: false
-  liquibase:
-    enabled: false
-  freemarker:
-    check-template-location: false
   # 发送邮件功能。如果启用此功能，建议将 management.health.mail.enabled 设为 true
   mail:
     host: '' #smtp.126.com
@@ -148,7 +144,7 @@ websocket:
   port: 8011
   # minute
   message-timeout: 30
-  #second
+  # second
   login-timeout: 30
 
 management:

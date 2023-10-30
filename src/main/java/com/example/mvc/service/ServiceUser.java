@@ -1,12 +1,5 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailUser;
-import com.example.mvc.bean.rep.RepUser;
-import com.example.mvc.bean.req.ReqUser;
-import com.example.mvc.cache.CacheUser;
-import com.example.mvc.dao.DaoUser;
-import com.example.mvc.model.User;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
@@ -18,8 +11,13 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailUser;
+import com.example.mvc.bean.rep.RepUser;
+import com.example.mvc.bean.req.ReqUser;
+import com.example.mvc.dao.DaoUser;
+import com.example.mvc.model.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.example.mvc.cache.CacheUser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Slf4j
