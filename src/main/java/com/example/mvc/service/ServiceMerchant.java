@@ -1,7 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailMerchant;
+import com.example.mvc.bean.rep.RepMerchant;
+import com.example.mvc.bean.req.ReqMerchant;
+import com.example.mvc.dao.DaoMerchant;
+import com.example.mvc.model.Merchant;
 import com.forsrc.common.constant.Code;
-import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
 import com.forsrc.common.db.batch.DbBatch;
 import com.forsrc.common.exception.CommonException;
@@ -11,12 +16,6 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailMerchant;
-import com.example.mvc.bean.rep.RepMerchant;
-import com.example.mvc.bean.req.ReqMerchant;
-import com.example.mvc.dao.DaoMerchant;
-import com.example.mvc.model.Merchant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,17 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.example.mvc.cache.CacheMerchant;
 
 @Service
 @Slf4j
 public class ServiceMerchant extends BaseService implements IService<Merchant> {
   private static final String tableName = "Merchant";
-  @Resource
-  private CacheMerchant cacheMerchant;
   @Resource
   private DaoMerchant daoMerchant;
   @Resource
@@ -55,9 +50,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     int count = daoMerchant.insert(merchant);
     if (count <= 0) {
       throw new CommonException("insert fail!");
-    }
-    if (ConfigCommon.redis.cacheInsert) {
-      cacheMerchant.put(merchant);
     }
     return merchant;
   }
@@ -92,9 +84,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
       int count = daoMerchant.insert(merchant);
       if (count <= 0) {
         throw new CommonException("insertSync fail!");
-      }
-      if (ConfigCommon.redis.cacheInsert) {
-        cacheMerchant.put(merchant);
       }
       num++;
     }
@@ -154,9 +143,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     int count = daoMerchant.update(merchant);
-    if (count > 0) {
-      cacheMerchant.update(daoMerchant.selectOne(merchant));
-    }
     return count;
   }
 
@@ -185,9 +171,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     int count = daoMerchant.updateEvenNull(merchant);
-    if (count > 0) {
-      cacheMerchant.update(daoMerchant.selectOne(merchant));
-    }
     return count;
   }
 
@@ -215,14 +198,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (merchant == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    List<Merchant> merchants_ = daoMerchant.select(merchant);
-    if (Tool.isNull(merchants_)) {
-      return 0;
-    }
-    for (Merchant merchant1 : merchants_) {
-      cacheMerchant.delete(merchant1.getMerchantId());
-    }
-    return merchants_.size();
+    int count = daoMerchant.delete(merchant);
+    return count;
   }
 
   /**
@@ -251,14 +228,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     }
     Merchant merchant = new Merchant();
     merchant.setMerchantId(merchantId);
-    Merchant merchant1 = cacheMerchant.get(merchantId);
-    if (merchant1 == null) {
-      return 0;
-    }
-    List<Merchant> merchants_ = new ArrayList<>();
-    merchants_.add(merchant1);
-    cacheMerchant.delete(merchantId);
-    return 1;
+    int count = daoMerchant.delete(merchant);
+    return count;
   }
 
   /**
@@ -285,7 +256,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (merchantId == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Merchant merchant = cacheMerchant.get(merchantId);
+    Merchant merchant = daoMerchant.selectByPrimary(merchantId);
     return merchant;
   }
 
@@ -435,9 +406,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
       throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
     }
     int count = daoMerchant.updateByMchNo(merchant);
-    if (count > 0) {
-      cacheMerchant.update(daoMerchant.selectOne(merchant));
-    }
     return count;
   }
 
@@ -474,14 +442,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     Merchant merchant1 = new Merchant();
     merchant1.setMchName(merchant.getMchName());
     merchant1.setMchNo(merchant.getMchNo());
-    Merchant merchant2 = cacheMerchant.getByMchNo(merchant1);
-    if (merchant2 == null) {
-      return 0;
-    }
-    List<Merchant> merchants_ = new ArrayList<>();
-    merchants_.add(merchant2);
-    cacheMerchant.deleteByMchNo(merchant2);
-    return 1;
+    int count = daoMerchant.deleteByMchNo(merchant1);
+    return count;
   }
 
   /**
@@ -514,7 +476,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getMchNo())) {
       throw new CommonException(Code.PARAM_EMPTY, "mchNo is null!");
     }
-    Merchant merchant0 = cacheMerchant.getByMchNo(merchant);
+    Merchant merchant0 = daoMerchant.selectByMchNo(merchant);
     return merchant0;
   }
 
@@ -580,9 +542,6 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
       throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
     }
     int count = daoMerchant.updateByAppid(merchant);
-    if (count > 0) {
-      cacheMerchant.update(daoMerchant.selectOne(merchant));
-    }
     return count;
   }
 
@@ -615,14 +574,8 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     }
     Merchant merchant1 = new Merchant();
     merchant1.setAppid(merchant.getAppid());
-    Merchant merchant2 = cacheMerchant.getByAppid(merchant1);
-    if (merchant2 == null) {
-      return 0;
-    }
-    List<Merchant> merchants_ = new ArrayList<>();
-    merchants_.add(merchant2);
-    cacheMerchant.deleteByAppid(merchant2);
-    return 1;
+    int count = daoMerchant.deleteByAppid(merchant1);
+    return count;
   }
 
   /**
@@ -652,7 +605,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     if (Tool.isNull(merchant.getAppid())) {
       throw new CommonException(Code.PARAM_EMPTY, "appid is null!");
     }
-    Merchant merchant0 = cacheMerchant.getByAppid(merchant);
+    Merchant merchant0 = daoMerchant.selectByAppid(merchant);
     return merchant0;
   }
 

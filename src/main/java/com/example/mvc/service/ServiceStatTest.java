@@ -1,7 +1,12 @@
 package com.example.mvc.service;
 
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailStatTest;
+import com.example.mvc.bean.rep.RepStatTest;
+import com.example.mvc.bean.req.ReqStatTest;
+import com.example.mvc.dao.DaoStatTest;
+import com.example.mvc.model.StatTest;
 import com.forsrc.common.constant.Code;
-import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
 import com.forsrc.common.db.batch.DbBatch;
 import com.forsrc.common.exception.CommonException;
@@ -11,12 +16,6 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailStatTest;
-import com.example.mvc.bean.rep.RepStatTest;
-import com.example.mvc.bean.req.ReqStatTest;
-import com.example.mvc.dao.DaoStatTest;
-import com.example.mvc.model.StatTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -436,25 +434,16 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
         field.setLength(32);
         field.setExportFieldType(Enum.ExportFieldType.string_);
         break;
-      case "crsDepTime":
+      case "argTime":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
-      case "crsArrTime":
+      case "totalTime":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
-      case "flightNum":
+      case "argNum":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
-      case "flightSum":
-        field.setExportFieldType(Enum.ExportFieldType.decimal_);
-        break;
-      case "crsElapsedTime":
-        field.setExportFieldType(Enum.ExportFieldType.decimal_);
-        break;
-      case "distance":
-        field.setExportFieldType(Enum.ExportFieldType.decimal_);
-        break;
-      case "distanceSum":
+      case "totalSum":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
       case "addTime":

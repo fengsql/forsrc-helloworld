@@ -21,46 +21,28 @@ public class StatTest {
   private String dayNo;
 
   /**
-   * 平均Dep时间
+   * 平均时间
    */
-  @ApiModelProperty(value = "平均Dep时间", name = "crsDepTime", dataType = "Double", required = false)
-  private Double crsDepTime;
+  @ApiModelProperty(value = "平均时间", name = "argTime", dataType = "Double", required = false)
+  private Double argTime;
 
   /**
-   * 平均Arr时间
+   * 总体时间
    */
-  @ApiModelProperty(value = "平均Arr时间", name = "crsArrTime", dataType = "Double", required = false)
-  private Double crsArrTime;
+  @ApiModelProperty(value = "总体时间", name = "totalTime", dataType = "Double", required = false)
+  private Double totalTime;
 
   /**
-   * 平均Flight个数
+   * 平均个数
    */
-  @ApiModelProperty(value = "平均Flight个数", name = "flightNum", dataType = "Double", required = false)
-  private Double flightNum;
+  @ApiModelProperty(value = "平均个数", name = "argNum", dataType = "Double", required = false)
+  private Double argNum;
 
   /**
-   * 总共Flight个数
+   * 总共个数
    */
-  @ApiModelProperty(value = "总共Flight个数", name = "flightSum", dataType = "Double", required = false)
-  private Double flightSum;
-
-  /**
-   * 平均Elapsed时间
-   */
-  @ApiModelProperty(value = "平均Elapsed时间", name = "crsElapsedTime", dataType = "Double", required = false)
-  private Double crsElapsedTime;
-
-  /**
-   * 平均距离
-   */
-  @ApiModelProperty(value = "平均距离", name = "distance", dataType = "Double", required = false)
-  private Double distance;
-
-  /**
-   * 总共距离
-   */
-  @ApiModelProperty(value = "总共距离", name = "distanceSum", dataType = "Double", required = false)
-  private Double distanceSum;
+  @ApiModelProperty(value = "总共个数", name = "totalSum", dataType = "Double", required = false)
+  private Double totalSum;
 
   /**
    * 输入时间

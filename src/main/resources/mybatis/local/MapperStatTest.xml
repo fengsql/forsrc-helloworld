@@ -5,52 +5,40 @@
   <sql id="Base_Column_List">
     `id`,
     `day_no`,
-    `crs_dep_time`,
-    `crs_arr_time`,
-    `flight_num`,
-    `flight_sum`,
-    `crs_elapsed_time`,
-    `distance`,
-    `distance_sum`,
+    `arg_time`,
+    `total_time`,
+    `arg_num`,
+    `total_sum`,
     `add_time`
   </sql>
   <!-- BaseResultMap -->
   <resultMap id="BaseResultMap" type="com.example.mvc.model.StatTest">
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="day_no" jdbcType="VARCHAR" property="dayNo"/>
-    <result column="crs_dep_time" jdbcType="DECIMAL" property="crsDepTime"/>
-    <result column="crs_arr_time" jdbcType="DECIMAL" property="crsArrTime"/>
-    <result column="flight_num" jdbcType="DECIMAL" property="flightNum"/>
-    <result column="flight_sum" jdbcType="DECIMAL" property="flightSum"/>
-    <result column="crs_elapsed_time" jdbcType="DECIMAL" property="crsElapsedTime"/>
-    <result column="distance" jdbcType="DECIMAL" property="distance"/>
-    <result column="distance_sum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="arg_time" jdbcType="DECIMAL" property="argTime"/>
+    <result column="total_time" jdbcType="DECIMAL" property="totalTime"/>
+    <result column="arg_num" jdbcType="DECIMAL" property="argNum"/>
+    <result column="total_sum" jdbcType="DECIMAL" property="totalSum"/>
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- RelativeResultMap -->
   <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepStatTest$StatTestRow">
     <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="dayNo" jdbcType="VARCHAR" property="dayNo"/>
-    <result column="crsDepTime" jdbcType="DECIMAL" property="crsDepTime"/>
-    <result column="crsArrTime" jdbcType="DECIMAL" property="crsArrTime"/>
-    <result column="flightNum" jdbcType="DECIMAL" property="flightNum"/>
-    <result column="flightSum" jdbcType="DECIMAL" property="flightSum"/>
-    <result column="crsElapsedTime" jdbcType="DECIMAL" property="crsElapsedTime"/>
-    <result column="distance" jdbcType="DECIMAL" property="distance"/>
-    <result column="distanceSum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="argTime" jdbcType="DECIMAL" property="argTime"/>
+    <result column="totalTime" jdbcType="DECIMAL" property="totalTime"/>
+    <result column="argNum" jdbcType="DECIMAL" property="argNum"/>
+    <result column="totalSum" jdbcType="DECIMAL" property="totalSum"/>
     <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- DetailResultMap -->
   <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailStatTest">
     <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="dayNo" jdbcType="VARCHAR" property="dayNo"/>
-    <result column="crsDepTime" jdbcType="DECIMAL" property="crsDepTime"/>
-    <result column="crsArrTime" jdbcType="DECIMAL" property="crsArrTime"/>
-    <result column="flightNum" jdbcType="DECIMAL" property="flightNum"/>
-    <result column="flightSum" jdbcType="DECIMAL" property="flightSum"/>
-    <result column="crsElapsedTime" jdbcType="DECIMAL" property="crsElapsedTime"/>
-    <result column="distance" jdbcType="DECIMAL" property="distance"/>
-    <result column="distanceSum" jdbcType="DECIMAL" property="distanceSum"/>
+    <result column="argTime" jdbcType="DECIMAL" property="argTime"/>
+    <result column="totalTime" jdbcType="DECIMAL" property="totalTime"/>
+    <result column="argNum" jdbcType="DECIMAL" property="argNum"/>
+    <result column="totalSum" jdbcType="DECIMAL" property="totalSum"/>
     <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- insert -->
@@ -60,26 +48,17 @@
       <if test='dayNo != null and dayNo != ""'>
         `day_no`,
       </if>
-      <if test='crsDepTime != null'>
-        `crs_dep_time`,
+      <if test='argTime != null'>
+        `arg_time`,
       </if>
-      <if test='crsArrTime != null'>
-        `crs_arr_time`,
+      <if test='totalTime != null'>
+        `total_time`,
       </if>
-      <if test='flightNum != null'>
-        `flight_num`,
+      <if test='argNum != null'>
+        `arg_num`,
       </if>
-      <if test='flightSum != null'>
-        `flight_sum`,
-      </if>
-      <if test='crsElapsedTime != null'>
-        `crs_elapsed_time`,
-      </if>
-      <if test='distance != null'>
-        `distance`,
-      </if>
-      <if test='distanceSum != null'>
-        `distance_sum`,
+      <if test='totalSum != null'>
+        `total_sum`,
       </if>
       <if test='addTime != null'>
         `add_time`,
@@ -89,26 +68,17 @@
       <if test='dayNo != null and dayNo != ""'>
         #{dayNo,jdbcType=VARCHAR},
       </if>
-      <if test='crsDepTime != null'>
-        #{crsDepTime,jdbcType=DECIMAL},
+      <if test='argTime != null'>
+        #{argTime,jdbcType=DECIMAL},
       </if>
-      <if test='crsArrTime != null'>
-        #{crsArrTime,jdbcType=DECIMAL},
+      <if test='totalTime != null'>
+        #{totalTime,jdbcType=DECIMAL},
       </if>
-      <if test='flightNum != null'>
-        #{flightNum,jdbcType=DECIMAL},
+      <if test='argNum != null'>
+        #{argNum,jdbcType=DECIMAL},
       </if>
-      <if test='flightSum != null'>
-        #{flightSum,jdbcType=DECIMAL},
-      </if>
-      <if test='crsElapsedTime != null'>
-        #{crsElapsedTime,jdbcType=DECIMAL},
-      </if>
-      <if test='distance != null'>
-        #{distance,jdbcType=DECIMAL},
-      </if>
-      <if test='distanceSum != null'>
-        #{distanceSum,jdbcType=DECIMAL},
+      <if test='totalSum != null'>
+        #{totalSum,jdbcType=DECIMAL},
       </if>
       <if test='addTime != null'>
         #{addTime,jdbcType=TIMESTAMP},
@@ -120,25 +90,19 @@
     INSERT INTO `t_stat_test` (
     <trim suffixOverrides=",">
       `day_no`,
-      `crs_dep_time`,
-      `crs_arr_time`,
-      `flight_num`,
-      `flight_sum`,
-      `crs_elapsed_time`,
-      `distance`,
-      `distance_sum`,
+      `arg_time`,
+      `total_time`,
+      `arg_num`,
+      `total_sum`,
       `add_time`,
     </trim>
     ) VALUES (
     <trim suffixOverrides=",">
       #{dayNo,jdbcType=VARCHAR},
-      #{crsDepTime,jdbcType=DECIMAL},
-      #{crsArrTime,jdbcType=DECIMAL},
-      #{flightNum,jdbcType=DECIMAL},
-      #{flightSum,jdbcType=DECIMAL},
-      #{crsElapsedTime,jdbcType=DECIMAL},
-      #{distance,jdbcType=DECIMAL},
-      #{distanceSum,jdbcType=DECIMAL},
+      #{argTime,jdbcType=DECIMAL},
+      #{totalTime,jdbcType=DECIMAL},
+      #{argNum,jdbcType=DECIMAL},
+      #{totalSum,jdbcType=DECIMAL},
       #{addTime,jdbcType=TIMESTAMP},
     </trim>
     )
@@ -150,26 +114,17 @@
       <if test='dayNo != null and dayNo != ""'>
         `day_no` = #{dayNo,jdbcType=VARCHAR},
       </if>
-      <if test='crsDepTime != null'>
-        `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
+      <if test='argTime != null'>
+        `arg_time` = #{argTime,jdbcType=DECIMAL},
       </if>
-      <if test='crsArrTime != null'>
-        `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
+      <if test='totalTime != null'>
+        `total_time` = #{totalTime,jdbcType=DECIMAL},
       </if>
-      <if test='flightNum != null'>
-        `flight_num` = #{flightNum,jdbcType=DECIMAL},
+      <if test='argNum != null'>
+        `arg_num` = #{argNum,jdbcType=DECIMAL},
       </if>
-      <if test='flightSum != null'>
-        `flight_sum` = #{flightSum,jdbcType=DECIMAL},
-      </if>
-      <if test='crsElapsedTime != null'>
-        `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
-      </if>
-      <if test='distance != null'>
-        `distance` = #{distance,jdbcType=DECIMAL},
-      </if>
-      <if test='distanceSum != null'>
-        `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
+      <if test='totalSum != null'>
+        `total_sum` = #{totalSum,jdbcType=DECIMAL},
       </if>
       <if test='addTime != null'>
         `add_time` = #{addTime,jdbcType=TIMESTAMP},
@@ -190,59 +145,35 @@
         </otherwise>
       </choose>
       <choose>
-        <when test='crsDepTime != null'>
-          `crs_dep_time` = #{crsDepTime,jdbcType=DECIMAL},
+        <when test='argTime != null'>
+          `arg_time` = #{argTime,jdbcType=DECIMAL},
         </when>
         <otherwise>
-          `crs_dep_time` = null,
+          `arg_time` = null,
         </otherwise>
       </choose>
       <choose>
-        <when test='crsArrTime != null'>
-          `crs_arr_time` = #{crsArrTime,jdbcType=DECIMAL},
+        <when test='totalTime != null'>
+          `total_time` = #{totalTime,jdbcType=DECIMAL},
         </when>
         <otherwise>
-          `crs_arr_time` = null,
+          `total_time` = null,
         </otherwise>
       </choose>
       <choose>
-        <when test='flightNum != null'>
-          `flight_num` = #{flightNum,jdbcType=DECIMAL},
+        <when test='argNum != null'>
+          `arg_num` = #{argNum,jdbcType=DECIMAL},
         </when>
         <otherwise>
-          `flight_num` = null,
+          `arg_num` = null,
         </otherwise>
       </choose>
       <choose>
-        <when test='flightSum != null'>
-          `flight_sum` = #{flightSum,jdbcType=DECIMAL},
+        <when test='totalSum != null'>
+          `total_sum` = #{totalSum,jdbcType=DECIMAL},
         </when>
         <otherwise>
-          `flight_sum` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='crsElapsedTime != null'>
-          `crs_elapsed_time` = #{crsElapsedTime,jdbcType=DECIMAL},
-        </when>
-        <otherwise>
-          `crs_elapsed_time` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='distance != null'>
-          `distance` = #{distance,jdbcType=DECIMAL},
-        </when>
-        <otherwise>
-          `distance` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='distanceSum != null'>
-          `distance_sum` = #{distanceSum,jdbcType=DECIMAL},
-        </when>
-        <otherwise>
-          `distance_sum` = null,
+          `total_sum` = null,
         </otherwise>
       </choose>
       <choose>
@@ -339,13 +270,10 @@
   <sql id="sql_detailField">
     `id` AS `id`,
     `day_no` AS `dayNo`,
-    `crs_dep_time` AS `crsDepTime`,
-    `crs_arr_time` AS `crsArrTime`,
-    `flight_num` AS `flightNum`,
-    `flight_sum` AS `flightSum`,
-    `crs_elapsed_time` AS `crsElapsedTime`,
-    `distance` AS `distance`,
-    `distance_sum` AS `distanceSum`,
+    `arg_time` AS `argTime`,
+    `total_time` AS `totalTime`,
+    `arg_num` AS `argNum`,
+    `total_sum` AS `totalSum`,
     `add_time` AS `addTime`
   </sql>
   <!-- sql_detailTable -->
@@ -384,13 +312,10 @@
   <sql id="sql_selectField">
     `id` AS `id`,
     `day_no` AS `dayNo`,
-    `crs_dep_time` AS `crsDepTime`,
-    `crs_arr_time` AS `crsArrTime`,
-    `flight_num` AS `flightNum`,
-    `flight_sum` AS `flightSum`,
-    `crs_elapsed_time` AS `crsElapsedTime`,
-    `distance` AS `distance`,
-    `distance_sum` AS `distanceSum`,
+    `arg_time` AS `argTime`,
+    `total_time` AS `totalTime`,
+    `arg_num` AS `argNum`,
+    `total_sum` AS `totalSum`,
     `add_time` AS `addTime`
   </sql>
   <!-- sql_selectCondition -->
@@ -401,60 +326,36 @@
     <if test='dayNo != null and dayNo != ""'>
       AND `t_stat_test`.`day_no` LIKE CONCAT ('%', #{dayNo,jdbcType=VARCHAR}, '%')
     </if>
-    <if test='crsDepTime != null'>
-      <if test='crsDepTime.length > 0'>
-        AND `t_stat_test`.`crs_dep_time` &gt;= #{crsDepTime.[0],jdbcType=DECIMAL}
+    <if test='argTime != null'>
+      <if test='argTime.length > 0'>
+        AND `t_stat_test`.`arg_time` &gt;= #{argTime.[0],jdbcType=DECIMAL}
       </if>
-      <if test='crsDepTime.length > 1'>
-        AND `t_stat_test`.`crs_dep_time` &lt;= #{crsDepTime.[1],jdbcType=DECIMAL}
-      </if>
-    </if>
-    <if test='crsArrTime != null'>
-      <if test='crsArrTime.length > 0'>
-        AND `t_stat_test`.`crs_arr_time` &gt;= #{crsArrTime.[0],jdbcType=DECIMAL}
-      </if>
-      <if test='crsArrTime.length > 1'>
-        AND `t_stat_test`.`crs_arr_time` &lt;= #{crsArrTime.[1],jdbcType=DECIMAL}
+      <if test='argTime.length > 1'>
+        AND `t_stat_test`.`arg_time` &lt;= #{argTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
-    <if test='flightNum != null'>
-      <if test='flightNum.length > 0'>
-        AND `t_stat_test`.`flight_num` &gt;= #{flightNum.[0],jdbcType=DECIMAL}
+    <if test='totalTime != null'>
+      <if test='totalTime.length > 0'>
+        AND `t_stat_test`.`total_time` &gt;= #{totalTime.[0],jdbcType=DECIMAL}
       </if>
-      <if test='flightNum.length > 1'>
-        AND `t_stat_test`.`flight_num` &lt;= #{flightNum.[1],jdbcType=DECIMAL}
-      </if>
-    </if>
-    <if test='flightSum != null'>
-      <if test='flightSum.length > 0'>
-        AND `t_stat_test`.`flight_sum` &gt;= #{flightSum.[0],jdbcType=DECIMAL}
-      </if>
-      <if test='flightSum.length > 1'>
-        AND `t_stat_test`.`flight_sum` &lt;= #{flightSum.[1],jdbcType=DECIMAL}
+      <if test='totalTime.length > 1'>
+        AND `t_stat_test`.`total_time` &lt;= #{totalTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
-    <if test='crsElapsedTime != null'>
-      <if test='crsElapsedTime.length > 0'>
-        AND `t_stat_test`.`crs_elapsed_time` &gt;= #{crsElapsedTime.[0],jdbcType=DECIMAL}
+    <if test='argNum != null'>
+      <if test='argNum.length > 0'>
+        AND `t_stat_test`.`arg_num` &gt;= #{argNum.[0],jdbcType=DECIMAL}
       </if>
-      <if test='crsElapsedTime.length > 1'>
-        AND `t_stat_test`.`crs_elapsed_time` &lt;= #{crsElapsedTime.[1],jdbcType=DECIMAL}
-      </if>
-    </if>
-    <if test='distance != null'>
-      <if test='distance.length > 0'>
-        AND `t_stat_test`.`distance` &gt;= #{distance.[0],jdbcType=DECIMAL}
-      </if>
-      <if test='distance.length > 1'>
-        AND `t_stat_test`.`distance` &lt;= #{distance.[1],jdbcType=DECIMAL}
+      <if test='argNum.length > 1'>
+        AND `t_stat_test`.`arg_num` &lt;= #{argNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
-    <if test='distanceSum != null'>
-      <if test='distanceSum.length > 0'>
-        AND `t_stat_test`.`distance_sum` &gt;= #{distanceSum.[0],jdbcType=DECIMAL}
+    <if test='totalSum != null'>
+      <if test='totalSum.length > 0'>
+        AND `t_stat_test`.`total_sum` &gt;= #{totalSum.[0],jdbcType=DECIMAL}
       </if>
-      <if test='distanceSum.length > 1'>
-        AND `t_stat_test`.`distance_sum` &lt;= #{distanceSum.[1],jdbcType=DECIMAL}
+      <if test='totalSum.length > 1'>
+        AND `t_stat_test`.`total_sum` &lt;= #{totalSum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='addTime != null'>
