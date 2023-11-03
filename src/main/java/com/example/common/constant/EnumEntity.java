@@ -11,12 +11,12 @@ import java.util.Map;
 public class EnumEntity {
 
   public enum Table implements IEnumField {
-    province_(1, "t_province", "省表"), //
-    city_(2, "t_city", "市表"), //
-    district_(3, "t_district", "县表"), //
-    user_(4, "t_user", "用户"), //
-    merchant_(5, "t_merchant", "商户表"), //
-    statTest_(6, "t_stat_test", "统计信息"), //
+    province_(1, "province", "省表"), //
+    city_(2, "city", "市表"), //
+    district_(3, "district", "县表"), //
+    user_(4, "user", "用户"), //
+    merchant_(5, "merchant", "商户表"), //
+    statTest_(6, "stat_test", "统计信息"), //
     ;
 
     @Getter

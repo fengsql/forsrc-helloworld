@@ -28,7 +28,7 @@
   </resultMap>
   <!-- insert -->
   <insert id="insert" parameterType="com.example.mvc.model.City" keyProperty="id" useGeneratedKeys="true">
-    INSERT INTO `t_city`
+    INSERT INTO `city`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test='provinceId != null'>
         `province_id`,
@@ -48,7 +48,7 @@
   </insert>
   <!-- insertEvenNull -->
   <insert id="insertEvenNull" parameterType="com.example.mvc.model.City" keyProperty="id" useGeneratedKeys="true">
-    INSERT INTO `t_city` (
+    INSERT INTO `city` (
     <trim suffixOverrides=",">
       `province_id`,
       `city_name`,
@@ -62,7 +62,7 @@
   </insert>
   <!-- update -->
   <update id="update" parameterType="com.example.mvc.model.City">
-    UPDATE `t_city`
+    UPDATE `city`
     <trim prefix="SET" suffixOverrides=",">
       <if test='provinceId != null'>
         `province_id` = #{provinceId,jdbcType=INTEGER},
@@ -75,7 +75,7 @@
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.City">
-    UPDATE `t_city` SET
+    UPDATE `city` SET
     <trim suffixOverrides=",">
       <if test='provinceId != null'>
         `province_id` = #{provinceId,jdbcType=INTEGER},
@@ -88,7 +88,7 @@
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
-    UPDATE `t_city` SET
+    UPDATE `city` SET
     <![CDATA[${updatePair}]]>
     <trim prefix="WHERE">
       <choose>
@@ -105,7 +105,7 @@
   </update>
   <!-- delete -->
   <delete id="delete" parameterType="com.example.mvc.model.City">
-    DELETE FROM `t_city`
+    DELETE FROM `city`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -117,7 +117,7 @@
   </delete>
   <!-- deleteConditional -->
   <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
-    DELETE FROM `t_city`
+    DELETE FROM `city`
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
@@ -135,14 +135,14 @@
   <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_city`
+    FROM `city`
     WHERE `id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_city`
+    FROM `city`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -160,7 +160,7 @@
   <select id="select" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_city`
+    FROM `city`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -176,14 +176,14 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `t_city`.`id` AS `id`,
-    `t_province`.`province_name` AS `provinceName`,
-    `t_city`.`city_name` AS `cityName`
+    `city`.`id` AS `id`,
+    `province`.`province_name` AS `provinceName`,
+    `city`.`city_name` AS `cityName`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
-    `t_city`
-    JOIN `t_province` AS `t_province` ON `t_city`.`province_id` = `t_province`.`id`
+    `city`
+    JOIN `province` AS `province` ON `city`.`province_id` = `province`.`id`
   </sql>
   <!-- selectDetail -->
   <select id="selectDetail" parameterType="com.example.mvc.model.City" resultMap="DetailResultMap">
@@ -193,13 +193,13 @@
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `t_city`.`id` = #{id,jdbcType=INTEGER}
+        AND `city`.`id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='provinceId != null'>
-        AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+        AND `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
       </if>
       <if test='cityName != null and cityName != ""'>
-        AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+        AND `city`.`city_name` = #{cityName,jdbcType=VARCHAR}
       </if>
     </trim>
     LIMIT 1
@@ -210,30 +210,30 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_city`.`id` = #{id,jdbcType=INTEGER}
+    WHERE `city`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
-    `t_city`
-    JOIN `t_province` AS `t_province` ON `t_city`.`province_id` = `t_province`.`id`
+    `city`
+    JOIN `province` AS `province` ON `city`.`province_id` = `province`.`id`
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `t_city`.`id` AS `id`,
-    `t_city`.`province_id` AS `provinceId`,
-    `t_province`.`province_name` AS `provinceName`,
-    `t_city`.`city_name` AS `cityName`
+    `city`.`id` AS `id`,
+    `city`.`province_id` AS `provinceId`,
+    `province`.`province_name` AS `provinceName`,
+    `city`.`city_name` AS `cityName`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
     <if test='id != null'>
-      AND `t_city`.`id` = #{id,jdbcType=INTEGER}
+      AND `city`.`id` = #{id,jdbcType=INTEGER}
     </if>
     <if test='provinceId != null'>
-      AND `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+      AND `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
     </if>
     <if test='cityName != null and cityName != ""'>
-      AND `t_city`.`city_name` LIKE CONCAT ('%', #{cityName,jdbcType=VARCHAR}, '%')
+      AND `city`.`city_name` LIKE CONCAT ('%', #{cityName,jdbcType=VARCHAR}, '%')
     </if>
     <if test='innerCondition != null and innerCondition != ""'>
       AND <![CDATA[${innerCondition}]]>
@@ -264,7 +264,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_city`.`id` DESC
+        ORDER BY `city`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -288,7 +288,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_city`.`id` DESC
+        ORDER BY `city`.`id` DESC
       </otherwise>
     </choose>
   </select>
@@ -319,7 +319,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_city`.`id` DESC
+        ORDER BY `city`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and rownum > 0'>
@@ -338,7 +338,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_city
+    FROM city
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -370,7 +370,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_city
+    FROM city
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -393,7 +393,7 @@
   </select>
   <!-- updateByCityName -->
   <update id="updateByCityName" parameterType="com.example.mvc.model.City">
-    UPDATE `t_city`
+    UPDATE `city`
     <trim prefix="SET" suffixOverrides=",">
       <if test='id != null'>
         `id` = #{id,jdbcType=INTEGER},
@@ -405,22 +405,22 @@
         `city_name` = #{cityName,jdbcType=VARCHAR},
       </if>
     </trim>
-    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    WHERE `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </update>
   <!-- deleteByCityName -->
   <delete id="deleteByCityName" parameterType="com.example.mvc.model.City">
-    DELETE FROM `t_city`
-    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    DELETE FROM `city`
+    WHERE `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </delete>
   <!-- selectByCityName -->
   <select id="selectByCityName" parameterType="com.example.mvc.model.City" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_city`
-    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    FROM `city`
+    WHERE `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </select>
   <!-- selectDetailByCityName -->
   <select id="selectDetailByCityName" parameterType="com.example.mvc.model.City" resultMap="DetailResultMap">
@@ -428,8 +428,8 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_city`.`province_id` = #{provinceId,jdbcType=INTEGER}
-    AND `t_city`.`city_name` = #{cityName,jdbcType=VARCHAR}
+    WHERE `city`.`province_id` = #{provinceId,jdbcType=INTEGER}
+    AND `city`.`city_name` = #{cityName,jdbcType=VARCHAR}
   </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
@@ -442,7 +442,7 @@
         COUNT(1)
       </otherwise>
     </choose>
-    FROM `t_city`
+    FROM `city`
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>

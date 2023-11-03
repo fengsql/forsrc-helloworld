@@ -43,7 +43,7 @@
   </resultMap>
   <!-- insert -->
   <insert id="insert" parameterType="com.example.mvc.model.StatTest" keyProperty="id" useGeneratedKeys="true">
-    INSERT INTO `t_stat_test`
+    INSERT INTO `stat_test`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test='dayNo != null and dayNo != ""'>
         `day_no`,
@@ -87,7 +87,7 @@
   </insert>
   <!-- insertEvenNull -->
   <insert id="insertEvenNull" parameterType="com.example.mvc.model.StatTest" keyProperty="id" useGeneratedKeys="true">
-    INSERT INTO `t_stat_test` (
+    INSERT INTO `stat_test` (
     <trim suffixOverrides=",">
       `day_no`,
       `arg_time`,
@@ -109,7 +109,7 @@
   </insert>
   <!-- update -->
   <update id="update" parameterType="com.example.mvc.model.StatTest">
-    UPDATE `t_stat_test`
+    UPDATE `stat_test`
     <trim prefix="SET" suffixOverrides=",">
       <if test='dayNo != null and dayNo != ""'>
         `day_no` = #{dayNo,jdbcType=VARCHAR},
@@ -134,7 +134,7 @@
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.StatTest">
-    UPDATE `t_stat_test` SET
+    UPDATE `stat_test` SET
     <trim suffixOverrides=",">
       <choose>
         <when test='dayNo != null and dayNo != ""'>
@@ -189,7 +189,7 @@
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
-    UPDATE `t_stat_test` SET
+    UPDATE `stat_test` SET
     <![CDATA[${updatePair}]]>
     <trim prefix="WHERE">
       <choose>
@@ -206,7 +206,7 @@
   </update>
   <!-- delete -->
   <delete id="delete" parameterType="com.example.mvc.model.StatTest">
-    DELETE FROM `t_stat_test`
+    DELETE FROM `stat_test`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -215,7 +215,7 @@
   </delete>
   <!-- deleteConditional -->
   <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
-    DELETE FROM `t_stat_test`
+    DELETE FROM `stat_test`
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
@@ -233,14 +233,14 @@
   <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_stat_test`
+    FROM `stat_test`
     WHERE `id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.StatTest" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_stat_test`
+    FROM `stat_test`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -255,7 +255,7 @@
   <select id="select" parameterType="com.example.mvc.model.StatTest" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_stat_test`
+    FROM `stat_test`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
         AND `id` = #{id,jdbcType=INTEGER}
@@ -278,7 +278,7 @@
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
-    `t_stat_test`
+    `stat_test`
   </sql>
   <!-- selectDetail -->
   <select id="selectDetail" parameterType="com.example.mvc.model.StatTest" resultMap="DetailResultMap">
@@ -288,10 +288,10 @@
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='id != null'>
-        AND `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
+        AND `stat_test`.`id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='dayNo != null and dayNo != ""'>
-        AND `t_stat_test`.`day_no` = #{dayNo,jdbcType=VARCHAR}
+        AND `stat_test`.`day_no` = #{dayNo,jdbcType=VARCHAR}
       </if>
     </trim>
     LIMIT 1
@@ -302,11 +302,11 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
+    WHERE `stat_test`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
-    `t_stat_test`
+    `stat_test`
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
@@ -321,49 +321,49 @@
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
     <if test='id != null'>
-      AND `t_stat_test`.`id` = #{id,jdbcType=INTEGER}
+      AND `stat_test`.`id` = #{id,jdbcType=INTEGER}
     </if>
     <if test='dayNo != null and dayNo != ""'>
-      AND `t_stat_test`.`day_no` LIKE CONCAT ('%', #{dayNo,jdbcType=VARCHAR}, '%')
+      AND `stat_test`.`day_no` LIKE CONCAT ('%', #{dayNo,jdbcType=VARCHAR}, '%')
     </if>
     <if test='argTime != null'>
       <if test='argTime.length > 0'>
-        AND `t_stat_test`.`arg_time` &gt;= #{argTime.[0],jdbcType=DECIMAL}
+        AND `stat_test`.`arg_time` &gt;= #{argTime.[0],jdbcType=DECIMAL}
       </if>
       <if test='argTime.length > 1'>
-        AND `t_stat_test`.`arg_time` &lt;= #{argTime.[1],jdbcType=DECIMAL}
+        AND `stat_test`.`arg_time` &lt;= #{argTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='totalTime != null'>
       <if test='totalTime.length > 0'>
-        AND `t_stat_test`.`total_time` &gt;= #{totalTime.[0],jdbcType=DECIMAL}
+        AND `stat_test`.`total_time` &gt;= #{totalTime.[0],jdbcType=DECIMAL}
       </if>
       <if test='totalTime.length > 1'>
-        AND `t_stat_test`.`total_time` &lt;= #{totalTime.[1],jdbcType=DECIMAL}
+        AND `stat_test`.`total_time` &lt;= #{totalTime.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='argNum != null'>
       <if test='argNum.length > 0'>
-        AND `t_stat_test`.`arg_num` &gt;= #{argNum.[0],jdbcType=DECIMAL}
+        AND `stat_test`.`arg_num` &gt;= #{argNum.[0],jdbcType=DECIMAL}
       </if>
       <if test='argNum.length > 1'>
-        AND `t_stat_test`.`arg_num` &lt;= #{argNum.[1],jdbcType=DECIMAL}
+        AND `stat_test`.`arg_num` &lt;= #{argNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='totalNum != null'>
       <if test='totalNum.length > 0'>
-        AND `t_stat_test`.`total_num` &gt;= #{totalNum.[0],jdbcType=DECIMAL}
+        AND `stat_test`.`total_num` &gt;= #{totalNum.[0],jdbcType=DECIMAL}
       </if>
       <if test='totalNum.length > 1'>
-        AND `t_stat_test`.`total_num` &lt;= #{totalNum.[1],jdbcType=DECIMAL}
+        AND `stat_test`.`total_num` &lt;= #{totalNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='addTime != null'>
       <if test='addTime.length > 0'>
-        AND `t_stat_test`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
+        AND `stat_test`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='addTime.length > 1'>
-        AND `t_stat_test`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
+        AND `stat_test`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>
@@ -395,7 +395,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_stat_test`.`id` DESC
+        ORDER BY `stat_test`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -419,7 +419,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_stat_test`.`id` DESC
+        ORDER BY `stat_test`.`id` DESC
       </otherwise>
     </choose>
   </select>
@@ -450,7 +450,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_stat_test`.`id` DESC
+        ORDER BY `stat_test`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and rownum > 0'>
@@ -469,7 +469,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_stat_test
+    FROM stat_test
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -501,7 +501,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_stat_test
+    FROM stat_test
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -533,7 +533,7 @@
         COUNT(1)
       </otherwise>
     </choose>
-    FROM `t_stat_test`
+    FROM `stat_test`
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>

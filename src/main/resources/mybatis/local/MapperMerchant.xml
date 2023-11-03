@@ -78,7 +78,7 @@
   </resultMap>
   <!-- insert -->
   <insert id="insert" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
-    INSERT INTO `t_merchant`
+    INSERT INTO `merchant`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test='cityId != null'>
         `city_id`,
@@ -158,7 +158,7 @@
   </insert>
   <!-- insertEvenNull -->
   <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
-    INSERT INTO `t_merchant` (
+    INSERT INTO `merchant` (
     <trim suffixOverrides=",">
       `city_id`,
       `user_id`,
@@ -192,7 +192,7 @@
   </insert>
   <!-- update -->
   <update id="update" parameterType="com.example.mvc.model.Merchant">
-    UPDATE `t_merchant`
+    UPDATE `merchant`
     <trim prefix="SET" suffixOverrides=",">
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},
@@ -235,7 +235,7 @@
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
-    UPDATE `t_merchant` SET
+    UPDATE `merchant` SET
     <trim suffixOverrides=",">
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},
@@ -328,7 +328,7 @@
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
-    UPDATE `t_merchant` SET
+    UPDATE `merchant` SET
     <![CDATA[${updatePair}]]>
     <trim prefix="WHERE">
       <choose>
@@ -345,7 +345,7 @@
   </update>
   <!-- delete -->
   <delete id="delete" parameterType="com.example.mvc.model.Merchant">
-    DELETE FROM `t_merchant`
+    DELETE FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
         AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
@@ -363,7 +363,7 @@
   </delete>
   <!-- deleteConditional -->
   <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
-    DELETE FROM `t_merchant`
+    DELETE FROM `merchant`
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
@@ -381,14 +381,14 @@
   <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_merchant`
+    FROM `merchant`
     WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_merchant`
+    FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
         AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
@@ -427,7 +427,7 @@
   <select id="select" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_merchant`
+    FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
         AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
@@ -464,25 +464,25 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `t_merchant`.`merchant_id` AS `merchantId`,
-    `t_city`.`city_name` AS `cityName`,
-    `t_user`.`username` AS `username`,
-    `t_merchant`.`merchant_type` AS `merchantType`, `t_merchant`.`merchant_type` AS `merchantType_`,
-    `t_merchant`.`mch_name` AS `mchName`,
-    `t_merchant`.`mch_no` AS `mchNo`,
-    `t_merchant`.`appid` AS `appid`,
-    `t_merchant`.`secret` AS `secret`,
-    `t_merchant`.`phone` AS `phone`,
-    `t_merchant`.`address` AS `address`,
-    `t_merchant`.`info` AS `info`,
-    `t_merchant`.`add_time` AS `addTime`,
-    `t_merchant`.`update_time` AS `updateTime`
+    `merchant`.`merchant_id` AS `merchantId`,
+    `city`.`city_name` AS `cityName`,
+    `user`.`username` AS `username`,
+    `merchant`.`merchant_type` AS `merchantType`, `merchant`.`merchant_type` AS `merchantType_`,
+    `merchant`.`mch_name` AS `mchName`,
+    `merchant`.`mch_no` AS `mchNo`,
+    `merchant`.`appid` AS `appid`,
+    `merchant`.`secret` AS `secret`,
+    `merchant`.`phone` AS `phone`,
+    `merchant`.`address` AS `address`,
+    `merchant`.`info` AS `info`,
+    `merchant`.`add_time` AS `addTime`,
+    `merchant`.`update_time` AS `updateTime`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
-    `t_merchant`
-    JOIN `t_city` AS `t_city` ON `t_merchant`.`city_id` = `t_city`.`id`
-    JOIN `t_user` AS `t_user` ON `t_merchant`.`user_id` = `t_user`.`id`
+    `merchant`
+    JOIN `city` AS `city` ON `merchant`.`city_id` = `city`.`id`
+    JOIN `user` AS `user` ON `merchant`.`user_id` = `user`.`id`
   </sql>
   <!-- selectDetail -->
   <select id="selectDetail" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
@@ -492,34 +492,34 @@
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
       <if test='merchantId != null'>
-        AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+        AND `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
-        AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
+        AND `merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
       </if>
       <if test='userId != null'>
-        AND `t_merchant`.`user_id` = #{userId,jdbcType=INTEGER}
+        AND `merchant`.`user_id` = #{userId,jdbcType=INTEGER}
       </if>
       <if test='merchantType != null'>
-        AND `t_merchant`.`merchant_type` = #{merchantType,jdbcType=INTEGER}
+        AND `merchant`.`merchant_type` = #{merchantType,jdbcType=INTEGER}
       </if>
       <if test='mchName != null and mchName != ""'>
-        AND `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+        AND `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
       </if>
       <if test='mchNo != null and mchNo != ""'>
-        AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+        AND `merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
       </if>
       <if test='appid != null and appid != ""'>
-        AND `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+        AND `merchant`.`appid` = #{appid,jdbcType=VARCHAR}
       </if>
       <if test='secret != null and secret != ""'>
-        AND `t_merchant`.`secret` = #{secret,jdbcType=VARCHAR}
+        AND `merchant`.`secret` = #{secret,jdbcType=VARCHAR}
       </if>
       <if test='phone != null and phone != ""'>
-        AND `t_merchant`.`phone` = #{phone,jdbcType=VARCHAR}
+        AND `merchant`.`phone` = #{phone,jdbcType=VARCHAR}
       </if>
       <if test='address != null and address != ""'>
-        AND `t_merchant`.`address` = #{address,jdbcType=VARCHAR}
+        AND `merchant`.`address` = #{address,jdbcType=VARCHAR}
       </if>
     </trim>
     LIMIT 1
@@ -530,85 +530,85 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+    WHERE `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
-    `t_merchant`
-    JOIN `t_city` AS `t_city` ON `t_merchant`.`city_id` = `t_city`.`id`
-    JOIN `t_user` AS `t_user` ON `t_merchant`.`user_id` = `t_user`.`id`
+    `merchant`
+    JOIN `city` AS `city` ON `merchant`.`city_id` = `city`.`id`
+    JOIN `user` AS `user` ON `merchant`.`user_id` = `user`.`id`
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `t_merchant`.`merchant_id` AS `merchantId`,
-    `t_merchant`.`city_id` AS `cityId`,
-    `t_city`.`city_name` AS `cityName`,
-    `t_merchant`.`user_id` AS `userId`,
-    `t_user`.`role_type` AS `roleType`, `t_user`.`role_type` AS `roleType_`,
-    `t_user`.`sex_type` AS `sexType`, `t_user`.`sex_type` AS `sexType_`,
-    `t_user`.`user_status` AS `userStatus`, `t_user`.`user_status` AS `userStatus_`,
-    `t_user`.`username` AS `username`,
-    `t_user`.`email` AS `email`,
-    `t_user`.`score` AS `score`,
-    `t_user`.`times` AS `times`,
-    `t_user`.`head_img_url` AS `headImgUrl`,
-    `t_merchant`.`merchant_type` AS `merchantType`, `t_merchant`.`merchant_type` AS `merchantType_`,
-    `t_merchant`.`mch_name` AS `mchName`,
-    `t_merchant`.`mch_no` AS `mchNo`,
-    `t_merchant`.`appid` AS `appid`,
-    `t_merchant`.`secret` AS `secret`,
-    `t_merchant`.`phone` AS `phone`,
-    `t_merchant`.`address` AS `address`
+    `merchant`.`merchant_id` AS `merchantId`,
+    `merchant`.`city_id` AS `cityId`,
+    `city`.`city_name` AS `cityName`,
+    `merchant`.`user_id` AS `userId`,
+    `user`.`role_type` AS `roleType`, `user`.`role_type` AS `roleType_`,
+    `user`.`sex_type` AS `sexType`, `user`.`sex_type` AS `sexType_`,
+    `user`.`user_status` AS `userStatus`, `user`.`user_status` AS `userStatus_`,
+    `user`.`username` AS `username`,
+    `user`.`email` AS `email`,
+    `user`.`score` AS `score`,
+    `user`.`times` AS `times`,
+    `user`.`head_img_url` AS `headImgUrl`,
+    `merchant`.`merchant_type` AS `merchantType`, `merchant`.`merchant_type` AS `merchantType_`,
+    `merchant`.`mch_name` AS `mchName`,
+    `merchant`.`mch_no` AS `mchNo`,
+    `merchant`.`appid` AS `appid`,
+    `merchant`.`secret` AS `secret`,
+    `merchant`.`phone` AS `phone`,
+    `merchant`.`address` AS `address`
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
     <if test='merchantId != null'>
-      AND `t_merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+      AND `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
     </if>
     <if test='cityId != null'>
-      AND `t_merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
+      AND `merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
     </if>
     <if test='userId != null'>
-      AND `t_merchant`.`user_id` = #{userId,jdbcType=INTEGER}
+      AND `merchant`.`user_id` = #{userId,jdbcType=INTEGER}
     </if>
     <if test="merchantType != null and merchantType.length > 0">
-      AND `t_merchant`.`merchant_type` IN
+      AND `merchant`.`merchant_type` IN
       <foreach collection="merchantType" item="item" index="index" open="(" close=")" separator=",">
         #{item}
       </foreach>
     </if>
     <if test='mchName != null and mchName != ""'>
-      AND `t_merchant`.`mch_name` LIKE CONCAT ('%', #{mchName,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`mch_name` LIKE CONCAT ('%', #{mchName,jdbcType=VARCHAR}, '%')
     </if>
     <if test='mchNo != null and mchNo != ""'>
-      AND `t_merchant`.`mch_no` LIKE CONCAT ('%', #{mchNo,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`mch_no` LIKE CONCAT ('%', #{mchNo,jdbcType=VARCHAR}, '%')
     </if>
     <if test='appid != null and appid != ""'>
-      AND `t_merchant`.`appid` LIKE CONCAT ('%', #{appid,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`appid` LIKE CONCAT ('%', #{appid,jdbcType=VARCHAR}, '%')
     </if>
     <if test='secret != null and secret != ""'>
-      AND `t_merchant`.`secret` LIKE CONCAT ('%', #{secret,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`secret` LIKE CONCAT ('%', #{secret,jdbcType=VARCHAR}, '%')
     </if>
     <if test='phone != null and phone != ""'>
-      AND `t_merchant`.`phone` LIKE CONCAT ('%', #{phone,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`phone` LIKE CONCAT ('%', #{phone,jdbcType=VARCHAR}, '%')
     </if>
     <if test='address != null and address != ""'>
-      AND `t_merchant`.`address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
+      AND `merchant`.`address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
     </if>
     <if test='addTime != null'>
       <if test='addTime.length > 0'>
-        AND `t_merchant`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
+        AND `merchant`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='addTime.length > 1'>
-        AND `t_merchant`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
+        AND `merchant`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='updateTime != null'>
       <if test='updateTime.length > 0'>
-        AND `t_merchant`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
+        AND `merchant`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='updateTime.length > 1'>
-        AND `t_merchant`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
+        AND `merchant`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>
@@ -640,7 +640,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`merchant_id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -664,7 +664,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`merchant_id` DESC
       </otherwise>
     </choose>
   </select>
@@ -695,7 +695,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `t_merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`merchant_id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and rownum > 0'>
@@ -714,7 +714,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_merchant
+    FROM merchant
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -746,7 +746,7 @@
         *
       </otherwise>
     </choose>
-    FROM t_merchant
+    FROM merchant
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
@@ -769,7 +769,7 @@
   </select>
   <!-- updateByMchNo -->
   <update id="updateByMchNo" parameterType="com.example.mvc.model.Merchant">
-    UPDATE `t_merchant`
+    UPDATE `merchant`
     <trim prefix="SET" suffixOverrides=",">
       <if test='merchantId != null'>
         `merchant_id` = #{merchantId,jdbcType=INTEGER},
@@ -811,22 +811,22 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    WHERE `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </update>
   <!-- deleteByMchNo -->
   <delete id="deleteByMchNo" parameterType="com.example.mvc.model.Merchant">
-    DELETE FROM `t_merchant`
-    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    DELETE FROM `merchant`
+    WHERE `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </delete>
   <!-- selectByMchNo -->
   <select id="selectByMchNo" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_merchant`
-    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    FROM `merchant`
+    WHERE `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </select>
   <!-- selectDetailByMchNo -->
   <select id="selectDetailByMchNo" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
@@ -834,12 +834,12 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
-    AND `t_merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
+    WHERE `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
+    AND `merchant`.`mch_no` = #{mchNo,jdbcType=VARCHAR}
   </select>
   <!-- updateByAppid -->
   <update id="updateByAppid" parameterType="com.example.mvc.model.Merchant">
-    UPDATE `t_merchant`
+    UPDATE `merchant`
     <trim prefix="SET" suffixOverrides=",">
       <if test='merchantId != null'>
         `merchant_id` = #{merchantId,jdbcType=INTEGER},
@@ -881,19 +881,19 @@
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
-    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    WHERE `merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </update>
   <!-- deleteByAppid -->
   <delete id="deleteByAppid" parameterType="com.example.mvc.model.Merchant">
-    DELETE FROM `t_merchant`
-    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    DELETE FROM `merchant`
+    WHERE `merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </delete>
   <!-- selectByAppid -->
   <select id="selectByAppid" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM `t_merchant`
-    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    FROM `merchant`
+    WHERE `merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </select>
   <!-- selectDetailByAppid -->
   <select id="selectDetailByAppid" parameterType="com.example.mvc.model.Merchant" resultMap="DetailResultMap">
@@ -901,7 +901,7 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `t_merchant`.`appid` = #{appid,jdbcType=VARCHAR}
+    WHERE `merchant`.`appid` = #{appid,jdbcType=VARCHAR}
   </select>
   <!-- selectSum -->
   <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
@@ -914,7 +914,7 @@
         COUNT(1)
       </otherwise>
     </choose>
-    FROM `t_merchant`
+    FROM `merchant`
     <trim prefix="WHERE">
       <if test='condition != null and condition != ""'>
         <![CDATA[${condition}]]>
