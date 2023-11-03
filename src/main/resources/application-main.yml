@@ -28,8 +28,6 @@ redis:
   password: ''
   # 设置本项目所有缓存key的前缀，空时不设置前缀
   cache-prefix: "example"
-  # 设置key的前缀，默认为英文冒号:
-  key-prefix: ":"
   # 过期时间，单位为秒，默认0不设置过期时间
   ttl: 3600
   # 刷新时间，second，获取缓存后判断，当缓存过期时间小于或等于这个时间时刷新过期时间
@@ -38,9 +36,12 @@ redis:
   cache-insert: true
 
 website:
+  register:
+    enable: true  # 是否开启注册功能，默认 false
+  verifycode:
+    enable: false  # 是否开启图片验证码功能，默认 false
   upload:
-    # 上传文件或图片的文件夹
-    folder: 'upload'
+    folder: 'upload'  # 上传文件或图片的文件夹
 
 project:
   # 统计任务配置。cron格式：秒 分 小时 月份中的日期 月份 星期中的日期 年份(可选)。
@@ -51,10 +52,6 @@ project:
 security:
   # 是否开启权限认证，默认 false
   enable: true
-  # 是否开启图像验证码进行验证，默认 false
-  enable-verify-code: false
-  # 是否开启注册功能，默认 false
-  enable-register: true
   token:
     # token 在 header 中的名称，默认 token
     name: token
@@ -80,7 +77,7 @@ security:
     # error
     - '/error'
     # register
-    - '/business/register/*'
+    - '/business/user/register/*'
   # 登录后，任何角色都可以访问
   all:
     - '/api/**/*'
