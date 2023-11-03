@@ -26,8 +26,8 @@ public class ReqStatTest extends BaseRequest {
   @ApiModelProperty(value = "平均个数", name = "argNum", dataType = "Double[]")
   private Double[] argNum;
 
-  @ApiModelProperty(value = "总共个数", name = "totalSum", dataType = "Double[]")
-  private Double[] totalSum;
+  @ApiModelProperty(value = "总共个数", name = "totalNum", dataType = "Double[]")
+  private Double[] totalNum;
 
   @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date[]")
   private java.util.Date[] addTime;

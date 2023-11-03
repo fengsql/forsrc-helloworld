@@ -24,8 +24,8 @@ public class DetailStatTest {
   @ApiModelProperty(value = "平均个数", name = "argNum", dataType = "Double", required = false)
   private Double argNum;
 
-  @ApiModelProperty(value = "总共个数", name = "totalSum", dataType = "Double", required = false)
-  private Double totalSum;
+  @ApiModelProperty(value = "总共个数", name = "totalNum", dataType = "Double", required = false)
+  private Double totalNum;
 
   @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
   @JSONField(format = "yyyy-MM-dd HH:mm:ss")

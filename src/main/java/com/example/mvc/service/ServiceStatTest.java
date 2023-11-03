@@ -443,7 +443,7 @@ public class ServiceStatTest extends BaseService implements IService<StatTest> {
       case "argNum":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
-      case "totalSum":
+      case "totalNum":
         field.setExportFieldType(Enum.ExportFieldType.decimal_);
         break;
       case "addTime":

@@ -41,8 +41,8 @@ public class StatTest {
   /**
    * 总共个数
    */
-  @ApiModelProperty(value = "总共个数", name = "totalSum", dataType = "Double", required = false)
-  private Double totalSum;
+  @ApiModelProperty(value = "总共个数", name = "totalNum", dataType = "Double", required = false)
+  private Double totalNum;
 
   /**
    * 输入时间

@@ -8,7 +8,7 @@
     `arg_time`,
     `total_time`,
     `arg_num`,
-    `total_sum`,
+    `total_num`,
     `add_time`
   </sql>
   <!-- BaseResultMap -->
@@ -18,7 +18,7 @@
     <result column="arg_time" jdbcType="DECIMAL" property="argTime"/>
     <result column="total_time" jdbcType="DECIMAL" property="totalTime"/>
     <result column="arg_num" jdbcType="DECIMAL" property="argNum"/>
-    <result column="total_sum" jdbcType="DECIMAL" property="totalSum"/>
+    <result column="total_num" jdbcType="DECIMAL" property="totalNum"/>
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- RelativeResultMap -->
@@ -28,7 +28,7 @@
     <result column="argTime" jdbcType="DECIMAL" property="argTime"/>
     <result column="totalTime" jdbcType="DECIMAL" property="totalTime"/>
     <result column="argNum" jdbcType="DECIMAL" property="argNum"/>
-    <result column="totalSum" jdbcType="DECIMAL" property="totalSum"/>
+    <result column="totalNum" jdbcType="DECIMAL" property="totalNum"/>
     <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- DetailResultMap -->
@@ -38,7 +38,7 @@
     <result column="argTime" jdbcType="DECIMAL" property="argTime"/>
     <result column="totalTime" jdbcType="DECIMAL" property="totalTime"/>
     <result column="argNum" jdbcType="DECIMAL" property="argNum"/>
-    <result column="totalSum" jdbcType="DECIMAL" property="totalSum"/>
+    <result column="totalNum" jdbcType="DECIMAL" property="totalNum"/>
     <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- insert -->
@@ -57,8 +57,8 @@
       <if test='argNum != null'>
         `arg_num`,
       </if>
-      <if test='totalSum != null'>
-        `total_sum`,
+      <if test='totalNum != null'>
+        `total_num`,
       </if>
       <if test='addTime != null'>
         `add_time`,
@@ -77,8 +77,8 @@
       <if test='argNum != null'>
         #{argNum,jdbcType=DECIMAL},
       </if>
-      <if test='totalSum != null'>
-        #{totalSum,jdbcType=DECIMAL},
+      <if test='totalNum != null'>
+        #{totalNum,jdbcType=DECIMAL},
       </if>
       <if test='addTime != null'>
         #{addTime,jdbcType=TIMESTAMP},
@@ -93,7 +93,7 @@
       `arg_time`,
       `total_time`,
       `arg_num`,
-      `total_sum`,
+      `total_num`,
       `add_time`,
     </trim>
     ) VALUES (
@@ -102,7 +102,7 @@
       #{argTime,jdbcType=DECIMAL},
       #{totalTime,jdbcType=DECIMAL},
       #{argNum,jdbcType=DECIMAL},
-      #{totalSum,jdbcType=DECIMAL},
+      #{totalNum,jdbcType=DECIMAL},
       #{addTime,jdbcType=TIMESTAMP},
     </trim>
     )
@@ -123,8 +123,8 @@
       <if test='argNum != null'>
         `arg_num` = #{argNum,jdbcType=DECIMAL},
       </if>
-      <if test='totalSum != null'>
-        `total_sum` = #{totalSum,jdbcType=DECIMAL},
+      <if test='totalNum != null'>
+        `total_num` = #{totalNum,jdbcType=DECIMAL},
       </if>
       <if test='addTime != null'>
         `add_time` = #{addTime,jdbcType=TIMESTAMP},
@@ -169,11 +169,11 @@
         </otherwise>
       </choose>
       <choose>
-        <when test='totalSum != null'>
-          `total_sum` = #{totalSum,jdbcType=DECIMAL},
+        <when test='totalNum != null'>
+          `total_num` = #{totalNum,jdbcType=DECIMAL},
         </when>
         <otherwise>
-          `total_sum` = null,
+          `total_num` = null,
         </otherwise>
       </choose>
       <choose>
@@ -273,7 +273,7 @@
     `arg_time` AS `argTime`,
     `total_time` AS `totalTime`,
     `arg_num` AS `argNum`,
-    `total_sum` AS `totalSum`,
+    `total_num` AS `totalNum`,
     `add_time` AS `addTime`
   </sql>
   <!-- sql_detailTable -->
@@ -315,7 +315,7 @@
     `arg_time` AS `argTime`,
     `total_time` AS `totalTime`,
     `arg_num` AS `argNum`,
-    `total_sum` AS `totalSum`,
+    `total_num` AS `totalNum`,
     `add_time` AS `addTime`
   </sql>
   <!-- sql_selectCondition -->
@@ -350,12 +350,12 @@
         AND `t_stat_test`.`arg_num` &lt;= #{argNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
-    <if test='totalSum != null'>
-      <if test='totalSum.length > 0'>
-        AND `t_stat_test`.`total_sum` &gt;= #{totalSum.[0],jdbcType=DECIMAL}
+    <if test='totalNum != null'>
+      <if test='totalNum.length > 0'>
+        AND `t_stat_test`.`total_num` &gt;= #{totalNum.[0],jdbcType=DECIMAL}
       </if>
-      <if test='totalSum.length > 1'>
-        AND `t_stat_test`.`total_sum` &lt;= #{totalSum.[1],jdbcType=DECIMAL}
+      <if test='totalNum.length > 1'>
+        AND `t_stat_test`.`total_num` &lt;= #{totalNum.[1],jdbcType=DECIMAL}
       </if>
     </if>
     <if test='addTime != null'>
