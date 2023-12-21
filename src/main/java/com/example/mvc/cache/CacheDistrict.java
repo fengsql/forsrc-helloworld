@@ -94,6 +94,21 @@ public class CacheDistrict extends BCacheTable<District> {
     return ok;
   }
 
+  /**
+   * 根据主键清除一条缓存的县表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。仅清除缓存，不清除数据库。
+   * @param id 县编号。
+   */
+  public void remove(Integer id) {
+    removeTable(Tool.toString(id));
+  }
+
+  /**
+   * 清除所有缓存的县表。仅清除缓存，不清除数据库。
+   */
+  public void clear() {
+    removeAll();
+  }
+
   // >>>----------------------- normal -----------------------
 
   // <<<----------------------- index -----------------------
@@ -170,7 +185,7 @@ public class CacheDistrict extends BCacheTable<District> {
   /**
    * 实现抽象方法。设置主键值。
    * @param district 县表。
-   * @param id 主键值。
+   * @param id      主键值。
    */
   @Override
   protected void setPrimaryId(District district, String id) {

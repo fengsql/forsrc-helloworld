@@ -23,9 +23,9 @@ public class ServiceRegister {
   private static final int size_username = 6;  //用户名最小长度
   private static final int size_password = 6;  //密码最小长度
 
-  @Value("${security.enable-verify-code:false}")
+  @Value("${website.verifycode.enable:false}")
   private Boolean enableVerifyCode;
-  @Value("${security.enable-register:false}")
+  @Value("${website.register.enable:false}")
   private Boolean enableRegister;
   @Resource
   private PasswordEncoder passwordEncoder;

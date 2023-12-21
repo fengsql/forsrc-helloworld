@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class DetailMerchant {
 
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
-  private Integer merchantId;
+  @ApiModelProperty(value = "商户编号", name = "id", dataType = "Integer", required = true)
+  private Integer id;
 
   @ApiModelProperty(value = "市名称", name = "cityName", dataType = "String", required = true)
   private String cityName;
@@ -18,19 +18,19 @@ public class DetailMerchant {
   @ApiModelProperty(value = "用户名", name = "username", dataType = "String", required = true)
   private String username;
 
-  @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = false)
+  @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = true)
   private Integer merchantType;
 
-  @ApiModelProperty(value = "商户类型", name = "merchantType_", dataType = "String", required = false)
+  @ApiModelProperty(value = "商户类型", name = "merchantType_", dataType = "String", required = true)
   private String merchantType_;
 
-  @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = false)
+  @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = true)
   private String mchName;
 
-  @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = false)
+  @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = true)
   private String mchNo;
 
-  @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = false)
+  @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = true)
   private String appid;
 
   @ApiModelProperty(value = "秘钥", name = "secret", dataType = "String", required = false)
@@ -45,12 +45,12 @@ public class DetailMerchant {
   @ApiModelProperty(value = "说明", name = "info", dataType = "String", required = false)
   private String info;
 
-  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
-  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-  private java.util.Date addTime;
-
   @ApiModelProperty(value = "更新时间", name = "updateTime", dataType = "java.util.Date", required = false)
   @JSONField(format = "yyyy-MM-dd HH:mm:ss")
   private java.util.Date updateTime;
+
+  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
+  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+  private java.util.Date addTime;
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mvc.dao.DaoMerchant">
   <!-- Base_Column_List -->
   <sql id="Base_Column_List">
-    `merchant_id`,
+    `id`,
     `city_id`,
     `user_id`,
     `merchant_type`,
@@ -14,12 +14,12 @@
     `phone`,
     `address`,
     `info`,
-    `add_time`,
-    `update_time`
+    `update_time`,
+    `add_time`
   </sql>
   <!-- BaseResultMap -->
   <resultMap id="BaseResultMap" type="com.example.mvc.model.Merchant">
-    <id column="merchant_id" jdbcType="INTEGER" property="merchantId"/>
+    <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="city_id" jdbcType="INTEGER" property="cityId"/>
     <result column="user_id" jdbcType="INTEGER" property="userId"/>
     <result column="merchant_type" jdbcType="INTEGER" property="merchantType"/>
@@ -30,12 +30,12 @@
     <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="address" jdbcType="VARCHAR" property="address"/>
     <result column="info" jdbcType="VARCHAR" property="info"/>
-    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- RelativeResultMap -->
   <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepMerchant$MerchantRow">
-    <result column="merchantId" jdbcType="INTEGER" property="merchantId"/>
+    <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="cityId" jdbcType="INTEGER" property="cityId"/>
     <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
     <result column="userId" jdbcType="INTEGER" property="userId"/>
@@ -61,7 +61,7 @@
   </resultMap>
   <!-- DetailResultMap -->
   <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailMerchant">
-    <result column="merchantId" jdbcType="INTEGER" property="merchantId"/>
+    <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="cityName" jdbcType="VARCHAR" property="cityName"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="merchantType" jdbcType="INTEGER" property="merchantType"/>
@@ -73,11 +73,11 @@
     <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="address" jdbcType="VARCHAR" property="address"/>
     <result column="info" jdbcType="VARCHAR" property="info"/>
-    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
   </resultMap>
   <!-- insert -->
-  <insert id="insert" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
+  <insert id="insert" parameterType="com.example.mvc.model.Merchant" keyProperty="id" useGeneratedKeys="true">
     INSERT INTO `merchant`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test='cityId != null'>
@@ -110,11 +110,11 @@
       <if test='info != null and info != ""'>
         `info`,
       </if>
-      <if test='addTime != null'>
-        `add_time`,
-      </if>
       <if test='updateTime != null'>
         `update_time`,
+      </if>
+      <if test='addTime != null'>
+        `add_time`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -148,16 +148,16 @@
       <if test='info != null and info != ""'>
         #{info,jdbcType=VARCHAR},
       </if>
-      <if test='addTime != null'>
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test='updateTime != null'>
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='addTime != null'>
+        #{addTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <!-- insertEvenNull -->
-  <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant" keyProperty="merchantId" useGeneratedKeys="true">
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.Merchant" keyProperty="id" useGeneratedKeys="true">
     INSERT INTO `merchant` (
     <trim suffixOverrides=",">
       `city_id`,
@@ -170,8 +170,8 @@
       `phone`,
       `address`,
       `info`,
-      `add_time`,
       `update_time`,
+      `add_time`,
     </trim>
     ) VALUES (
     <trim suffixOverrides=",">
@@ -185,8 +185,8 @@
       #{phone,jdbcType=VARCHAR},
       #{address,jdbcType=VARCHAR},
       #{info,jdbcType=VARCHAR},
-      #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP},
+      #{addTime,jdbcType=TIMESTAMP},
     </trim>
     )
   </insert>
@@ -224,14 +224,14 @@
       <if test='info != null and info != ""'>
         `info` = #{info,jdbcType=VARCHAR},
       </if>
-      <if test='addTime != null'>
-        `add_time` = #{addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test='updateTime != null'>
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
-    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </update>
   <!-- updateEvenNull -->
   <update id="updateEvenNull" parameterType="com.example.mvc.model.Merchant">
@@ -243,38 +243,18 @@
       <if test='userId != null'>
         `user_id` = #{userId,jdbcType=INTEGER},
       </if>
-      <choose>
-        <when test='merchantType != null'>
-          `merchant_type` = #{merchantType,jdbcType=INTEGER},
-        </when>
-        <otherwise>
-          `merchant_type` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='mchName != null and mchName != ""'>
-          `mch_name` = #{mchName,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-          `mch_name` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='mchNo != null and mchNo != ""'>
-          `mch_no` = #{mchNo,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-          `mch_no` = null,
-        </otherwise>
-      </choose>
-      <choose>
-        <when test='appid != null and appid != ""'>
-          `appid` = #{appid,jdbcType=VARCHAR},
-        </when>
-        <otherwise>
-          `appid` = null,
-        </otherwise>
-      </choose>
+      <if test='merchantType != null'>
+        `merchant_type` = #{merchantType,jdbcType=INTEGER},
+      </if>
+      <if test='mchName != null and mchName != ""'>
+        `mch_name` = #{mchName,jdbcType=VARCHAR},
+      </if>
+      <if test='mchNo != null and mchNo != ""'>
+        `mch_no` = #{mchNo,jdbcType=VARCHAR},
+      </if>
+      <if test='appid != null and appid != ""'>
+        `appid` = #{appid,jdbcType=VARCHAR},
+      </if>
       <choose>
         <when test='secret != null and secret != ""'>
           `secret` = #{secret,jdbcType=VARCHAR},
@@ -308,14 +288,6 @@
         </otherwise>
       </choose>
       <choose>
-        <when test='addTime != null'>
-          `add_time` = #{addTime,jdbcType=TIMESTAMP},
-        </when>
-        <otherwise>
-          `add_time` = null,
-        </otherwise>
-      </choose>
-      <choose>
         <when test='updateTime != null'>
           `update_time` = #{updateTime,jdbcType=TIMESTAMP},
         </when>
@@ -323,8 +295,16 @@
           `update_time` = null,
         </otherwise>
       </choose>
+      <choose>
+        <when test='addTime != null'>
+          `add_time` = #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `add_time` = null,
+        </otherwise>
+      </choose>
     </trim>
-    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </update>
   <!-- updateConditional -->
   <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
@@ -333,7 +313,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `merchant_id` = #{primaryId,jdbcType=INTEGER}
+          `id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -347,8 +327,8 @@
   <delete id="delete" parameterType="com.example.mvc.model.Merchant">
     DELETE FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
-      <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -367,7 +347,7 @@
     <trim prefix="WHERE">
       <choose>
         <when test='primaryId != null'>
-          `merchant_id` = #{primaryId,jdbcType=INTEGER}
+          `id` = #{primaryId,jdbcType=INTEGER}
         </when>
         <otherwise>
           <if test='condition != null and condition != ""'>
@@ -382,7 +362,7 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM `merchant`
-    WHERE `merchant_id` = #{merchantId,jdbcType=INTEGER}
+    WHERE `id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- selectOne -->
   <select id="selectOne" parameterType="com.example.mvc.model.Merchant" resultMap="BaseResultMap">
@@ -390,8 +370,8 @@
     <include refid="Base_Column_List"/>
     FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
-      <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -429,8 +409,8 @@
     <include refid="Base_Column_List"/>
     FROM `merchant`
     <trim prefix="WHERE" prefixOverrides="AND|OR">
-      <if test='merchantId != null'>
-        AND `merchant_id` = #{merchantId,jdbcType=INTEGER}
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `city_id` = #{cityId,jdbcType=INTEGER}
@@ -460,11 +440,11 @@
         AND `address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
       </if>
     </trim>
-    ORDER BY `merchant_id` DESC
+    ORDER BY `id` DESC
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `merchant`.`merchant_id` AS `merchantId`,
+    `merchant`.`id` AS `id`,
     `city`.`city_name` AS `cityName`,
     `user`.`username` AS `username`,
     `merchant`.`merchant_type` AS `merchantType`, `merchant`.`merchant_type` AS `merchantType_`,
@@ -475,8 +455,8 @@
     `merchant`.`phone` AS `phone`,
     `merchant`.`address` AS `address`,
     `merchant`.`info` AS `info`,
-    `merchant`.`add_time` AS `addTime`,
-    `merchant`.`update_time` AS `updateTime`
+    `merchant`.`update_time` AS `updateTime`,
+    `merchant`.`add_time` AS `addTime`
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -491,8 +471,8 @@
     FROM
     <include refid="sql_detailTable"/>
     <trim prefix="WHERE" prefixOverrides="AND|OR">
-      <if test='merchantId != null'>
-        AND `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+      <if test='id != null'>
+        AND `merchant`.`id` = #{id,jdbcType=INTEGER}
       </if>
       <if test='cityId != null'>
         AND `merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
@@ -530,7 +510,7 @@
     <include refid="sql_detailField"/>
     FROM
     <include refid="sql_detailTable"/>
-    WHERE `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+    WHERE `merchant`.`id` = #{id,jdbcType=INTEGER}
   </select>
   <!-- sql_selectTable -->
   <sql id="sql_selectTable">
@@ -540,7 +520,7 @@
   </sql>
   <!-- sql_selectField -->
   <sql id="sql_selectField">
-    `merchant`.`merchant_id` AS `merchantId`,
+    `merchant`.`id` AS `id`,
     `merchant`.`city_id` AS `cityId`,
     `city`.`city_name` AS `cityName`,
     `merchant`.`user_id` AS `userId`,
@@ -562,8 +542,8 @@
   </sql>
   <!-- sql_selectCondition -->
   <sql id="sql_selectCondition">
-    <if test='merchantId != null'>
-      AND `merchant`.`merchant_id` = #{merchantId,jdbcType=INTEGER}
+    <if test='id != null'>
+      AND `merchant`.`id` = #{id,jdbcType=INTEGER}
     </if>
     <if test='cityId != null'>
       AND `merchant`.`city_id` = #{cityId,jdbcType=INTEGER}
@@ -595,20 +575,20 @@
     <if test='address != null and address != ""'>
       AND `merchant`.`address` LIKE CONCAT ('%', #{address,jdbcType=VARCHAR}, '%')
     </if>
-    <if test='addTime != null'>
-      <if test='addTime.length > 0'>
-        AND `merchant`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
-      </if>
-      <if test='addTime.length > 1'>
-        AND `merchant`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
-      </if>
-    </if>
     <if test='updateTime != null'>
       <if test='updateTime.length > 0'>
         AND `merchant`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
       <if test='updateTime.length > 1'>
         AND `merchant`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='addTime != null'>
+      <if test='addTime.length > 0'>
+        AND `merchant`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='addTime.length > 1'>
+        AND `merchant`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='innerCondition != null and innerCondition != ""'>
@@ -640,7 +620,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -664,7 +644,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`id` DESC
       </otherwise>
     </choose>
   </select>
@@ -695,7 +675,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `merchant`.`merchant_id` DESC
+        ORDER BY `merchant`.`id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and rownum > 0'>
@@ -728,7 +708,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `merchant_id` DESC
+        ORDER BY `id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -760,7 +740,7 @@
         </if>
       </when>
       <otherwise>
-        ORDER BY `merchant_id` DESC
+        ORDER BY `id` DESC
       </otherwise>
     </choose>
     <if test='startIndex >= 0 and pageSize > 0'>
@@ -771,8 +751,8 @@
   <update id="updateByMchNo" parameterType="com.example.mvc.model.Merchant">
     UPDATE `merchant`
     <trim prefix="SET" suffixOverrides=",">
-      <if test='merchantId != null'>
-        `merchant_id` = #{merchantId,jdbcType=INTEGER},
+      <if test='id != null'>
+        `id` = #{id,jdbcType=INTEGER},
       </if>
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},
@@ -804,11 +784,11 @@
       <if test='info != null and info != ""'>
         `info` = #{info,jdbcType=VARCHAR},
       </if>
-      <if test='addTime != null'>
-        `add_time` = #{addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test='updateTime != null'>
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
     WHERE `merchant`.`mch_name` = #{mchName,jdbcType=VARCHAR}
@@ -841,8 +821,8 @@
   <update id="updateByAppid" parameterType="com.example.mvc.model.Merchant">
     UPDATE `merchant`
     <trim prefix="SET" suffixOverrides=",">
-      <if test='merchantId != null'>
-        `merchant_id` = #{merchantId,jdbcType=INTEGER},
+      <if test='id != null'>
+        `id` = #{id,jdbcType=INTEGER},
       </if>
       <if test='cityId != null'>
         `city_id` = #{cityId,jdbcType=INTEGER},
@@ -874,11 +854,11 @@
       <if test='info != null and info != ""'>
         `info` = #{info,jdbcType=VARCHAR},
       </if>
-      <if test='addTime != null'>
-        `add_time` = #{addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test='updateTime != null'>
         `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
     WHERE `merchant`.`appid` = #{appid,jdbcType=VARCHAR}

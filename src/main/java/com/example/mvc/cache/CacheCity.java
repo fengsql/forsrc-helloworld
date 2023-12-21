@@ -94,6 +94,21 @@ public class CacheCity extends BCacheTable<City> {
     return ok;
   }
 
+  /**
+   * 根据主键清除一条缓存的市表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。仅清除缓存，不清除数据库。
+   * @param id 市编号。
+   */
+  public void remove(Integer id) {
+    removeTable(Tool.toString(id));
+  }
+
+  /**
+   * 清除所有缓存的市表。仅清除缓存，不清除数据库。
+   */
+  public void clear() {
+    removeAll();
+  }
+
   // >>>----------------------- normal -----------------------
 
   // <<<----------------------- index -----------------------
@@ -170,7 +185,7 @@ public class CacheCity extends BCacheTable<City> {
   /**
    * 实现抽象方法。设置主键值。
    * @param city 市表。
-   * @param id 主键值。
+   * @param id      主键值。
    */
   @Override
   protected void setPrimaryId(City city, String id) {

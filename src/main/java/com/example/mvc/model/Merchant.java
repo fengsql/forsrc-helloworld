@@ -11,8 +11,8 @@ public class Merchant {
   /**
    * 商户编号
    */
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
-  private Integer merchantId;
+  @ApiModelProperty(value = "商户编号", name = "id", dataType = "Integer", required = true)
+  private Integer id;
 
   /**
    * 市编号
@@ -29,25 +29,25 @@ public class Merchant {
   /**
    * 商户类型
    */
-  @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = false)
+  @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = true)
   private Integer merchantType;
 
   /**
    * 商户名
    */
-  @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = false)
+  @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = true)
   private String mchName;
 
   /**
    * 商户号
    */
-  @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = false)
+  @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = true)
   private String mchNo;
 
   /**
    * Appid
    */
-  @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = false)
+  @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = true)
   private String appid;
 
   /**
@@ -75,17 +75,17 @@ public class Merchant {
   private String info;
 
   /**
-   * 输入时间
-   */
-  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
-  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-  private java.util.Date addTime;
-
-  /**
    * 更新时间
    */
   @ApiModelProperty(value = "更新时间", name = "updateTime", dataType = "java.util.Date", required = false)
   @JSONField(format = "yyyy-MM-dd HH:mm:ss")
   private java.util.Date updateTime;
+
+  /**
+   * 输入时间
+   */
+  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
+  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+  private java.util.Date addTime;
 
 }

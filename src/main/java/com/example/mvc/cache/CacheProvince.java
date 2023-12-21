@@ -94,6 +94,21 @@ public class CacheProvince extends BCacheTable<Province> {
     return ok;
   }
 
+  /**
+   * 根据主键清除一条缓存的省表。同时删除缓存索引字段(唯一字段且未禁用缓存)信息。仅清除缓存，不清除数据库。
+   * @param id 省编号。
+   */
+  public void remove(Integer id) {
+    removeTable(Tool.toString(id));
+  }
+
+  /**
+   * 清除所有缓存的省表。仅清除缓存，不清除数据库。
+   */
+  public void clear() {
+    removeAll();
+  }
+
   // >>>----------------------- normal -----------------------
 
   // <<<----------------------- index -----------------------
@@ -161,7 +176,7 @@ public class CacheProvince extends BCacheTable<Province> {
   /**
    * 实现抽象方法。设置主键值。
    * @param province 省表。
-   * @param id 主键值。
+   * @param id      主键值。
    */
   @Override
   protected void setPrimaryId(Province province, String id) {

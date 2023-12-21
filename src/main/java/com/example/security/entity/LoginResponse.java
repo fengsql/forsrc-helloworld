@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 用户登录的返回信息。可以自定义返回数据。
  */
@@ -25,5 +27,14 @@ public class LoginResponse extends BLoginResponse {
 
   @ApiModelProperty(value = "角色类型名称", name = "roleName_", dataType = "String", required = true)
   private String roleName_;
+
+  /**
+   * 登录成功后执行此方法
+   * @param request 请求对象。
+   */
+  @Override
+  public void loginSuccess(HttpServletRequest request) {
+
+  }
 
 }

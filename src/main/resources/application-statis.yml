@@ -1,0 +1,23 @@
+project:
+  store:
+    # 入库方式，copy, sql。copy 仅适用于 gp 或 postgresql
+    mode: sql
+  # 统计任务配置。cron格式：秒 分 小时 月份中的日期 月份 星期中的日期 年份(可选)。
+  statis:
+    # 是否启用，true 开启统计任务，false 不开启。
+    enable: false
+    task:
+      statDayOrder:
+        # 是否开启每日订单统计，true 开启统计任务，false 不开启。
+        enable: true
+        # 每天凌晨1点执行一次。
+        cron: "0 0 1 * * ?"
+        # 每次统计前几天，默认为 1 统计前一天，0 统计当天。不能小于 0。如果设置大于 1，统计前先将清除前 statis-num 天已统计的数据，进行重新统计。
+        statis-num: 1
+      statDayGoods:
+        # 是否开启每日订单商品统计，true 开启统计任务，false 不开启。
+        enable: true
+        # 每天凌晨1点执行一次。
+        cron: "0 0 1 * * ?"
+        # 每次统计前几天，默认为 1 统计前一天，0 统计当天。不能小于 0。如果设置大于 1，统计前先将清除前 statis-num 天已统计的数据，进行重新统计。
+        statis-num: 1

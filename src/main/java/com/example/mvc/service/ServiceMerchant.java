@@ -1,12 +1,7 @@
 package com.example.mvc.service;
 
-import com.example.common.spring.base.BaseService;
-import com.example.mvc.bean.detail.DetailMerchant;
-import com.example.mvc.bean.rep.RepMerchant;
-import com.example.mvc.bean.req.ReqMerchant;
-import com.example.mvc.dao.DaoMerchant;
-import com.example.mvc.model.Merchant;
 import com.forsrc.common.constant.Code;
+import com.forsrc.common.constant.ConfigCommon;
 import com.forsrc.common.constant.Enum;
 import com.forsrc.common.db.batch.DbBatch;
 import com.forsrc.common.exception.CommonException;
@@ -16,6 +11,12 @@ import com.forsrc.common.extend.tool.ToolExport;
 import com.forsrc.common.spring.base.IService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.common.tool.ToolJson;
+import com.example.common.spring.base.BaseService;
+import com.example.mvc.bean.detail.DetailMerchant;
+import com.example.mvc.bean.rep.RepMerchant;
+import com.example.mvc.bean.req.ReqMerchant;
+import com.example.mvc.dao.DaoMerchant;
+import com.example.mvc.model.Merchant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -219,15 +221,15 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
    * //#  }
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
-    if (merchantId == null) {
+  public int delete(HttpServletRequest request, HttpServletResponse response, Integer id) {
+    if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     Merchant merchant = new Merchant();
-    merchant.setMerchantId(merchantId);
+    merchant.setId(id);
     int count = daoMerchant.delete(merchant);
     return count;
   }
@@ -237,11 +239,11 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * //#  if (isCache(table)) {
    * 删除成功后，同时删除缓存和缓存索引字段(唯一字段且未禁用缓存)信息。
    * //#  }
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回删除的记录数。
    */
-  public int delete(Integer merchantId) {
-    return delete(null, null, merchantId);
+  public int delete(Integer id) {
+    return delete(null, null, id);
   }
 
   /**
@@ -249,14 +251,14 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * //#  }
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回商户表。
    */
-  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
-    if (merchantId == null) {
+  public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, Integer id) {
+    if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    Merchant merchant = daoMerchant.selectByPrimary(merchantId);
+    Merchant merchant = daoMerchant.selectByPrimary(id);
     return merchant;
   }
 
@@ -265,11 +267,11 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
    * //#  if (isCache(table)) {
    * 先从缓存查询，没有找到再从数据库查询，查询成功后添加到缓存。
    * //#  }
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回商户表。
    */
-  public Merchant selectByPrimary(Integer merchantId) {
-    return selectByPrimary(null, null, merchantId);
+  public Merchant selectByPrimary(Integer id) {
+    return selectByPrimary(null, null, id);
   }
 
   /**
@@ -318,24 +320,24 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
 
   /**
    * 根据主键查询一条商户表详情。
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回商户表详情。
    */
-  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, Integer merchantId) {
-    if (merchantId == null) {
+  public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, Integer id) {
+    if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
-    DetailMerchant detailMerchant = daoMerchant.selectDetailByPrimary(merchantId);
+    DetailMerchant detailMerchant = daoMerchant.selectDetailByPrimary(id);
     return detailMerchant;
   }
 
   /**
    * 根据主键查询一条商户表详情。
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回商户表详情。
    */
-  public DetailMerchant selectDetailByPrimary(Integer merchantId) {
-    return selectDetailByPrimary(null, null, merchantId);
+  public DetailMerchant selectDetailByPrimary(Integer id) {
+    return selectDetailByPrimary(null, null, id);
   }
 
   /**
@@ -692,7 +694,7 @@ public class ServiceMerchant extends BaseService implements IService<Merchant> {
     }
     String name = field.getName();
     switch (name) {
-      case "merchantId":
+      case "id":
         field.setExportFieldType(Enum.ExportFieldType.integer_);
         break;
       case "cityId":

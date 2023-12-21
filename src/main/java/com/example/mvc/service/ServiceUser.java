@@ -642,10 +642,10 @@ public class ServiceUser extends BaseService implements IService<User> {
         field.setLength(256);
         field.setExportFieldType(Enum.ExportFieldType.string_);
         break;
-      case "addTime":
+      case "updateTime":
         field.setExportFieldType(Enum.ExportFieldType.datetime_);
         break;
-      case "updateTime":
+      case "addTime":
         field.setExportFieldType(Enum.ExportFieldType.datetime_);
         break;
       default:

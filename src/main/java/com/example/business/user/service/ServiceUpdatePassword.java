@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 @Slf4j
 public class ServiceUpdatePassword extends BaseService {
+  private static final String password_default = "123456";
   @Resource
   private ServiceUser serviceUser;
   @Resource
@@ -27,27 +28,21 @@ public class ServiceUpdatePassword extends BaseService {
     throwNull(reqUpdatePassword, "param");
     throwNull(reqUpdatePassword.getOldPassword(), "old password");
     throwNull(reqUpdatePassword.getNewPassword(), "new password");
-    User user = getUser(request, response);
-    throwNull(user, "user");
+    User user = getUser();
 
     checkPassword(user, reqUpdatePassword.getOldPassword());
-    updatePassword(request, response, user, reqUpdatePassword.getNewPassword());
+    updatePassword(user, reqUpdatePassword.getNewPassword());
   }
 
-  private void updatePassword(HttpServletRequest request, HttpServletResponse response, User user, String newPassword) {
-    user.setPassword(newPassword);
-    serviceUser.update(request, response, user);
+  private void updatePassword(User user, String newPassword) {
+    user.setPassword(passwordEncoder.encode(newPassword));
+    serviceUser.update(user);
   }
 
   private void checkPassword(User user, String oldPassword) {
     if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
       throw new CommonException(Code.USER_CREDENTIALS_ERROR);
     }
-  }
-
-  private User getUser(HttpServletRequest request, HttpServletResponse response) {
-    Integer userId = getUserId();
-    return serviceUser.selectByPrimary(request, response, userId);
   }
 
 }

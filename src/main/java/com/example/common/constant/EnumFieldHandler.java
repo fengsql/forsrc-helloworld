@@ -52,4 +52,37 @@ public class EnumFieldHandler {
     }
   }
 
+  public static class HandleOnlineStatus extends BaseEnumTypeHandler {
+    @Override
+    public String getNullableResult(ResultSet resultSet, String fieldName) throws SQLException {
+      if (resultSet.getString(fieldName) == null) {
+        return null;
+      }
+      EnumField.OnlineStatus type = EnumField.OnlineStatus.get(resultSet.getInt(fieldName));
+      return type == null ? null : type.getTitle();
+    }
+  }
+
+  public static class HandleOrderStatus extends BaseEnumTypeHandler {
+    @Override
+    public String getNullableResult(ResultSet resultSet, String fieldName) throws SQLException {
+      if (resultSet.getString(fieldName) == null) {
+        return null;
+      }
+      EnumField.OrderStatus type = EnumField.OrderStatus.get(resultSet.getInt(fieldName));
+      return type == null ? null : type.getTitle();
+    }
+  }
+
+  public static class HandlePayStatus extends BaseEnumTypeHandler {
+    @Override
+    public String getNullableResult(ResultSet resultSet, String fieldName) throws SQLException {
+      if (resultSet.getString(fieldName) == null) {
+        return null;
+      }
+      EnumField.PayStatus type = EnumField.PayStatus.get(resultSet.getInt(fieldName));
+      return type == null ? null : type.getTitle();
+    }
+  }
+
 }

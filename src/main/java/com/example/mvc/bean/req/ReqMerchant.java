@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ReqMerchant extends BaseRequest {
 
-  @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer")
-  private Integer merchantId;
+  @ApiModelProperty(value = "商户编号", name = "id", dataType = "Integer")
+  private Integer id;
 
   @ApiModelProperty(value = "市编号", name = "cityId", dataType = "Integer")
   private Integer cityId;
@@ -68,10 +68,10 @@ public class ReqMerchant extends BaseRequest {
   @ApiModelProperty(value = "地址", name = "address", dataType = "String")
   private String address;
 
-  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date[]")
-  private java.util.Date[] addTime;
-
   @ApiModelProperty(value = "更新时间", name = "updateTime", dataType = "java.util.Date[]")
   private java.util.Date[] updateTime;
+
+  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date[]")
+  private java.util.Date[] addTime;
 
 }

@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mvc.dao.DaoOrder">
+  <!-- Base_Column_List -->
+  <sql id="Base_Column_List">
+    `id`,
+    `user_id`,
+    `order_status`,
+    `pay_status`,
+    `amount`,
+    `amount_success`,
+    `third_order_no`,
+    `send_time`,
+    `pay_time`,
+    `notify_time`,
+    `update_time`,
+    `add_time`
+  </sql>
+  <!-- BaseResultMap -->
+  <resultMap id="BaseResultMap" type="com.example.mvc.model.Order">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="order_status" jdbcType="TINYINT" property="orderStatus"/>
+    <result column="pay_status" jdbcType="TINYINT" property="payStatus"/>
+    <result column="amount" jdbcType="INTEGER" property="amount"/>
+    <result column="amount_success" jdbcType="INTEGER" property="amountSuccess"/>
+    <result column="third_order_no" jdbcType="VARCHAR" property="thirdOrderNo"/>
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime"/>
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+    <result column="notify_time" jdbcType="TIMESTAMP" property="notifyTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- RelativeResultMap -->
+  <resultMap id="RelativeResultMap" type="com.example.mvc.bean.rep.RepOrder$OrderRow">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="userId" jdbcType="INTEGER" property="userId"/>
+    <result column="roleType" jdbcType="TINYINT" property="roleType"/>
+    <result column="roleType_" jdbcType="VARCHAR" property="roleType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleRoleType"/>
+    <result column="sexType" jdbcType="TINYINT" property="sexType"/>
+    <result column="sexType_" jdbcType="VARCHAR" property="sexType_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleSexType"/>
+    <result column="userStatus" jdbcType="TINYINT" property="userStatus"/>
+    <result column="userStatus_" jdbcType="VARCHAR" property="userStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleUserStatus"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="score" jdbcType="BIGINT" property="score"/>
+    <result column="times" jdbcType="INTEGER" property="times"/>
+    <result column="headImgUrl" jdbcType="VARCHAR" property="headImgUrl"/>
+    <result column="orderStatus" jdbcType="TINYINT" property="orderStatus"/>
+    <result column="orderStatus_" jdbcType="VARCHAR" property="orderStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleOrderStatus"/>
+    <result column="payStatus" jdbcType="TINYINT" property="payStatus"/>
+    <result column="payStatus_" jdbcType="VARCHAR" property="payStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandlePayStatus"/>
+    <result column="amount" jdbcType="INTEGER" property="amount"/>
+    <result column="amountSuccess" jdbcType="INTEGER" property="amountSuccess"/>
+    <result column="thirdOrderNo" jdbcType="VARCHAR" property="thirdOrderNo"/>
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendTime"/>
+    <result column="payTime" jdbcType="TIMESTAMP" property="payTime"/>
+    <result column="notifyTime" jdbcType="TIMESTAMP" property="notifyTime"/>
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <!-- DetailResultMap -->
+  <resultMap id="DetailResultMap" type="com.example.mvc.bean.detail.DetailOrder">
+    <result column="id" jdbcType="INTEGER" property="id"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="orderStatus" jdbcType="TINYINT" property="orderStatus"/>
+    <result column="orderStatus_" jdbcType="VARCHAR" property="orderStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandleOrderStatus"/>
+    <result column="payStatus" jdbcType="TINYINT" property="payStatus"/>
+    <result column="payStatus_" jdbcType="VARCHAR" property="payStatus_" typeHandler="com.example.common.constant.EnumFieldHandler$HandlePayStatus"/>
+    <result column="amount" jdbcType="INTEGER" property="amount"/>
+    <result column="amountSuccess" jdbcType="INTEGER" property="amountSuccess"/>
+    <result column="thirdOrderNo" jdbcType="VARCHAR" property="thirdOrderNo"/>
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendTime"/>
+    <result column="payTime" jdbcType="TIMESTAMP" property="payTime"/>
+    <result column="notifyTime" jdbcType="TIMESTAMP" property="notifyTime"/>
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+  </resultMap>
+  <!-- insert -->
+  <insert id="insert" parameterType="com.example.mvc.model.Order" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test='userId != null'>
+        `user_id`,
+      </if>
+      <if test='orderStatus != null'>
+        `order_status`,
+      </if>
+      <if test='payStatus != null'>
+        `pay_status`,
+      </if>
+      <if test='amount != null'>
+        `amount`,
+      </if>
+      <if test='amountSuccess != null'>
+        `amount_success`,
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        `third_order_no`,
+      </if>
+      <if test='sendTime != null'>
+        `send_time`,
+      </if>
+      <if test='payTime != null'>
+        `pay_time`,
+      </if>
+      <if test='notifyTime != null'>
+        `notify_time`,
+      </if>
+      <if test='updateTime != null'>
+        `update_time`,
+      </if>
+      <if test='addTime != null'>
+        `add_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test='userId != null'>
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test='orderStatus != null'>
+        #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test='payStatus != null'>
+        #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test='amount != null'>
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test='amountSuccess != null'>
+        #{amountSuccess,jdbcType=INTEGER},
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        #{thirdOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test='sendTime != null'>
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='payTime != null'>
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='notifyTime != null'>
+        #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='addTime != null'>
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!-- insertEvenNull -->
+  <insert id="insertEvenNull" parameterType="com.example.mvc.model.Order" keyProperty="id" useGeneratedKeys="true">
+    INSERT INTO `order` (
+    <trim suffixOverrides=",">
+      `user_id`,
+      `order_status`,
+      `pay_status`,
+      `amount`,
+      `amount_success`,
+      `third_order_no`,
+      `send_time`,
+      `pay_time`,
+      `notify_time`,
+      `update_time`,
+      `add_time`,
+    </trim>
+    ) VALUES (
+    <trim suffixOverrides=",">
+      #{userId,jdbcType=INTEGER},
+      #{orderStatus,jdbcType=TINYINT},
+      #{payStatus,jdbcType=TINYINT},
+      #{amount,jdbcType=INTEGER},
+      #{amountSuccess,jdbcType=INTEGER},
+      #{thirdOrderNo,jdbcType=VARCHAR},
+      #{sendTime,jdbcType=TIMESTAMP},
+      #{payTime,jdbcType=TIMESTAMP},
+      #{notifyTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{addTime,jdbcType=TIMESTAMP},
+    </trim>
+    )
+  </insert>
+  <!-- update -->
+  <update id="update" parameterType="com.example.mvc.model.Order">
+    UPDATE `order`
+    <trim prefix="SET" suffixOverrides=",">
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test='orderStatus != null'>
+        `order_status` = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test='payStatus != null'>
+        `pay_status` = #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test='amount != null'>
+        `amount` = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test='amountSuccess != null'>
+        `amount_success` = #{amountSuccess,jdbcType=INTEGER},
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        `third_order_no` = #{thirdOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test='sendTime != null'>
+        `send_time` = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='payTime != null'>
+        `pay_time` = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='notifyTime != null'>
+        `notify_time` = #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='updateTime != null'>
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test='addTime != null'>
+        `add_time` = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateEvenNull -->
+  <update id="updateEvenNull" parameterType="com.example.mvc.model.Order">
+    UPDATE `order` SET
+    <trim suffixOverrides=",">
+      <if test='userId != null'>
+        `user_id` = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test='orderStatus != null'>
+        `order_status` = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test='payStatus != null'>
+        `pay_status` = #{payStatus,jdbcType=TINYINT},
+      </if>
+      <if test='amount != null'>
+        `amount` = #{amount,jdbcType=INTEGER},
+      </if>
+      <choose>
+        <when test='amountSuccess != null'>
+          `amount_success` = #{amountSuccess,jdbcType=INTEGER},
+        </when>
+        <otherwise>
+          `amount_success` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='thirdOrderNo != null and thirdOrderNo != ""'>
+          `third_order_no` = #{thirdOrderNo,jdbcType=VARCHAR},
+        </when>
+        <otherwise>
+          `third_order_no` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='sendTime != null'>
+          `send_time` = #{sendTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `send_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='payTime != null'>
+          `pay_time` = #{payTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `pay_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='notifyTime != null'>
+          `notify_time` = #{notifyTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `notify_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='updateTime != null'>
+          `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `update_time` = null,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test='addTime != null'>
+          `add_time` = #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>
+          `add_time` = null,
+        </otherwise>
+      </choose>
+    </trim>
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- updateConditional -->
+  <update id="updateConditional" parameterType="com.forsrc.common.spring.bean.param.ParamUpdate">
+    UPDATE `order` SET
+    <![CDATA[${updatePair}]]>
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </update>
+  <!-- delete -->
+  <delete id="delete" parameterType="com.example.mvc.model.Order">
+    DELETE FROM `order`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test='orderStatus != null'>
+        AND `order_status` = #{orderStatus,jdbcType=TINYINT}
+      </if>
+      <if test='payStatus != null'>
+        AND `pay_status` = #{payStatus,jdbcType=TINYINT}
+      </if>
+    </trim>
+  </delete>
+  <!-- deleteConditional -->
+  <delete id="deleteConditional" parameterType="com.forsrc.common.spring.bean.param.ParamDelete">
+    DELETE FROM `order`
+    <trim prefix="WHERE">
+      <choose>
+        <when test='primaryId != null'>
+          `id` = #{primaryId,jdbcType=INTEGER}
+        </when>
+        <otherwise>
+          <if test='condition != null and condition != ""'>
+            <![CDATA[${condition}]]>
+          </if>
+        </otherwise>
+      </choose>
+    </trim>
+  </delete>
+  <!-- selectByPrimary -->
+  <select id="selectByPrimary" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `order`
+    WHERE `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- selectOne -->
+  <select id="selectOne" parameterType="com.example.mvc.model.Order" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `order`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test='orderStatus != null'>
+        AND `order_status` = #{orderStatus,jdbcType=TINYINT}
+      </if>
+      <if test='payStatus != null'>
+        AND `pay_status` = #{payStatus,jdbcType=TINYINT}
+      </if>
+      <if test='amount != null'>
+        AND `amount` = #{amount,jdbcType=INTEGER}
+      </if>
+      <if test='amountSuccess != null'>
+        AND `amount_success` = #{amountSuccess,jdbcType=INTEGER}
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        AND `third_order_no` = #{thirdOrderNo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- select -->
+  <select id="select" parameterType="com.example.mvc.model.Order" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM `order`
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `user_id` = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test='orderStatus != null'>
+        AND `order_status` = #{orderStatus,jdbcType=TINYINT}
+      </if>
+      <if test='payStatus != null'>
+        AND `pay_status` = #{payStatus,jdbcType=TINYINT}
+      </if>
+      <if test='amount != null'>
+        AND `amount` = #{amount,jdbcType=INTEGER}
+      </if>
+      <if test='amountSuccess != null'>
+        AND `amount_success` = #{amountSuccess,jdbcType=INTEGER}
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        AND `third_order_no` LIKE CONCAT ('%', #{thirdOrderNo,jdbcType=VARCHAR}, '%')
+      </if>
+    </trim>
+    ORDER BY `id` DESC
+  </select>
+  <!-- sql_detailField -->
+  <sql id="sql_detailField">
+    `order`.`id` AS `id`,
+    `user`.`username` AS `username`,
+    `order`.`order_status` AS `orderStatus`, `order`.`order_status` AS `orderStatus_`,
+    `order`.`pay_status` AS `payStatus`, `order`.`pay_status` AS `payStatus_`,
+    `order`.`amount` AS `amount`,
+    `order`.`amount_success` AS `amountSuccess`,
+    `order`.`third_order_no` AS `thirdOrderNo`,
+    `order`.`send_time` AS `sendTime`,
+    `order`.`pay_time` AS `payTime`,
+    `order`.`notify_time` AS `notifyTime`,
+    `order`.`update_time` AS `updateTime`,
+    `order`.`add_time` AS `addTime`
+  </sql>
+  <!-- sql_detailTable -->
+  <sql id="sql_detailTable">
+    `order`
+    JOIN `user` AS `user` ON `order`.`user_id` = `user`.`id`
+  </sql>
+  <!-- selectDetail -->
+  <select id="selectDetail" parameterType="com.example.mvc.model.Order" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test='id != null'>
+        AND `order`.`id` = #{id,jdbcType=INTEGER}
+      </if>
+      <if test='userId != null'>
+        AND `order`.`user_id` = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test='orderStatus != null'>
+        AND `order`.`order_status` = #{orderStatus,jdbcType=TINYINT}
+      </if>
+      <if test='payStatus != null'>
+        AND `order`.`pay_status` = #{payStatus,jdbcType=TINYINT}
+      </if>
+      <if test='amount != null'>
+        AND `order`.`amount` = #{amount,jdbcType=INTEGER}
+      </if>
+      <if test='amountSuccess != null'>
+        AND `order`.`amount_success` = #{amountSuccess,jdbcType=INTEGER}
+      </if>
+      <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+        AND `order`.`third_order_no` = #{thirdOrderNo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    LIMIT 1
+  </select>
+  <!-- selectDetailByPrimary -->
+  <select id="selectDetailByPrimary" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    SELECT
+    <include refid="sql_detailField"/>
+    FROM
+    <include refid="sql_detailTable"/>
+    WHERE `order`.`id` = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- sql_selectTable -->
+  <sql id="sql_selectTable">
+    `order`
+    JOIN `user` AS `user` ON `order`.`user_id` = `user`.`id`
+  </sql>
+  <!-- sql_selectField -->
+  <sql id="sql_selectField">
+    `order`.`id` AS `id`,
+    `order`.`user_id` AS `userId`,
+    `user`.`role_type` AS `roleType`, `user`.`role_type` AS `roleType_`,
+    `user`.`sex_type` AS `sexType`, `user`.`sex_type` AS `sexType_`,
+    `user`.`user_status` AS `userStatus`, `user`.`user_status` AS `userStatus_`,
+    `user`.`username` AS `username`,
+    `user`.`email` AS `email`,
+    `user`.`score` AS `score`,
+    `user`.`times` AS `times`,
+    `user`.`head_img_url` AS `headImgUrl`,
+    `order`.`order_status` AS `orderStatus`, `order`.`order_status` AS `orderStatus_`,
+    `order`.`pay_status` AS `payStatus`, `order`.`pay_status` AS `payStatus_`,
+    `order`.`amount` AS `amount`,
+    `order`.`amount_success` AS `amountSuccess`,
+    `order`.`third_order_no` AS `thirdOrderNo`,
+    `order`.`send_time` AS `sendTime`,
+    `order`.`pay_time` AS `payTime`,
+    `order`.`notify_time` AS `notifyTime`,
+    `order`.`update_time` AS `updateTime`
+  </sql>
+  <!-- sql_selectCondition -->
+  <sql id="sql_selectCondition">
+    <if test='id != null'>
+      AND `order`.`id` = #{id,jdbcType=INTEGER}
+    </if>
+    <if test='userId != null'>
+      AND `order`.`user_id` = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="orderStatus != null and orderStatus.length > 0">
+      AND `order`.`order_status` IN
+      <foreach collection="orderStatus" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="payStatus != null and payStatus.length > 0">
+      AND `order`.`pay_status` IN
+      <foreach collection="payStatus" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test='amount != null'>
+      <if test='amount.length > 0'>
+        AND `order`.`amount` &gt;= #{amount.[0],jdbcType=INTEGER}
+      </if>
+      <if test='amount.length > 1'>
+        AND `order`.`amount` &lt;= #{amount.[1],jdbcType=INTEGER}
+      </if>
+    </if>
+    <if test='amountSuccess != null'>
+      <if test='amountSuccess.length > 0'>
+        AND `order`.`amount_success` &gt;= #{amountSuccess.[0],jdbcType=INTEGER}
+      </if>
+      <if test='amountSuccess.length > 1'>
+        AND `order`.`amount_success` &lt;= #{amountSuccess.[1],jdbcType=INTEGER}
+      </if>
+    </if>
+    <if test='thirdOrderNo != null and thirdOrderNo != ""'>
+      AND `order`.`third_order_no` LIKE CONCAT ('%', #{thirdOrderNo,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test='sendTime != null'>
+      <if test='sendTime.length > 0'>
+        AND `order`.`send_time` &gt;= #{sendTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='sendTime.length > 1'>
+        AND `order`.`send_time` &lt;= #{sendTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='payTime != null'>
+      <if test='payTime.length > 0'>
+        AND `order`.`pay_time` &gt;= #{payTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='payTime.length > 1'>
+        AND `order`.`pay_time` &lt;= #{payTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='notifyTime != null'>
+      <if test='notifyTime.length > 0'>
+        AND `order`.`notify_time` &gt;= #{notifyTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='notifyTime.length > 1'>
+        AND `order`.`notify_time` &lt;= #{notifyTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='updateTime != null'>
+      <if test='updateTime.length > 0'>
+        AND `order`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='updateTime.length > 1'>
+        AND `order`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='addTime != null'>
+      <if test='addTime.length > 0'>
+        AND `order`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
+      </if>
+      <if test='addTime.length > 1'>
+        AND `order`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
+      </if>
+    </if>
+    <if test='innerCondition != null and innerCondition != ""'>
+      AND <![CDATA[${innerCondition}]]>
+    </if>
+  </sql>
+  <!-- selectTotal -->
+  <select id="selectTotal" parameterType="com.example.mvc.bean.req.ReqOrder" resultType="Integer">
+    SELECT COUNT(1) FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+  </select>
+  <!-- selectRelative -->
+  <select id="selectRelative" parameterType="com.example.mvc.bean.req.ReqOrder" resultMap="RelativeResultMap">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `order`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectRelativeMap -->
+  <select id="selectRelativeMap" parameterType="com.example.mvc.bean.req.ReqOrder" resultType="java.util.Map">
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `order`.`id` DESC
+      </otherwise>
+    </choose>
+  </select>
+  <!-- selectList -->
+  <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM (
+    SELECT
+    <include refid="sql_selectField"/>
+    FROM
+    <include refid="sql_selectTable"/>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <include refid="sql_selectCondition"/>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `order`.`id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and rownum > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
+    </if>
+    ) t
+  </select>
+  <!-- selectMap -->
+  <select id="selectMap" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="java.util.Map">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM order
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectConditional -->
+  <select id="selectConditional" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultMap="BaseResultMap">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        *
+      </otherwise>
+    </choose>
+    FROM order
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+    <choose>
+      <when test='orderBy != null and orderBy != ""'>
+        ORDER BY <![CDATA[${orderBy}]]>
+        <if test='desc == true'>
+          DESC
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY `id` DESC
+      </otherwise>
+    </choose>
+    <if test='startIndex >= 0 and pageSize > 0'>
+      LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </if>
+  </select>
+  <!-- selectSum -->
+  <select id="selectSum" parameterType="com.forsrc.common.spring.bean.param.ParamQuery" resultType="Double">
+    SELECT
+    <choose>
+      <when test='queryField != null and queryField != ""'>
+        <![CDATA[${queryField}]]>
+      </when>
+      <otherwise>
+        COUNT(1)
+      </otherwise>
+    </choose>
+    FROM `order`
+    <trim prefix="WHERE">
+      <if test='condition != null and condition != ""'>
+        <![CDATA[${condition}]]>
+      </if>
+    </trim>
+  </select>
+</mapper>

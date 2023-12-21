@@ -64,10 +64,10 @@ public interface DaoMerchant extends IDao<Merchant> {
 
   /**
    * 根据主键查询一条商户表。
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回的商户表。
    */
-  Merchant selectByPrimary(Integer merchantId);
+  Merchant selectByPrimary(Integer id);
 
   /**
    * 查询一条商户表。
@@ -92,10 +92,10 @@ public interface DaoMerchant extends IDao<Merchant> {
 
   /**
    * 根据主键查询一条商户表详情。
-   * @param merchantId 商户编号。
+   * @param id 商户编号。
    * @return 返回的商户表详情。
    */
-  DetailMerchant selectDetailByPrimary(Integer merchantId);
+  DetailMerchant selectDetailByPrimary(Integer id);
 
   /**
    * 根据条件查询商户表的记录数。

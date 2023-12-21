@@ -52,12 +52,12 @@ public class DetailUser {
   @ApiModelProperty(value = "说明", name = "info", dataType = "String", required = false)
   private String info;
 
-  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
-  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-  private java.util.Date addTime;
-
   @ApiModelProperty(value = "更新时间", name = "updateTime", dataType = "java.util.Date", required = false)
   @JSONField(format = "yyyy-MM-dd HH:mm:ss")
   private java.util.Date updateTime;
+
+  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
+  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+  private java.util.Date addTime;
 
 }

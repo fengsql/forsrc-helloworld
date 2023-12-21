@@ -1,5 +1,6 @@
 package com.example.security.service;
 
+import com.forsrc.common.constant.Code;
 import com.forsrc.common.exception.CommonException;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.security.base.BLoginResponse;
@@ -95,7 +96,10 @@ public class SecurityServiceUserDetails extends BServiceUserDetails<User> {
   private String getRoleName(User user) {
     int value = Tool.toInt(user.getRoleType());
     EnumField.RoleType roleType = EnumField.RoleType.get(value);
-    return roleType == null ? null : roleType.getName();
+    if (roleType == null) {
+      throw new CommonException(Code.USER_EXCEPTION.getCode(), "获取用户角色失败!");
+    }
+    return roleType.getName();
   }
 
 }

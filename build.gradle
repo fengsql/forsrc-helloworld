@@ -110,8 +110,8 @@ dependencies {
     //mail
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.8'
     //forsrc
-    implementation 'io.github.fengsql:forsrc-common:1.0.0.12'
-    implementation 'io.github.fengsql:forsrc-security:0.0.6'
+    implementation 'io.github.fengsql:forsrc-common:1.0.2'
+    implementation 'io.github.fengsql:forsrc-security:0.0.7'
 
 }
 

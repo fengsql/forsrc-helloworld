@@ -82,17 +82,17 @@ public class User {
   private String info;
 
   /**
-   * 输入时间
-   */
-  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
-  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-  private java.util.Date addTime;
-
-  /**
    * 更新时间
    */
   @ApiModelProperty(value = "更新时间", name = "updateTime", dataType = "java.util.Date", required = false)
   @JSONField(format = "yyyy-MM-dd HH:mm:ss")
   private java.util.Date updateTime;
+
+  /**
+   * 输入时间
+   */
+  @ApiModelProperty(value = "输入时间", name = "addTime", dataType = "java.util.Date", required = false)
+  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+  private java.util.Date addTime;
 
 }

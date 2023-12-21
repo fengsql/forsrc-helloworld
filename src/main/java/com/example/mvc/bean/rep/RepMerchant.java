@@ -19,8 +19,8 @@ public class RepMerchant {
   @Data
   public static class MerchantRow {
 
-    @ApiModelProperty(value = "商户编号", name = "merchantId", dataType = "Integer", required = true)
-    private Integer merchantId;
+    @ApiModelProperty(value = "商户编号", name = "id", dataType = "Integer", required = true)
+    private Integer id;
 
     @ApiModelProperty(value = "市编号", name = "cityId", dataType = "Integer", required = true)
     private Integer cityId;
@@ -64,19 +64,19 @@ public class RepMerchant {
     @ApiModelProperty(value = "头像(用户编号)", name = "headImgUrl", dataType = "String", required = false)
     private String headImgUrl;
 
-    @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = false)
+    @ApiModelProperty(value = "商户类型", name = "merchantType", dataType = "Integer", required = true)
     private Integer merchantType;
 
-    @ApiModelProperty(value = "商户类型名称", name = "merchantType_", dataType = "String", required = false)
+    @ApiModelProperty(value = "商户类型名称", name = "merchantType_", dataType = "String", required = true)
     private String merchantType_;
 
-    @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = false)
+    @ApiModelProperty(value = "商户名", name = "mchName", dataType = "String", required = true)
     private String mchName;
 
-    @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = false)
+    @ApiModelProperty(value = "商户号", name = "mchNo", dataType = "String", required = true)
     private String mchNo;
 
-    @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = false)
+    @ApiModelProperty(value = "Appid", name = "appid", dataType = "String", required = true)
     private String appid;
 
     @ApiModelProperty(value = "秘钥", name = "secret", dataType = "String", required = false)
