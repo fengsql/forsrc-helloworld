@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.example.mvc.cache.CacheUser;
+import com.example.mvc.event.before.BeforeUser;
+import com.example.mvc.event.after.AfterUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -37,6 +39,10 @@ public class ServiceUser extends BaseService implements IService<User> {
 
   @Resource
   private CacheUser cacheUser;
+  @Resource
+  private BeforeUser beforeUser;
+  @Resource
+  private AfterUser afterUser;
   @Resource
   private PasswordEncoder passwordEncoder;
   @Resource
@@ -61,6 +67,7 @@ public class ServiceUser extends BaseService implements IService<User> {
     } else {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
+    beforeUser.onInsert(request, response, user);
     int count = daoUser.insert(user);
     if (count <= 0) {
       throw new CommonException("insert fail!");
@@ -68,6 +75,7 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (ConfigCommon.redis.cacheInsert) {
       cacheUser.put(user);
     }
+    afterUser.onInsert(request, response, user);
     return user;
   }
 
@@ -103,6 +111,7 @@ public class ServiceUser extends BaseService implements IService<User> {
       } else {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
       }
+      beforeUser.onInsert(request, response, user);
       int count = daoUser.insert(user);
       if (count <= 0) {
         throw new CommonException("insertSync fail!");
@@ -110,6 +119,7 @@ public class ServiceUser extends BaseService implements IService<User> {
       if (ConfigCommon.redis.cacheInsert) {
         cacheUser.put(user);
       }
+      afterUser.onInsert(request, response, user);
       num++;
     }
     return num;
@@ -145,7 +155,9 @@ public class ServiceUser extends BaseService implements IService<User> {
       } else {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
       }
+      beforeUser.onInsert(request, response, user);
       dbBatch.insert(user, daoUser);
+      afterUser.onInsert(request, response, user);
     }
   }
 
@@ -172,10 +184,12 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeUser.onUpdate(request, response, user);
     int count = daoUser.update(user);
     if (count > 0) {
       cacheUser.update(daoUser.selectOne(user));
     }
+    afterUser.onUpdate(request, response, user, count);
     return count;
   }
 
@@ -203,10 +217,12 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeUser.onUpdate(request, response, user);
     int count = daoUser.updateEvenNull(user);
     if (count > 0) {
       cacheUser.update(daoUser.selectOne(user));
     }
+    afterUser.onUpdate(request, response, user, count);
     return count;
   }
 
@@ -238,9 +254,11 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(users_)) {
       return 0;
     }
+    beforeUser.onDelete(request, response, user, users_);
     for (User user1 : users_) {
       cacheUser.delete(user1.getId());
     }
+    afterUser.onDelete(request, response, user, users_);
     return users_.size();
   }
 
@@ -276,7 +294,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     }
     List<User> users_ = new ArrayList<>();
     users_.add(user1);
+    beforeUser.onDelete(request, response, user1, users_);
     cacheUser.delete(id);
+    afterUser.onDelete(request, response, user1, users_);
     return 1;
   }
 
@@ -304,7 +324,13 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    User user1 = new User();
+    user1.setId(id);
+    beforeUser.onSelect(request, response, user1);
     User user = cacheUser.get(id);
+    User user2 = new User();
+    user2.setId(id);
+    afterUser.onSelect(request, response, user2, user);
     return user;
   }
 
@@ -329,7 +355,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeUser.onSelect(request, response, user);
     User user1 = daoUser.selectOne(user);
+    afterUser.onSelect(request, response, user, user1);
     return user1;
   }
 
@@ -351,7 +379,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeUser.onSelectDetail(request, response, user);
     DetailUser detailUser = daoUser.selectDetail(user);
+    afterUser.onSelectDetail(request, response, user, detailUser);
     return detailUser;
   }
 
@@ -373,7 +403,13 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (id == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    User user1 = new User();
+    user1.setId(id);
+    beforeUser.onSelectDetail(request, response, user1);
     DetailUser detailUser = daoUser.selectDetailByPrimary(id);
+    User user2 = new User();
+    user2.setId(id);
+    afterUser.onSelectDetail(request, response, user2, detailUser);
     return detailUser;
   }
 
@@ -395,7 +431,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (user == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeUser.onSelect(request, response, user);
     List<User> list = daoUser.select(user);
+    afterUser.onSelect(request, response, user, list);
     return list;
   }
 
@@ -418,11 +456,13 @@ public class ServiceUser extends BaseService implements IService<User> {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     initService(request, reqUser);
+    beforeUser.onSelectRelative(request, response, reqUser);
     RepUser repUser = new RepUser();
     if (isQueryTotal(reqUser)) {
       repUser.setTotal(daoUser.selectTotal(reqUser));
     }
     repUser.setRows(daoUser.selectRelative(reqUser));
+    afterUser.onSelectRelative(request, response, reqUser, repUser);
     return repUser;
   }
 
@@ -450,10 +490,12 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(user.getUsername())) {
       throw new CommonException(Code.PARAM_EMPTY, "username is null!");
     }
+    beforeUser.onUpdate(request, response, user);
     int count = daoUser.updateByUsername(user);
     if (count > 0) {
       cacheUser.update(daoUser.selectOne(user));
     }
+    afterUser.onUpdate(request, response, user, count);
     return count;
   }
 
@@ -492,7 +534,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     }
     List<User> users_ = new ArrayList<>();
     users_.add(user2);
+    beforeUser.onDelete(request, response, user2, users_);
     cacheUser.deleteByUsername(user2);
+    afterUser.onDelete(request, response, user2, users_);
     return 1;
   }
 
@@ -523,7 +567,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(user.getUsername())) {
       throw new CommonException(Code.PARAM_EMPTY, "username is null!");
     }
+    beforeUser.onSelect(request, response, user);
     User user0 = cacheUser.getByUsername(user);
+    afterUser.onSelect(request, response, user, user0);
     return user0;
   }
 
@@ -554,7 +600,9 @@ public class ServiceUser extends BaseService implements IService<User> {
     if (Tool.isNull(user.getUsername())) {
       throw new CommonException(Code.PARAM_EMPTY, "username is null!");
     }
+    beforeUser.onSelectDetail(request, response, user);
     DetailUser detailUser = daoUser.selectDetailByUsername(user);
+    afterUser.onSelectDetail(request, response, user, detailUser);
     return detailUser;
   }
 
@@ -588,13 +636,16 @@ public class ServiceUser extends BaseService implements IService<User> {
     } else {
       reqUser = new ReqUser();
     }
+    beforeUser.onSelectRelative(request, response, reqUser);
     List<Map<String, Object>> list = daoUser.selectRelativeMap(reqUser);
+    beforeUser.onExport(request, response, paramExport, list);
     String title = paramExport.getTitle();
     if (Tool.isNull(title)) {
       title = "用户";
     }
     List<Field> fields = getFields(paramExport.getFields());
     ToolExport.export(response, tableName, title, fields, list);
+    afterUser.onExport(request, response, paramExport, list);
   }
 
   private List<Field> getFields(List<Field> fields) {

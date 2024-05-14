@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.example.mvc.cache.CacheGoods;
+import com.example.mvc.event.before.BeforeGoods;
+import com.example.mvc.event.after.AfterGoods;
 
 @Service
 @Slf4j
@@ -36,6 +38,10 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
 
   @Resource
   private CacheGoods cacheGoods;
+  @Resource
+  private BeforeGoods beforeGoods;
+  @Resource
+  private AfterGoods afterGoods;
   @Resource
   private DaoGoods daoGoods;
   @Resource
@@ -53,6 +59,7 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
     if (goods == null) {
       throw new CommonException(Code.PARAM_EMPTY);
     }
+    beforeGoods.onInsert(request, response, goods);
     int count = daoGoods.insert(goods);
     if (count <= 0) {
       throw new CommonException("insert fail!");
@@ -90,6 +97,7 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
     }
     int num = 0;
     for (Goods goods : goodss) {
+      beforeGoods.onInsert(request, response, goods);
       int count = daoGoods.insert(goods);
       if (count <= 0) {
         throw new CommonException("insertSync fail!");
@@ -127,6 +135,7 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
       throw new CommonException(Code.PARAM_EMPTY);
     }
     for (Goods goods : goodss) {
+      beforeGoods.onInsert(request, response, goods);
       dbBatch.insert(goods, daoGoods);
     }
   }
@@ -158,6 +167,7 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
     if (count > 0) {
       cacheGoods.update(daoGoods.selectOne(goods));
     }
+    afterGoods.onUpdate(request, response, goods, count);
     return count;
   }
 
@@ -189,6 +199,7 @@ public class ServiceGoods extends BaseService implements IService<Goods> {
     if (count > 0) {
       cacheGoods.update(daoGoods.selectOne(goods));
     }
+    afterGoods.onUpdate(request, response, goods, count);
     return count;
   }
 
