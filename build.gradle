@@ -98,7 +98,6 @@ dependencies {
     //mysql 5
     implementation 'mysql:mysql-connector-java:5.1.46'
     //fastjson
-    implementation 'com.alibaba:fastjson:1.2.83'
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.25'
     implementation 'com.alibaba.fastjson2:fastjson2-extension:2.0.25'
     implementation 'com.alibaba.fastjson2:fastjson2-extension-spring5:2.0.25'
