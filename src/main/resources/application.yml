@@ -10,8 +10,8 @@ spring:
   application:
     name: ${application.name}
   profiles:
-    include: main
-  #    active: prod
+    include: main, statis
+#    active: prd
   boot:
     admin:
       client:
@@ -29,7 +29,7 @@ spring:
     timeout: ${redis.ttl}
     lettuce:
       pool:
-        # 连接池最大阻塞等待时间(使用负值表示没有限制),过短会频繁抛出异常,过长或者无限制会导致接口响应时间过长,默认为-1, ms
+        # 连接池最大阻塞等待时间(负值表示没有限制),过短会频繁抛出异常,过长或者无限制会导致接口响应时间过长,默认为-1, ms
         max-wait: 5000
         # 最大活跃链接数 默认8
         max-active: 16
@@ -38,7 +38,6 @@ spring:
         # 最小空闲连接数 默认0
         min-idle: 0
   datasource:
-    enable: true  # false 不启用数据库，默认为 true
     type: com.alibaba.druid.pool.DruidDataSource
     # druid 为 url
     url: ${datasource.${datasource.name}.url}
@@ -63,8 +62,7 @@ spring:
       filters: stat,wall,log4j
       filter:
         stat:
-          # 是否启用监控界面，默认为 false
-          enabled: true
+          enabled: true  # 是否启用监控界面，默认为 false
           log-slow-sql: true
           slow-sql-millis: 2000
       # 打开 PSCache，并且指定每个连接上 PSCache 的大小
@@ -128,7 +126,7 @@ thread:
     scheduler:
       poolSize: 20
       awaitTerminationSeconds: 60  #
-      threadNamePrefix: "taskScheduler-"
+      threadNamePrefix: "scheduler-"
 
 okhttp:
   connect-timeout: 30
