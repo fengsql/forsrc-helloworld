@@ -13,9 +13,11 @@ public class RepMerchant {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "商户表列表", name = "rows", dataType = "List", required = false)
   private List<MerchantRow> rows;
 
+  @ApiModel(value = "商户表", description = "商户表")
   @Data
   public static class MerchantRow {
 

@@ -98,6 +98,7 @@ public class ControllerCity {
     return serviceCity.updateEvenNull(request, response, city);
   }
 
+
   /**
    * 根据主键删除一条市表。
    * @param id 市编号。
@@ -105,9 +106,7 @@ public class ControllerCity {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条市表", notes = "根据主键删除一条市表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerCity {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条市表", notes = "根据主键查询一条市表。", response = City.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public City selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerCity {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条市表详情", notes = "根据主键查询一条市表详情。", response = DetailCity.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "市编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailCity selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceCity.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询市表列表。返回所有符合条件的市表，未分页。
@@ -191,7 +187,7 @@ public class ControllerCity {
    * @return 返回市表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询市表列表", notes = "查询市表列表，返回所有符合条件的市表，未分页。", response = City.class, responseContainer="List")
+  @ApiOperation(value = "查询市表列表", notes = "查询市表列表，返回所有符合条件的市表，未分页。", response = City.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<City> select(HttpServletRequest request, HttpServletResponse response, @RequestBody City city) {
     log.info("select: {}", city);
@@ -210,6 +206,7 @@ public class ControllerCity {
     log.info("selectRelative: {}", reqCity);
     return serviceCity.selectRelative(request, response, reqCity);
   }
+
 
   /**
    * 根据市名称更新一条市表，此方法不适用根据市名称更改市名称的字段值。
@@ -262,6 +259,7 @@ public class ControllerCity {
     log.info("selectDetailByCityName: {}", city);
     return serviceCity.selectDetailByCityName(request, response, city);
   }
+
 
   /**
    * 导出市表到 excel。

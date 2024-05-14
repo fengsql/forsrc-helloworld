@@ -34,6 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 public class ServiceUser extends BaseService implements IService<User> {
   private static final String tableName = "User";
+
   @Resource
   private CacheUser cacheUser;
   @Resource

@@ -148,8 +148,10 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS `id`,
-    `province_name` AS `provinceName`
+    <trim suffixOverrides=",">
+      `id` AS `id`,
+      `province_name` AS `provinceName`,
+    </trim>
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -220,14 +222,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `province`.`id` DESC
+        ORDER BY `province`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -244,14 +246,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `province`.`id` DESC
+        ORDER BY `province`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
   </select>
   <!-- selectList -->
   <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -275,14 +277,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `province`.`id` DESC
+        ORDER BY `province`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and rownum > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
     </if>
@@ -308,14 +310,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -340,14 +342,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>

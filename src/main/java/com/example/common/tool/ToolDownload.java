@@ -1,32 +1,31 @@
 package com.example.common.tool;
 
+import com.forsrc.common.tool.ToolFile;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.ClientAbortException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class ToolDownload {
+  private static final int buffer_size = 8192;
 
   /**
-   * 文件支持分块下载和断点续传
+   * 文件分块下载，断点续传。
    * @param request  请求
    * @param response 响应
-   * @param filePath 文件完整路径
+   * @param filePath 完整路径文件名
    */
+  @SneakyThrows
   public static void download(HttpServletRequest request, HttpServletResponse response, String filePath) {
     String range = request.getHeader("Range");
     File file = new File(filePath);
     long startByte = 0;
     long endByte = file.length() - 1;
-    //    log.info("文件开始位置：{}，文件结束位置：{}，文件总长度：{}", startByte, endByte, file.length());
-    log.info("download file length: {}. file: {}", file.length(), filePath);
+    log.info("download file length: {}. range: {}. file: {}", file.length(), range, filePath);
     if (range != null && range.contains("bytes=") && range.contains("-")) {
       range = range.substring(range.lastIndexOf("=") + 1).trim();
       String[] ranges = range.split("-");
@@ -44,7 +43,7 @@ public class ToolDownload {
       } catch (NumberFormatException e) {
         startByte = 0;
         endByte = file.length() - 1;
-        log.error("Range Occur Error,Message:{}", e.getLocalizedMessage());
+        log.error("Range occur error! Message: {}", e.getLocalizedMessage());
       }
     }
 
@@ -68,7 +67,7 @@ public class ToolDownload {
     try {
       randomAccessFile = new RandomAccessFile(file, "r");
       outputStream = new BufferedOutputStream(response.getOutputStream());
-      byte[] buff = new byte[4096];
+      byte[] buff = new byte[buffer_size];
       int len = 0;
       randomAccessFile.seek(startByte);
       while ((transmitted + len) <= contentLength && (len = randomAccessFile.read(buff)) != -1) {
@@ -82,13 +81,7 @@ public class ToolDownload {
       }
       outputStream.flush();
       response.flushBuffer();
-      randomAccessFile.close();
-      //      log.info("下载完毕：" + startByte + "-" + endByte + "：" + transmitted);
       log.info("download ok. file: {}", filePath);
-    } catch (ClientAbortException e) {
-      log.info("用户停止下载：" + startByte + "-" + endByte + "：" + transmitted);
-    } catch (IOException e) {
-      log.error("用户下载IO异常!", e);
     } finally {
       try {
         if (randomAccessFile != null) {
@@ -99,6 +92,56 @@ public class ToolDownload {
     }
   }
 
+  /**
+   * 下载文件，直接下载，无断点续传
+   * @param response 响应
+   * @param filePath 完整路径文件名
+   */
+  @SneakyThrows
+  public static void download(HttpServletResponse response, String filePath) {
+    if (!ToolFile.existFile(filePath)) {
+      log.warn("file not exist. file: " + filePath);
+      return;
+    }
+    String name = ToolFile.getFileName(filePath);
+    response.setStatus(HttpServletResponse.SC_OK);
+    response.setContentType("application/octet-stream");
+    try {
+      response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(name, "UTF-8"));
+    } catch (UnsupportedEncodingException e) {
+      log.error("downFile UnsupportedEncodingException.", e);
+    }
+    byte[] buff = new byte[buffer_size];
+    BufferedInputStream inputStream = null;
+    OutputStream outputStream = null;
+    try {
+      outputStream = response.getOutputStream();
+      File file = new File(filePath);
+      inputStream = new BufferedInputStream(new FileInputStream(file));
+      int count = 0;
+      int len;
+      while ((len = inputStream.read(buff)) != -1) {
+        outputStream.write(buff, 0, len);
+        outputStream.flush();
+        count += len;
+      }
+      log.info("downFile ok. file: {}. size: {}", filePath, ToolFile.getFileSizeText(count));
+    } finally {
+      try {
+        if (inputStream != null) {
+          inputStream.close();
+        }
+      } catch (IOException e) {
+      }
+    }
+  }
+
+  /**
+   * 下载文件，直接下载，无断点续传
+   * @param response 响应
+   * @param content  文件内容
+   */
+  @SneakyThrows
   public static void download(HttpServletResponse response, byte[] content) {
     long contentLength = content.length;
     //文件类型
@@ -108,14 +151,9 @@ public class ToolDownload {
     response.setHeader("Content-Type", contentType);
     response.setHeader("Content-Length", String.valueOf(contentLength));
 
-    BufferedOutputStream outputStream;
-    try {
-      outputStream = new BufferedOutputStream(response.getOutputStream());
-      outputStream.write(content);
-      outputStream.flush();
-      response.flushBuffer();
-    } catch (IOException e) {
-      log.error("用户下载IO异常，Message：{}", e.getLocalizedMessage());
-    }
+    BufferedOutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+    outputStream.write(content);
+    outputStream.flush();
+    response.flushBuffer();
   }
 }

@@ -13,9 +13,11 @@ public class RepStatDayGoods {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "每日订单商品统计列表", name = "rows", dataType = "List", required = false)
   private List<StatDayGoodsRow> rows;
 
+  @ApiModel(value = "每日订单商品统计", description = "每日订单商品统计")
   @Data
   public static class StatDayGoodsRow {
 

@@ -42,14 +42,14 @@ public class InsertStatDayGoods extends BStatis {
 
   private void insert(List<StatDayGoods> list) {
     Tool.throwNull(list);
-    for (StatDayGoods reportUserDay : list) {
-      insert(reportUserDay);
+    for (StatDayGoods statDayGoods : list) {
+      insert(statDayGoods);
     }
     log.info("add insert ok. count: {}.", list.size());
   }
 
-  private void insert(StatDayGoods reportUserDay) {
-    dbBatch.insert(reportUserDay, daoStatDayGoods);
+  private void insert(StatDayGoods statDayGoods) {
+    dbBatch.insert(statDayGoods, daoStatDayGoods);
   }
 
   // >>>----------------------- normal -----------------------

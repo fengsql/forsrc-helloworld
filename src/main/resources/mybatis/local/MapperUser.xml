@@ -458,19 +458,21 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS `id`,
-    `role_type` AS `roleType`, `role_type` AS `roleType_`,
-    `sex_type` AS `sexType`, `sex_type` AS `sexType_`,
-    `user_status` AS `userStatus`, `user_status` AS `userStatus_`,
-    `username` AS `username`,
-    `email` AS `email`,
-    `score` AS `score`,
-    `times` AS `times`,
-    `birth_date` AS `birthDate`,
-    `head_img_url` AS `headImgUrl`,
-    `info` AS `info`,
-    `update_time` AS `updateTime`,
-    `add_time` AS `addTime`
+    <trim suffixOverrides=",">
+      `id` AS `id`,
+      `role_type` AS `roleType`, `role_type` AS `roleType_`,
+      `sex_type` AS `sexType`, `sex_type` AS `sexType_`,
+      `user_status` AS `userStatus`, `user_status` AS `userStatus_`,
+      `username` AS `username`,
+      `email` AS `email`,
+      `score` AS `score`,
+      `times` AS `times`,
+      `birth_date` AS `birthDate`,
+      `head_img_url` AS `headImgUrl`,
+      `info` AS `info`,
+      `update_time` AS `updateTime`,
+      `add_time` AS `addTime`,
+    </trim>
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -570,26 +572,26 @@
       AND `user`.`email` LIKE CONCAT ('%', #{email,jdbcType=VARCHAR}, '%')
     </if>
     <if test='score != null'>
-      <if test='score.length > 0'>
+      <if test='score.length > 0 and score[0] != null'>
         AND `user`.`score` &gt;= #{score.[0],jdbcType=BIGINT}
       </if>
-      <if test='score.length > 1'>
+      <if test='score.length > 1 and score[1] != null'>
         AND `user`.`score` &lt;= #{score.[1],jdbcType=BIGINT}
       </if>
     </if>
     <if test='times != null'>
-      <if test='times.length > 0'>
+      <if test='times.length > 0 and times[0] != null'>
         AND `user`.`times` &gt;= #{times.[0],jdbcType=INTEGER}
       </if>
-      <if test='times.length > 1'>
+      <if test='times.length > 1 and times[1] != null'>
         AND `user`.`times` &lt;= #{times.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='birthDate != null'>
-      <if test='birthDate.length > 0'>
+      <if test='birthDate.length > 0 and birthDate[0] != null'>
         AND `user`.`birth_date` &gt;= #{birthDate.[0],jdbcType=DATE}
       </if>
-      <if test='birthDate.length > 1'>
+      <if test='birthDate.length > 1 and birthDate[1] != null'>
         AND `user`.`birth_date` &lt;= #{birthDate.[1],jdbcType=DATE}
       </if>
     </if>
@@ -597,18 +599,18 @@
       AND `user`.`head_img_url` LIKE CONCAT ('%', #{headImgUrl,jdbcType=VARCHAR}, '%')
     </if>
     <if test='updateTime != null'>
-      <if test='updateTime.length > 0'>
+      <if test='updateTime.length > 0 and updateTime[0] != null'>
         AND `user`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
-      <if test='updateTime.length > 1'>
+      <if test='updateTime.length > 1 and updateTime[1] != null'>
         AND `user`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='addTime != null'>
-      <if test='addTime.length > 0'>
+      <if test='addTime.length > 0 and addTime[0] != null'>
         AND `user`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
-      <if test='addTime.length > 1'>
+      <if test='addTime.length > 1 and addTime[1] != null'>
         AND `user`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
@@ -636,14 +638,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `user`.`id` DESC
+        ORDER BY `user`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -660,14 +662,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `user`.`id` DESC
+        ORDER BY `user`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
   </select>
   <!-- selectList -->
   <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -691,14 +693,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `user`.`id` DESC
+        ORDER BY `user`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and rownum > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
     </if>
@@ -724,14 +726,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -756,14 +758,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>

@@ -55,6 +55,7 @@ public interface DaoDistrict extends IDao<District> {
    * @return 返回删除的记录数。
    */
   int delete(District district);
+
   /**
    * 删除县表。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。

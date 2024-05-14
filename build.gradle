@@ -21,13 +21,14 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url 'https://mvnrepository.com/'
     }
     maven {
         allowInsecureProtocol = true
-        url 'http://maven.aliyun.com/nexus/content/groups/public'
+        url 'https://maven.aliyun.com/nexus/content/groups/public'
     }
 }
 
@@ -110,10 +111,8 @@ dependencies {
     //mail
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.8'
     //forsrc
-    implementation 'io.github.fengsql:forsrc-common:1.0.2'
-//    implementation 'io.github.fengsql:forsrc-security:0.0.7'
-    // https://mvnrepository.com/artifact/io.github.fengsql/forsrc-security
-    implementation group: 'io.github.fengsql', name: 'forsrc-security', version: '0.0.7'
+    implementation 'io.github.fengsql:forsrc-common:1.0.3'
+    implementation 'io.github.fengsql:forsrc-security:0.0.7'
 
 }
 

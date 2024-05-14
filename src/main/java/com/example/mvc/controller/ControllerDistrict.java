@@ -98,6 +98,7 @@ public class ControllerDistrict {
     return serviceDistrict.updateEvenNull(request, response, district);
   }
 
+
   /**
    * 根据主键删除一条县表。
    * @param id 县编号。
@@ -105,9 +106,7 @@ public class ControllerDistrict {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条县表", notes = "根据主键删除一条县表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerDistrict {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条县表", notes = "根据主键查询一条县表。", response = District.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public District selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerDistrict {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条县表详情", notes = "根据主键查询一条县表详情。", response = DetailDistrict.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "县编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailDistrict selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceDistrict.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询县表列表。返回所有符合条件的县表，未分页。
@@ -191,7 +187,7 @@ public class ControllerDistrict {
    * @return 返回县表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询县表列表", notes = "查询县表列表，返回所有符合条件的县表，未分页。", response = District.class, responseContainer="List")
+  @ApiOperation(value = "查询县表列表", notes = "查询县表列表，返回所有符合条件的县表，未分页。", response = District.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<District> select(HttpServletRequest request, HttpServletResponse response, @RequestBody District district) {
     log.info("select: {}", district);
@@ -210,6 +206,7 @@ public class ControllerDistrict {
     log.info("selectRelative: {}", reqDistrict);
     return serviceDistrict.selectRelative(request, response, reqDistrict);
   }
+
 
   /**
    * 根据县名称更新一条县表，此方法不适用根据县名称更改县名称的字段值。
@@ -262,6 +259,7 @@ public class ControllerDistrict {
     log.info("selectDetailByDistrictName: {}", district);
     return serviceDistrict.selectDetailByDistrictName(request, response, district);
   }
+
 
   /**
    * 导出县表到 excel。

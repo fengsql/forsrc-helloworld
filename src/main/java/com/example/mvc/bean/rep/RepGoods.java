@@ -13,9 +13,11 @@ public class RepGoods {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "商品表列表", name = "rows", dataType = "List", required = false)
   private List<GoodsRow> rows;
 
+  @ApiModel(value = "商品表", description = "商品表")
   @Data
   public static class GoodsRow {
 

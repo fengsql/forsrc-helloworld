@@ -13,9 +13,11 @@ public class RepOrderDetail {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "订单明细表列表", name = "rows", dataType = "List", required = false)
   private List<OrderDetailRow> rows;
 
+  @ApiModel(value = "订单明细表", description = "订单明细表")
   @Data
   public static class OrderDetailRow {
 

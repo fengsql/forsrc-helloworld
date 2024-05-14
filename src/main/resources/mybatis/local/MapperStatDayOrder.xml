@@ -258,12 +258,14 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `id` AS `id`,
-    `order_status` AS `orderStatus`, `order_status` AS `orderStatus_`,
-    `day_no` AS `dayNo`,
-    `amount` AS `amount`,
-    `order_num` AS `orderNum`,
-    `add_time` AS `addTime`
+    <trim suffixOverrides=",">
+      `id` AS `id`,
+      `order_status` AS `orderStatus`, `order_status` AS `orderStatus_`,
+      `day_no` AS `dayNo`,
+      `amount` AS `amount`,
+      `order_num` AS `orderNum`,
+      `add_time` AS `addTime`,
+    </trim>
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -327,34 +329,34 @@
       </foreach>
     </if>
     <if test='dayNo != null'>
-      <if test='dayNo.length > 0'>
-        AND `stat_day_order`.`day_no` &gt;= #{dayNo[0],javaType=java.lang.Long,jdbcType=INTEGER}
+      <if test='dayNo.length > 0 and dayNo[0] != null'>
+        AND `stat_day_order`.`day_no` &gt;= #{dayNo.[0],jdbcType=INTEGER}
       </if>
-      <if test='dayNo.length > 1'>
-        AND `stat_day_order`.`day_no` &lt;= #{dayNo[1],javaType=java.lang.Long,jdbcType=INTEGER}
+      <if test='dayNo.length > 1 and dayNo[1] != null'>
+        AND `stat_day_order`.`day_no` &lt;= #{dayNo.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='amount != null'>
-      <if test='amount.length > 0'>
+      <if test='amount.length > 0 and amount[0] != null'>
         AND `stat_day_order`.`amount` &gt;= #{amount.[0],jdbcType=INTEGER}
       </if>
-      <if test='amount.length > 1'>
+      <if test='amount.length > 1 and amount[1] != null'>
         AND `stat_day_order`.`amount` &lt;= #{amount.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='orderNum != null'>
-      <if test='orderNum.length > 0'>
+      <if test='orderNum.length > 0 and orderNum[0] != null'>
         AND `stat_day_order`.`order_num` &gt;= #{orderNum.[0],jdbcType=INTEGER}
       </if>
-      <if test='orderNum.length > 1'>
+      <if test='orderNum.length > 1 and orderNum[1] != null'>
         AND `stat_day_order`.`order_num` &lt;= #{orderNum.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='addTime != null'>
-      <if test='addTime.length > 0'>
+      <if test='addTime.length > 0 and addTime[0] != null'>
         AND `stat_day_order`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
-      <if test='addTime.length > 1'>
+      <if test='addTime.length > 1 and addTime[1] != null'>
         AND `stat_day_order`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
@@ -382,14 +384,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `stat_day_order`.`id` DESC
+        ORDER BY `stat_day_order`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -406,14 +408,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `stat_day_order`.`id` DESC
+        ORDER BY `stat_day_order`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
   </select>
   <!-- selectList -->
   <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -437,14 +439,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `stat_day_order`.`id` DESC
+        ORDER BY `stat_day_order`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and rownum > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
     </if>
@@ -470,14 +472,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -502,14 +504,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -563,11 +565,11 @@
       AND order_status = #{orderStatus,jdbcType=TINYINT}
     </if>
     <if test='dayNo != null'>
-      <if test='dayNo.length > 0'>
-        AND CAST(DATE_FORMAT(pay_time, '%Y%m%d') AS DECIMAL) &gt;= #{dayNo[0],javaType=java.lang.Integer,jdbcType=INTEGER}
+      <if test='dayNo.length > 0 and dayNo[0] != null'>
+        AND CAST(DATE_FORMAT(pay_time, '%Y%m%d') AS DECIMAL) &gt;= #{dayNo.[0],jdbcType=INTEGER}
       </if>
-      <if test='dayNo.length > 1'>
-        AND CAST(DATE_FORMAT(pay_time, '%Y%m%d') AS DECIMAL) &lt; #{dayNo[1],javaType=java.lang.Integer,jdbcType=INTEGER}
+      <if test='dayNo.length > 1 and dayNo[1] != null'>
+        AND CAST(DATE_FORMAT(pay_time, '%Y%m%d') AS DECIMAL) &lt; #{dayNo.[1],jdbcType=INTEGER}
       </if>
     </if>
   </sql>

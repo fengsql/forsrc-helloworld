@@ -302,14 +302,16 @@
   </select>
   <!-- sql_detailField -->
   <sql id="sql_detailField">
-    `goods`.`id` AS `id`,
-    `goods_kind`.`name` AS `goodsKindName`,
-    `goods`.`online_status` AS `onlineStatus`, `goods`.`online_status` AS `onlineStatus_`,
-    `goods`.`name` AS `name`,
-    `goods`.`price` AS `price`,
-    `goods`.`info` AS `info`,
-    `goods`.`update_time` AS `updateTime`,
-    `goods`.`add_time` AS `addTime`
+    <trim suffixOverrides=",">
+      `goods`.`id` AS `id`,
+      `goods_kind`.`name` AS `goodsKindName`,
+      `goods`.`online_status` AS `onlineStatus`, `goods`.`online_status` AS `onlineStatus_`,
+      `goods`.`name` AS `name`,
+      `goods`.`price` AS `price`,
+      `goods`.`info` AS `info`,
+      `goods`.`update_time` AS `updateTime`,
+      `goods`.`add_time` AS `addTime`,
+    </trim>
   </sql>
   <!-- sql_detailTable -->
   <sql id="sql_detailTable">
@@ -383,26 +385,26 @@
       AND `goods`.`name` LIKE CONCAT ('%', #{name,jdbcType=VARCHAR}, '%')
     </if>
     <if test='price != null'>
-      <if test='price.length > 0'>
+      <if test='price.length > 0 and price[0] != null'>
         AND `goods`.`price` &gt;= #{price.[0],jdbcType=INTEGER}
       </if>
-      <if test='price.length > 1'>
+      <if test='price.length > 1 and price[1] != null'>
         AND `goods`.`price` &lt;= #{price.[1],jdbcType=INTEGER}
       </if>
     </if>
     <if test='updateTime != null'>
-      <if test='updateTime.length > 0'>
+      <if test='updateTime.length > 0 and updateTime[0] != null'>
         AND `goods`.`update_time` &gt;= #{updateTime.[0],jdbcType=TIMESTAMP}
       </if>
-      <if test='updateTime.length > 1'>
+      <if test='updateTime.length > 1 and updateTime[1] != null'>
         AND `goods`.`update_time` &lt;= #{updateTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
     <if test='addTime != null'>
-      <if test='addTime.length > 0'>
+      <if test='addTime.length > 0 and addTime[0] != null'>
         AND `goods`.`add_time` &gt;= #{addTime.[0],jdbcType=TIMESTAMP}
       </if>
-      <if test='addTime.length > 1'>
+      <if test='addTime.length > 1 and addTime[1] != null'>
         AND `goods`.`add_time` &lt;= #{addTime.[1],jdbcType=TIMESTAMP}
       </if>
     </if>
@@ -430,14 +432,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `goods`.`id` DESC
+        ORDER BY `goods`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -454,14 +456,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `goods`.`id` DESC
+        ORDER BY `goods`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
   </select>
   <!-- selectList -->
   <select id="selectList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -485,14 +487,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `goods`.`id` DESC
+        ORDER BY `goods`.`id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and rownum > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{rownum, jdbcType=INTEGER}
     </if>
@@ -518,14 +520,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>
@@ -550,14 +552,14 @@
     <choose>
       <when test='orderBy != null and orderBy != ""'>
         ORDER BY <![CDATA[${orderBy}]]>
-        <if test='desc == true'>
-          DESC
-        </if>
       </when>
       <otherwise>
-        ORDER BY `id` DESC
+        ORDER BY `id`
       </otherwise>
     </choose>
+    <if test='desc == true'>
+      DESC
+    </if>
     <if test='startIndex >= 0 and pageSize > 0'>
       LIMIT #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </if>

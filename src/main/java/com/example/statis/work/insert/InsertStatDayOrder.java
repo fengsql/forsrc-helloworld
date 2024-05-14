@@ -42,14 +42,14 @@ public class InsertStatDayOrder extends BStatis {
 
   private void insert(List<StatDayOrder> list) {
     Tool.throwNull(list);
-    for (StatDayOrder reportUserDay : list) {
-      insert(reportUserDay);
+    for (StatDayOrder statDayOrder : list) {
+      insert(statDayOrder);
     }
     log.info("add insert ok. count: {}.", list.size());
   }
 
-  private void insert(StatDayOrder reportUserDay) {
-    dbBatch.insert(reportUserDay, daoStatDayOrder);
+  private void insert(StatDayOrder statDayOrder) {
+    dbBatch.insert(statDayOrder, daoStatDayOrder);
   }
 
   // >>>----------------------- normal -----------------------

@@ -1,15 +1,15 @@
 package com.example.mvc.bean.req;
 
-import com.example.common.spring.base.BaseRequest;
+import com.forsrc.common.spring.base.BRequestPage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@ApiModel(value = "综合查询每日订单统计请求的参数", description = "每日订单统计", parent = BaseRequest.class)
+@ApiModel(value = "综合查询每日订单统计请求的参数", description = "每日订单统计", parent = BRequestPage.class)
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ReqStatDayOrder extends BaseRequest {
+public class ReqStatDayOrder extends BRequestPage {
 
   @ApiModelProperty(value = "编号", name = "id", dataType = "Integer")
   private Integer id;

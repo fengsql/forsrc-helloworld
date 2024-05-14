@@ -98,6 +98,7 @@ public class ControllerGoods {
     return serviceGoods.updateEvenNull(request, response, goods);
   }
 
+
   /**
    * 根据主键删除一条商品表。
    * @param id 商品编号。
@@ -105,9 +106,7 @@ public class ControllerGoods {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条商品表", notes = "根据主键删除一条商品表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerGoods {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条商品表", notes = "根据主键查询一条商品表。", response = Goods.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public Goods selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerGoods {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条商品表详情", notes = "根据主键查询一条商品表详情。", response = DetailGoods.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailGoods selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceGoods.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询商品表列表。返回所有符合条件的商品表，未分页。
@@ -191,7 +187,7 @@ public class ControllerGoods {
    * @return 返回商品表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询商品表列表", notes = "查询商品表列表，返回所有符合条件的商品表，未分页。", response = Goods.class, responseContainer="List")
+  @ApiOperation(value = "查询商品表列表", notes = "查询商品表列表，返回所有符合条件的商品表，未分页。", response = Goods.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<Goods> select(HttpServletRequest request, HttpServletResponse response, @RequestBody Goods goods) {
     log.info("select: {}", goods);
@@ -210,6 +206,7 @@ public class ControllerGoods {
     log.info("selectRelative: {}", reqGoods);
     return serviceGoods.selectRelative(request, response, reqGoods);
   }
+
 
   /**
    * 导出商品表到 excel。

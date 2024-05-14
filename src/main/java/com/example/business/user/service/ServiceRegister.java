@@ -35,7 +35,7 @@ public class ServiceRegister {
   // <<----------------------- public -----------------------
 
   public String register(HttpServletRequest request, HttpServletResponse response, ReqRegister reqRegister) {
-    checkRegister(reqRegister);
+    checkParam(reqRegister);
     String verifyCode = reqRegister.getVerifyCode_();
     checkVerifyCode(request, verifyCode);
     String username = reqRegister.getUsername();
@@ -82,23 +82,23 @@ public class ServiceRegister {
 
   // <<<----------------------- normal -----------------------
 
-  private void checkRegister(ReqRegister reqRegister) {
+  private void checkParam(ReqRegister reqRegister) {
     if (!enableRegister) {
       throw new CommonException("未开启注册功能!");
     }
     if (enableVerifyCode) {
       if (Tool.isNull(reqRegister.getVerifyCode_())) {
-        throw new CommonException("验证码为空!");
+        throw new CommonException("验证码不能为空!");
       }
     }
     if (Tool.isNull(reqRegister.getUsername())) {
-      throw new CommonException("用户名为空!");
+      throw new CommonException("用户名不能为空!");
     }
     if (Tool.isNull(reqRegister.getPassword())) {
-      throw new CommonException("密码为空!");
+      throw new CommonException("密码不能为空!");
     }
     if (Tool.isNull(reqRegister.getPassword_again())) {
-      throw new CommonException("重复密码为空!");
+      throw new CommonException("重复密码不能为空!");
     }
   }
 

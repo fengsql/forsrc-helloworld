@@ -98,6 +98,7 @@ public class ControllerStatDayOrder {
     return serviceStatDayOrder.updateEvenNull(request, response, statDayOrder);
   }
 
+
   /**
    * 根据主键删除一条每日订单统计。
    * @param id 编号。
@@ -105,9 +106,7 @@ public class ControllerStatDayOrder {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条每日订单统计", notes = "根据主键删除一条每日订单统计。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerStatDayOrder {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条每日订单统计", notes = "根据主键查询一条每日订单统计。", response = StatDayOrder.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public StatDayOrder selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerStatDayOrder {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条每日订单统计详情", notes = "根据主键查询一条每日订单统计详情。", response = DetailStatDayOrder.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailStatDayOrder selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceStatDayOrder.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询每日订单统计列表。返回所有符合条件的每日订单统计，未分页。
@@ -191,7 +187,7 @@ public class ControllerStatDayOrder {
    * @return 返回每日订单统计列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询每日订单统计列表", notes = "查询每日订单统计列表，返回所有符合条件的每日订单统计，未分页。", response = StatDayOrder.class, responseContainer="List")
+  @ApiOperation(value = "查询每日订单统计列表", notes = "查询每日订单统计列表，返回所有符合条件的每日订单统计，未分页。", response = StatDayOrder.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<StatDayOrder> select(HttpServletRequest request, HttpServletResponse response, @RequestBody StatDayOrder statDayOrder) {
     log.info("select: {}", statDayOrder);
@@ -211,6 +207,7 @@ public class ControllerStatDayOrder {
     return serviceStatDayOrder.selectRelative(request, response, reqStatDayOrder);
   }
 
+
   /**
    * 导出每日订单统计到 excel。
    * @param paramExport 导出的参数。其中 fields 从 selectRelative 接口的 RepStatDayOrder.StatDayOrderRow 中获取，reqParam 为 ReqStatDayOrder 对象。
@@ -223,13 +220,14 @@ public class ControllerStatDayOrder {
     serviceStatDayOrder.export(request, response, paramExport);
   }
 
+
   /**
    * 实时统计每日订单统计。返回所有统计结果，未分页。
    * @param reqStatDayOrder 统计参数。
    * @return 返回实时统计每日订单统计。
    */
   @ApiOperationSupport(order = 210)
-  @ApiOperation(value = "实时统计每日订单统计", notes = "实时统计每日订单统计，返回所有统计结果，未分页。仅分组字段可以作为查询条件。", response = StatDayOrder.class, responseContainer="List")
+  @ApiOperation(value = "实时统计每日订单统计", notes = "实时统计每日订单统计，返回所有统计结果，未分页。仅分组字段可以作为查询条件。", response = StatDayOrder.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "stat")
   public List<StatDayOrder> stat(HttpServletRequest request, HttpServletResponse response, @RequestBody ReqStatDayOrder reqStatDayOrder) {
     log.info("stat: {}", reqStatDayOrder);

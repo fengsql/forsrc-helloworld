@@ -33,6 +33,7 @@ import com.example.mvc.cache.CacheGoodsKind;
 @Slf4j
 public class ServiceGoodsKind extends BaseService implements IService<GoodsKind> {
   private static final String tableName = "GoodsKind";
+
   @Resource
   private CacheGoodsKind cacheGoodsKind;
   @Resource

@@ -3,6 +3,7 @@ package com.example.common.spring.base;
 import com.forsrc.common.constant.Code;
 import com.forsrc.common.constant.Const;
 import com.forsrc.common.exception.CommonException;
+import com.forsrc.common.spring.base.BRequestPage;
 import com.forsrc.common.spring.base.BService;
 import com.forsrc.common.tool.Tool;
 import com.forsrc.security.model.UserDetail;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,19 +28,22 @@ public class BaseService extends BService {
 
   // <<----------------------- public -----------------------
 
-  protected void initService(HttpServletRequest request, BaseRequest baseRequest) {
-    initValue(baseRequest);
-    initPageSet(baseRequest, false);
+  // <<<----------------------- common -----------------------
+
+  protected void initService(HttpServletRequest request, BRequestPage requestPage) {
+    initValue(requestPage);
+    initPageSet(requestPage, false);
   }
 
-  protected void initServiceNest(HttpServletRequest request, BaseRequest baseRequest) {
-    initValue(baseRequest);
-    initPageSet(baseRequest, true);
+  protected void initServiceNest(HttpServletRequest request, BRequestPage requestPage) {
+    initValue(requestPage);
+    initPageSet(requestPage, true);
   }
 
-  protected boolean isQueryTotal(BaseRequest baseRequest) {
-    int pageIndex = Tool.toInt(baseRequest.getPageIndex());
-    return pageIndex <= 0;
+  protected boolean isQueryTotal(BRequestPage requestPage) {
+    int pageSize = Tool.toInt(requestPage.getPageSize());
+    int pageIndex = Tool.toInt(requestPage.getPageIndex());
+    return pageSize > 0 && pageIndex <= 0;
   }
 
   protected Integer getUserId() {
@@ -50,6 +55,10 @@ public class BaseService extends BService {
     return userDetail == null ? 0 : Tool.toInteger(userDetail.getUserId());
   }
 
+  protected Integer getRoleType(UserDetail userDetail) {
+    return userDetail == null ? 0 : Tool.toInteger(userDetail.getRoleType());
+  }
+
   protected String getUsername() {
     return ToolSecurity.getUsername();
   }
@@ -59,9 +68,7 @@ public class BaseService extends BService {
   }
 
   protected UserDetail getUserDetail() {
-    UserDetail userDetail = ToolSecurity.getUserDetail();
-    throwNull(userDetail, "userDetail");
-    return userDetail;
+    return ToolSecurity.getUserDetail();
   }
 
   protected User getUser() {
@@ -82,48 +89,62 @@ public class BaseService extends BService {
 
   protected void throwNull(HttpServletRequest request, HttpServletResponse response) {
     if (request == null) {
-      throw new CommonException(Code.OBJECT_NULL, "request is null");
+      throw new CommonException(Code.OBJECT_NULL, "request 对象不能为空!");
     }
     if (response == null) {
-      throw new CommonException(Code.OBJECT_NULL, "response is null");
+      throw new CommonException(Code.OBJECT_NULL, "response 对象不能为空!");
+    }
+  }
+
+  protected void throwNull(Integer value, String name) {
+    if (value == null || value <= 0) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不是一个有效整数!");
+    }
+  }
+
+  protected void throwNull(Double value, String name) {
+    if (value == null || value <= 0) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不是一个有效小数!");
     }
   }
 
   protected void throwNull(String value, String name) {
     if (Tool.isNull(value)) {
-      throw new CommonException(Code.OBJECT_NULL, name + " is null!");
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
     }
   }
 
-  protected void throwNull(String value) {
-    if (Tool.isNull(value)) {
-      throw new CommonException(Code.OBJECT_NULL, "object is null!");
+  protected <T> void throwNull(List<T> list, String name) {
+    if (list == null || list.size() == 0) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
+    }
+  }
+
+  protected <K, V> void throwNull(Map<K, V> map, String name) {
+    if (map == null || map.size() == 0) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
     }
   }
 
   protected void throwNull(Object object, String name) {
     if (object == null) {
-      throw new CommonException(Code.OBJECT_NULL, name + " is null!");
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
     }
   }
 
-  protected <T> void throwNull(List<T> list) {
-    if (list == null || list.size() == 0) {
-      throw new CommonException(Code.OBJECT_NULL, "list is null!");
+  protected void assertNumber(Integer value, String name) {
+    if (value == null) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
     }
   }
 
-  protected void throwNull(Object object) {
-    if (object == null) {
-      throw new CommonException(Code.OBJECT_NULL, "object is null!");
+  protected void assertNumber(Double value, String name) {
+    if (value == null) {
+      throw new CommonException(Code.OBJECT_NULL, name + " 不能为空!");
     }
   }
 
-  protected void assertUnsigned(Integer value, String name) {
-    if (value == null || value <= 0) {
-      throw new CommonException(Code.OBJECT_NULL, name + " is invalid number!");
-    }
-  }
+  // >>>----------------------- common -----------------------
 
   // >>----------------------- public -----------------------
 
@@ -131,13 +152,16 @@ public class BaseService extends BService {
 
   // <<<----------------------- common -----------------------
 
-  private void initValue(BaseRequest baseRequest) {
-    baseRequest.setInnerCondition(null);
+  private void initValue(BRequestPage requestPage) {
+    requestPage.setInnerCondition(null);
+    if (requestPage.getDesc() == null) {
+      requestPage.setDesc(true);
+    }
   }
 
-  private void initPageSet(BaseRequest baseRequest, boolean isDefaultAll) {
-    int pageSize = Tool.toInt(baseRequest.getPageSize());
-    int pageIndex = Tool.toInt(baseRequest.getPageIndex());
+  private void initPageSet(BRequestPage requestPage, boolean isDefaultAll) {
+    int pageSize = Tool.toInt(requestPage.getPageSize());
+    int pageIndex = Tool.toInt(requestPage.getPageIndex());
     if (pageIndex < 0) {
       pageIndex = 0;
     }
@@ -152,8 +176,8 @@ public class BaseService extends BService {
     }
     int startIndex = pageSize * pageIndex;
 
-    baseRequest.setPageSize(pageSize);
-    baseRequest.setStartIndex(startIndex);
+    requestPage.setPageSize(pageSize);
+    requestPage.setStartIndex(startIndex);
   }
 
   // >>>----------------------- common -----------------------

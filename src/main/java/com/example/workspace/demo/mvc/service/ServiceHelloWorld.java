@@ -16,7 +16,7 @@ public class ServiceHelloWorld extends BaseService {
   // <<----------------------- public -----------------------
 
   /**
-   * 这是一个演示接口。。
+   * 这是一个演示接口。
    * @param reqHelloWorld 请求数据。
    * @return 返回数据。
    */
@@ -32,7 +32,7 @@ public class ServiceHelloWorld extends BaseService {
   // <<<----------------------- normal -----------------------
 
   private void checkParam(ReqHelloWorld reqHelloWorld) {
-    throwNull(reqHelloWorld);
+    throwNull(reqHelloWorld, "请求参数");
   }
 
   private RepHelloWorld doHelloWorld(ReqHelloWorld reqHelloWorld) {

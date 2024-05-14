@@ -13,9 +13,11 @@ public class RepUser {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "用户列表", name = "rows", dataType = "List", required = false)
   private List<UserRow> rows;
 
+  @ApiModel(value = "用户", description = "用户")
   @Data
   public static class UserRow {
 

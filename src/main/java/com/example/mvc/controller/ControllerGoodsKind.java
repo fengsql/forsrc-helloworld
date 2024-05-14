@@ -98,6 +98,7 @@ public class ControllerGoodsKind {
     return serviceGoodsKind.updateEvenNull(request, response, goodsKind);
   }
 
+
   /**
    * 根据主键删除一条商品类别表。
    * @param id 商品编号。
@@ -105,9 +106,7 @@ public class ControllerGoodsKind {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条商品类别表", notes = "根据主键删除一条商品类别表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerGoodsKind {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条商品类别表", notes = "根据主键查询一条商品类别表。", response = GoodsKind.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public GoodsKind selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerGoodsKind {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条商品类别表详情", notes = "根据主键查询一条商品类别表详情。", response = DetailGoodsKind.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商品编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailGoodsKind selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceGoodsKind.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询商品类别表列表。返回所有符合条件的商品类别表，未分页。
@@ -191,7 +187,7 @@ public class ControllerGoodsKind {
    * @return 返回商品类别表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询商品类别表列表", notes = "查询商品类别表列表，返回所有符合条件的商品类别表，未分页。", response = GoodsKind.class, responseContainer="List")
+  @ApiOperation(value = "查询商品类别表列表", notes = "查询商品类别表列表，返回所有符合条件的商品类别表，未分页。", response = GoodsKind.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<GoodsKind> select(HttpServletRequest request, HttpServletResponse response, @RequestBody GoodsKind goodsKind) {
     log.info("select: {}", goodsKind);
@@ -210,6 +206,7 @@ public class ControllerGoodsKind {
     log.info("selectRelative: {}", reqGoodsKind);
     return serviceGoodsKind.selectRelative(request, response, reqGoodsKind);
   }
+
 
   /**
    * 根据类别名称更新一条商品类别表，此方法不适用根据类别名称更改类别名称的字段值。
@@ -262,6 +259,7 @@ public class ControllerGoodsKind {
     log.info("selectDetailByName: {}", goodsKind);
     return serviceGoodsKind.selectDetailByName(request, response, goodsKind);
   }
+
 
   /**
    * 导出商品类别表到 excel。

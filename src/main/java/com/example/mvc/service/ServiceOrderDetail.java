@@ -32,6 +32,7 @@ import java.util.Map;
 @Slf4j
 public class ServiceOrderDetail extends BaseService implements IService<OrderDetail> {
   private static final String tableName = "OrderDetail";
+
   @Resource
   private DaoOrderDetail daoOrderDetail;
   @Resource

@@ -33,6 +33,7 @@ import com.example.statis.work.stat.StatStatDayOrder;
 @Slf4j
 public class ServiceStatDayOrder extends BaseService implements IService<StatDayOrder> {
   private static final String tableName = "StatDayOrder";
+
   @Resource
   private StatStatDayOrder statStatDayOrder;
   @Resource

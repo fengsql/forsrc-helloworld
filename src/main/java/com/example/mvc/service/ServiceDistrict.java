@@ -33,6 +33,7 @@ import com.example.mvc.cache.CacheDistrict;
 @Slf4j
 public class ServiceDistrict extends BaseService implements IService<District> {
   private static final String tableName = "District";
+
   @Resource
   private CacheDistrict cacheDistrict;
   @Resource

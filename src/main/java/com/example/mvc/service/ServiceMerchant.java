@@ -32,6 +32,7 @@ import java.util.Map;
 @Slf4j
 public class ServiceMerchant extends BaseService implements IService<Merchant> {
   private static final String tableName = "Merchant";
+
   @Resource
   private DaoMerchant daoMerchant;
   @Resource

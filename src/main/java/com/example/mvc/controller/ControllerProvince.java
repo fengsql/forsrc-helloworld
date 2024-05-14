@@ -98,6 +98,7 @@ public class ControllerProvince {
     return serviceProvince.updateEvenNull(request, response, province);
   }
 
+
   /**
    * 根据主键删除一条省表。
    * @param id 省编号。
@@ -105,9 +106,7 @@ public class ControllerProvince {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条省表", notes = "根据主键删除一条省表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
@@ -134,9 +133,7 @@ public class ControllerProvince {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条省表", notes = "根据主键查询一条省表。", response = Province.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public Province selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
@@ -176,14 +173,13 @@ public class ControllerProvince {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条省表详情", notes = "根据主键查询一条省表详情。", response = DetailProvince.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "省编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailProvince selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
     return serviceProvince.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询省表列表。返回所有符合条件的省表，未分页。
@@ -191,7 +187,7 @@ public class ControllerProvince {
    * @return 返回省表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询省表列表", notes = "查询省表列表，返回所有符合条件的省表，未分页。", response = Province.class, responseContainer="List")
+  @ApiOperation(value = "查询省表列表", notes = "查询省表列表，返回所有符合条件的省表，未分页。", response = Province.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<Province> select(HttpServletRequest request, HttpServletResponse response, @RequestBody Province province) {
     log.info("select: {}", province);
@@ -210,6 +206,7 @@ public class ControllerProvince {
     log.info("selectRelative: {}", reqProvince);
     return serviceProvince.selectRelative(request, response, reqProvince);
   }
+
 
   /**
    * 根据省名称更新一条省表，此方法不适用根据省名称更改省名称的字段值。
@@ -262,6 +259,7 @@ public class ControllerProvince {
     log.info("selectDetailByProvinceName: {}", province);
     return serviceProvince.selectDetailByProvinceName(request, response, province);
   }
+
 
   /**
    * 导出省表到 excel。

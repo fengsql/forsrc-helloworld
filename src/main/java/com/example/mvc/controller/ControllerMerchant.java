@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import com.example.mvc.event.auth.AuthMerchant;
 
 @Api(tags = "商户表", description = "商户表相关的 API", position = 1)
 @RestController
@@ -29,6 +30,8 @@ import java.util.List;
 @Slf4j
 public class ControllerMerchant {
 
+  @Resource
+  private AuthMerchant authMerchant;
   @Resource
   private ServiceMerchant serviceMerchant;
 
@@ -42,6 +45,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public Merchant insert(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("insert: {}", merchant);
+    authMerchant.onInsert(request, response, merchant);
     return serviceMerchant.insert(request, response, merchant);
   }
 
@@ -55,6 +59,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "insertSync")
   public int insertSync(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Merchant> merchants) {
     log.info("insertSync: {}", merchants.size());
+    authMerchant.onInsert(request, response, merchants);
     return serviceMerchant.insertSync(request, response, merchants);
   }
 
@@ -68,6 +73,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Merchant> merchants) {
     log.info("insertAsyn: {}", merchants.size());
+    authMerchant.onInsert(request, response, merchants);
     serviceMerchant.insertAsyn(request, response, merchants);
     return "";
   }
@@ -82,6 +88,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("update: {}", merchant);
+    authMerchant.onUpdate(request, response, merchant);
     return serviceMerchant.update(request, response, merchant);
   }
 
@@ -95,8 +102,10 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
   public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("updateEvenNull: {}", merchant);
+    authMerchant.onUpdate(request, response, merchant);
     return serviceMerchant.updateEvenNull(request, response, merchant);
   }
+
 
   /**
    * 根据主键删除一条商户表。
@@ -105,12 +114,13 @@ public class ControllerMerchant {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条商户表", notes = "根据主键删除一条商户表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
+    Merchant merchant = new Merchant();
+    merchant.setId(id);
+    authMerchant.onDelete(request, response, merchant);
     return serviceMerchant.delete(request, response, id);
   }
 
@@ -124,6 +134,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("delete: {}", merchant);
+    authMerchant.onDelete(request, response, merchant);
     return serviceMerchant.delete(request, response, merchant);
   }
 
@@ -134,12 +145,13 @@ public class ControllerMerchant {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条商户表", notes = "根据主键查询一条商户表。", response = Merchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public Merchant selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
+    Merchant merchant = new Merchant();
+    merchant.setId(id);
+    authMerchant.onSelect(request, response, merchant);
     return serviceMerchant.selectByPrimary(request, response, id);
   }
 
@@ -153,6 +165,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectOne")
   public Merchant selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectOne: {}", merchant);
+    authMerchant.onSelect(request, response, merchant);
     return serviceMerchant.selectOne(request, response, merchant);
   }
 
@@ -166,6 +179,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailMerchant selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectDetail: {}", merchant);
+    authMerchant.onSelectDetail(request, response, merchant);
     return serviceMerchant.selectDetail(request, response, merchant);
   }
 
@@ -176,14 +190,16 @@ public class ControllerMerchant {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条商户表详情", notes = "根据主键查询一条商户表详情。", response = DetailMerchant.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "商户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailMerchant selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
+    Merchant merchant = new Merchant();
+    merchant.setId(id);
+    authMerchant.onSelectDetail(request, response, merchant);
     return serviceMerchant.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询商户表列表。返回所有符合条件的商户表，未分页。
@@ -191,10 +207,11 @@ public class ControllerMerchant {
    * @return 返回商户表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询商户表列表", notes = "查询商户表列表，返回所有符合条件的商户表，未分页。", response = Merchant.class, responseContainer="List")
+  @ApiOperation(value = "查询商户表列表", notes = "查询商户表列表，返回所有符合条件的商户表，未分页。", response = Merchant.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<Merchant> select(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("select: {}", merchant);
+    authMerchant.onSelect(request, response, merchant);
     return serviceMerchant.select(request, response, merchant);
   }
 
@@ -208,8 +225,10 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectRelative")
   public RepMerchant selectRelative(HttpServletRequest request, HttpServletResponse response, @RequestBody ReqMerchant reqMerchant) {
     log.info("selectRelative: {}", reqMerchant);
+    authMerchant.onSelectRelative(request, response, reqMerchant);
     return serviceMerchant.selectRelative(request, response, reqMerchant);
   }
+
 
   /**
    * 根据商户号更新一条商户表，此方法不适用根据商户号更改商户号的字段值。
@@ -221,6 +240,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "updateByMchNo")
   public int updateByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("updateByMchNo. merchant: {}", merchant);
+    authMerchant.onUpdate(request, response, merchant);
     return serviceMerchant.updateByMchNo(request, response, merchant);
   }
 
@@ -234,6 +254,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "deleteByMchNo")
   public int deleteByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("deleteByMchNo. merchant: {}", merchant);
+    authMerchant.onDelete(request, response, merchant);
     return serviceMerchant.deleteByMchNo(request, response, merchant);
   }
 
@@ -247,6 +268,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectByMchNo")
   public Merchant selectByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectByMchNo: {}", merchant);
+    authMerchant.onSelect(request, response, merchant);
     return serviceMerchant.selectByMchNo(request, response, merchant);
   }
 
@@ -260,8 +282,10 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByMchNo")
   public DetailMerchant selectDetailByMchNo(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectDetailByMchNo: {}", merchant);
+    authMerchant.onSelectDetail(request, response, merchant);
     return serviceMerchant.selectDetailByMchNo(request, response, merchant);
   }
+
 
   /**
    * 根据Appid更新一条商户表，此方法不适用根据Appid更改Appid的字段值。
@@ -273,6 +297,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "updateByAppid")
   public int updateByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("updateByAppid. merchant: {}", merchant);
+    authMerchant.onUpdate(request, response, merchant);
     return serviceMerchant.updateByAppid(request, response, merchant);
   }
 
@@ -286,6 +311,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "deleteByAppid")
   public int deleteByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("deleteByAppid. merchant: {}", merchant);
+    authMerchant.onDelete(request, response, merchant);
     return serviceMerchant.deleteByAppid(request, response, merchant);
   }
 
@@ -299,6 +325,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectByAppid")
   public Merchant selectByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectByAppid: {}", merchant);
+    authMerchant.onSelect(request, response, merchant);
     return serviceMerchant.selectByAppid(request, response, merchant);
   }
 
@@ -312,8 +339,10 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByAppid")
   public DetailMerchant selectDetailByAppid(HttpServletRequest request, HttpServletResponse response, @RequestBody Merchant merchant) {
     log.info("selectDetailByAppid: {}", merchant);
+    authMerchant.onSelectDetail(request, response, merchant);
     return serviceMerchant.selectDetailByAppid(request, response, merchant);
   }
+
 
   /**
    * 导出商户表到 excel。
@@ -324,6 +353,7 @@ public class ControllerMerchant {
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {
     log.info("export: {}", paramExport);
+    authMerchant.onExport(request, response, paramExport);
     serviceMerchant.export(request, response, paramExport);
   }
 

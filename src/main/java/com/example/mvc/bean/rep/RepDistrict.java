@@ -13,9 +13,11 @@ public class RepDistrict {
 
   @ApiModelProperty(value = "总记录数", name = "total", dataType = "int", required = false)
   private int total;
+
   @ApiModelProperty(value = "县表列表", name = "rows", dataType = "List", required = false)
   private List<DistrictRow> rows;
 
+  @ApiModel(value = "县表", description = "县表")
   @Data
   public static class DistrictRow {
 

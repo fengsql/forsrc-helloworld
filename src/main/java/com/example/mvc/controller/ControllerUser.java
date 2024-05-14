@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import com.example.mvc.event.auth.AuthUser;
 
 @Api(tags = "用户", description = "用户相关的 API", position = 1)
 @RestController
@@ -29,6 +30,8 @@ import java.util.List;
 @Slf4j
 public class ControllerUser {
 
+  @Resource
+  private AuthUser authUser;
   @Resource
   private ServiceUser serviceUser;
 
@@ -42,6 +45,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public User insert(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("insert: {}", user);
+    authUser.onInsert(request, response, user);
     return serviceUser.insert(request, response, user);
   }
 
@@ -55,6 +59,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "insertSync")
   public int insertSync(HttpServletRequest request, HttpServletResponse response, @RequestBody List<User> users) {
     log.info("insertSync: {}", users.size());
+    authUser.onInsert(request, response, users);
     return serviceUser.insertSync(request, response, users);
   }
 
@@ -68,6 +73,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<User> users) {
     log.info("insertAsyn: {}", users.size());
+    authUser.onInsert(request, response, users);
     serviceUser.insertAsyn(request, response, users);
     return "";
   }
@@ -82,6 +88,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("update: {}", user);
+    authUser.onUpdate(request, response, user);
     return serviceUser.update(request, response, user);
   }
 
@@ -95,8 +102,10 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
   public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("updateEvenNull: {}", user);
+    authUser.onUpdate(request, response, user);
     return serviceUser.updateEvenNull(request, response, user);
   }
+
 
   /**
    * 根据主键删除一条用户。
@@ -105,12 +114,13 @@ public class ControllerUser {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条用户", notes = "根据主键删除一条用户。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
+    User user = new User();
+    user.setId(id);
+    authUser.onDelete(request, response, user);
     return serviceUser.delete(request, response, id);
   }
 
@@ -124,6 +134,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("delete: {}", user);
+    authUser.onDelete(request, response, user);
     return serviceUser.delete(request, response, user);
   }
 
@@ -134,12 +145,13 @@ public class ControllerUser {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条用户", notes = "根据主键查询一条用户。", response = User.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public User selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
+    User user = new User();
+    user.setId(id);
+    authUser.onSelect(request, response, user);
     return serviceUser.selectByPrimary(request, response, id);
   }
 
@@ -153,6 +165,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "selectOne")
   public User selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("selectOne: {}", user);
+    authUser.onSelect(request, response, user);
     return serviceUser.selectOne(request, response, user);
   }
 
@@ -166,6 +179,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailUser selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("selectDetail: {}", user);
+    authUser.onSelectDetail(request, response, user);
     return serviceUser.selectDetail(request, response, user);
   }
 
@@ -176,14 +190,16 @@ public class ControllerUser {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条用户详情", notes = "根据主键查询一条用户详情。", response = DetailUser.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "用户编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailUser selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
+    User user = new User();
+    user.setId(id);
+    authUser.onSelectDetail(request, response, user);
     return serviceUser.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询用户列表。返回所有符合条件的用户，未分页。
@@ -191,10 +207,11 @@ public class ControllerUser {
    * @return 返回用户列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询用户列表", notes = "查询用户列表，返回所有符合条件的用户，未分页。", response = User.class, responseContainer="List")
+  @ApiOperation(value = "查询用户列表", notes = "查询用户列表，返回所有符合条件的用户，未分页。", response = User.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<User> select(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("select: {}", user);
+    authUser.onSelect(request, response, user);
     return serviceUser.select(request, response, user);
   }
 
@@ -208,8 +225,10 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "selectRelative")
   public RepUser selectRelative(HttpServletRequest request, HttpServletResponse response, @RequestBody ReqUser reqUser) {
     log.info("selectRelative: {}", reqUser);
+    authUser.onSelectRelative(request, response, reqUser);
     return serviceUser.selectRelative(request, response, reqUser);
   }
+
 
   /**
    * 根据用户名更新一条用户，此方法不适用根据用户名更改用户名的字段值。
@@ -221,6 +240,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "updateByUsername")
   public int updateByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("updateByUsername. user: {}", user);
+    authUser.onUpdate(request, response, user);
     return serviceUser.updateByUsername(request, response, user);
   }
 
@@ -234,6 +254,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "deleteByUsername")
   public int deleteByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("deleteByUsername. user: {}", user);
+    authUser.onDelete(request, response, user);
     return serviceUser.deleteByUsername(request, response, user);
   }
 
@@ -247,6 +268,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "selectByUsername")
   public User selectByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("selectByUsername: {}", user);
+    authUser.onSelect(request, response, user);
     return serviceUser.selectByUsername(request, response, user);
   }
 
@@ -260,8 +282,10 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByUsername")
   public DetailUser selectDetailByUsername(HttpServletRequest request, HttpServletResponse response, @RequestBody User user) {
     log.info("selectDetailByUsername: {}", user);
+    authUser.onSelectDetail(request, response, user);
     return serviceUser.selectDetailByUsername(request, response, user);
   }
+
 
   /**
    * 导出用户到 excel。
@@ -272,6 +296,7 @@ public class ControllerUser {
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {
     log.info("export: {}", paramExport);
+    authUser.onExport(request, response, paramExport);
     serviceUser.export(request, response, paramExport);
   }
 

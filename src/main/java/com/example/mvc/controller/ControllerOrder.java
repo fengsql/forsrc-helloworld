@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import com.example.mvc.event.auth.AuthOrder;
 
 @Api(tags = "订单表", description = "订单表相关的 API", position = 1)
 @RestController
@@ -29,6 +30,8 @@ import java.util.List;
 @Slf4j
 public class ControllerOrder {
 
+  @Resource
+  private AuthOrder authOrder;
   @Resource
   private ServiceOrder serviceOrder;
 
@@ -42,6 +45,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "insert")
   public Order insert(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("insert: {}", order);
+    authOrder.onInsert(request, response, order);
     return serviceOrder.insert(request, response, order);
   }
 
@@ -55,6 +59,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "insertSync")
   public int insertSync(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Order> orders) {
     log.info("insertSync: {}", orders.size());
+    authOrder.onInsert(request, response, orders);
     return serviceOrder.insertSync(request, response, orders);
   }
 
@@ -68,6 +73,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "insertAsyn")
   public String insertAsyn(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Order> orders) {
     log.info("insertAsyn: {}", orders.size());
+    authOrder.onInsert(request, response, orders);
     serviceOrder.insertAsyn(request, response, orders);
     return "";
   }
@@ -82,6 +88,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "update")
   public int update(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("update: {}", order);
+    authOrder.onUpdate(request, response, order);
     return serviceOrder.update(request, response, order);
   }
 
@@ -95,8 +102,10 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "updateEvenNull")
   public int updateEvenNull(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("updateEvenNull: {}", order);
+    authOrder.onUpdate(request, response, order);
     return serviceOrder.updateEvenNull(request, response, order);
   }
+
 
   /**
    * 根据主键删除一条订单表。
@@ -105,12 +114,13 @@ public class ControllerOrder {
    */
   @ApiOperationSupport(order = 50)
   @ApiOperation(value = "删除一条订单表", notes = "根据主键删除一条订单表。", response = Integer.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "deleteByPrimary")
   public int deleteByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("deleteByPrimary: {}", id);
+    Order order = new Order();
+    order.setId(id);
+    authOrder.onDelete(request, response, order);
     return serviceOrder.delete(request, response, id);
   }
 
@@ -124,6 +134,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "delete")
   public int delete(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("delete: {}", order);
+    authOrder.onDelete(request, response, order);
     return serviceOrder.delete(request, response, order);
   }
 
@@ -134,12 +145,13 @@ public class ControllerOrder {
    */
   @ApiOperationSupport(order = 70)
   @ApiOperation(value = "根据主键查询一条订单表", notes = "根据主键查询一条订单表。", response = Order.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectByPrimary")
   public Order selectByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectByPrimary: {}", id);
+    Order order = new Order();
+    order.setId(id);
+    authOrder.onSelect(request, response, order);
     return serviceOrder.selectByPrimary(request, response, id);
   }
 
@@ -153,6 +165,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "selectOne")
   public Order selectOne(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("selectOne: {}", order);
+    authOrder.onSelect(request, response, order);
     return serviceOrder.selectOne(request, response, order);
   }
 
@@ -166,6 +179,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "selectDetail")
   public DetailOrder selectDetail(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("selectDetail: {}", order);
+    authOrder.onSelectDetail(request, response, order);
     return serviceOrder.selectDetail(request, response, order);
   }
 
@@ -176,14 +190,16 @@ public class ControllerOrder {
    */
   @ApiOperationSupport(order = 90)
   @ApiOperation(value = "根据主键查询一条订单表详情", notes = "根据主键查询一条订单表详情。", response = DetailOrder.class)
-  @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)
-  })
+  @ApiImplicitParams({@ApiImplicitParam(paramType = "body", dataType = "Integer", name = "id", value = "订单编号", required = true)})
   @RequestMapping(method = RequestMethod.POST, value = "selectDetailByPrimary")
   public DetailOrder selectDetailByPrimary(HttpServletRequest request, HttpServletResponse response, @RequestSingle(value = "id") Integer id) {
     log.info("selectDetailByPrimary: {}", id);
+    Order order = new Order();
+    order.setId(id);
+    authOrder.onSelectDetail(request, response, order);
     return serviceOrder.selectDetailByPrimary(request, response, id);
   }
+
 
   /**
    * 查询订单表列表。返回所有符合条件的订单表，未分页。
@@ -191,10 +207,11 @@ public class ControllerOrder {
    * @return 返回订单表列表。
    */
   @ApiOperationSupport(order = 100)
-  @ApiOperation(value = "查询订单表列表", notes = "查询订单表列表，返回所有符合条件的订单表，未分页。", response = Order.class, responseContainer="List")
+  @ApiOperation(value = "查询订单表列表", notes = "查询订单表列表，返回所有符合条件的订单表，未分页。", response = Order.class, responseContainer = "List")
   @RequestMapping(method = RequestMethod.POST, value = "select")
   public List<Order> select(HttpServletRequest request, HttpServletResponse response, @RequestBody Order order) {
     log.info("select: {}", order);
+    authOrder.onSelect(request, response, order);
     return serviceOrder.select(request, response, order);
   }
 
@@ -208,8 +225,10 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "selectRelative")
   public RepOrder selectRelative(HttpServletRequest request, HttpServletResponse response, @RequestBody ReqOrder reqOrder) {
     log.info("selectRelative: {}", reqOrder);
+    authOrder.onSelectRelative(request, response, reqOrder);
     return serviceOrder.selectRelative(request, response, reqOrder);
   }
+
 
   /**
    * 导出订单表到 excel。
@@ -220,6 +239,7 @@ public class ControllerOrder {
   @RequestMapping(method = RequestMethod.POST, value = "export")
   public void export(HttpServletRequest request, HttpServletResponse response, @RequestBody ParamExport paramExport) {
     log.info("export: {}", paramExport);
+    authOrder.onExport(request, response, paramExport);
     serviceOrder.export(request, response, paramExport);
   }
 

@@ -55,6 +55,7 @@ public interface DaoStatDayGoods extends IDao<StatDayGoods> {
    * @return 返回删除的记录数。
    */
   int delete(StatDayGoods statDayGoods);
+
   /**
    * 删除每日订单商品统计。此操作有 sql 注入风险。
    * @param paramDelete 删除条件，可以设置主键或条件。

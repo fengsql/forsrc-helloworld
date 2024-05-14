@@ -33,12 +33,12 @@ public class ServiceSendMail extends BaseService {
 
   @SneakyThrows
   public void sendEmail(ReqSendMail reqSendMail) {
-    throwNull(reqSendMail);
+    throwNull(reqSendMail, "请求参数");
     String email = reqSendMail.getEmail();
     String subject = reqSendMail.getSubject();
     String content = reqSendMail.getContent();
-    throwNull(email);
-    throwNull(subject);
+    throwNull(email, "邮箱地址");
+    throwNull(subject, "标题");
 
     String[] emails = Tool.split(email, sep_email);
     String filePath = reqSendMail.getFilePath();

@@ -71,11 +71,12 @@
     <appender-ref ref="LOG_WARN"/>
     <appender-ref ref="LOG_ERROR"/>
   </root>
+  <!-- forsrc -->
+  <logger name="com.forsrc.common.cache.base" level="info"/>
   <!-- project -->
   <logger name="com.example" level="info"/>
   <logger name="com.example.repository" level="info"/>
   <logger name="com.example.mvc.dao" level="info"/>
-  <logger name="com.forsrc.common.cache.base" level="info"/>
   <!-- 关闭 druid 输出日志 -->
   <logger name="com.alibaba.druid.pool" level="warn"/>
   <!-- 关闭 kafka 输出日志 -->

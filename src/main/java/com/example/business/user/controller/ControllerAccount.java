@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Api(tags = "扩展功能-用户信息", description = "扩展功能-用户信息 API", position = 20000)
+@Api(tags = "业务-基础-用户信息", description = "业务-基础-用户信息 API", position = 20000)
 @RestController
 @RequestMapping("/business/user/account")
 @Slf4j
